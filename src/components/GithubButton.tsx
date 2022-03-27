@@ -5,7 +5,7 @@ function GithubButton() {
   return (
     <ActionIcon
       size={30}
-      onClick={() => window.open('https://github.com/larscom/totp-n', '_blank')}
+      onClick={() => window.open('https://github.com/larscom/jit-2fa', '_blank')}
       variant="transparent"
       color="gray"
       title="View source code"

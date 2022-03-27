@@ -8,7 +8,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: 'totp-color-scheme',
+    key: 'jit-2fa-color',
     defaultValue: 'light'
   });
   const [totalAccounts, setTotalAccounts] = useState(0);
