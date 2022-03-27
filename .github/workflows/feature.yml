@@ -1,0 +1,28 @@
+name: 'feature'
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - '*'
+      - '!master'
+      - '!v*.'
+      - '!*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install packages
+        run: npm ci --ignore-scripts
+      - name: Unit Test
+        run: npm run test       
+      - name: Build
+        run: npm run build

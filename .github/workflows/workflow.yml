@@ -1,0 +1,48 @@
+name: 'master'
+on:
+  push:
+    branches:
+      - 'master'
+    tags:
+      - 'v*.*.*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install packages
+        run: npm ci --ignore-scripts
+      - name: Unit test
+        run: npm run test       
+      - name: Build
+        run: npm run build
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: jit-2fa-build
+          path: dist
+
+  firebase:
+    needs:
+      - build    
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Download Build
+        uses: actions/download-artifact@v2
+        with:
+          name: jit-2fa-build
+          path: dist
+      - name: Firebase deploy
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
