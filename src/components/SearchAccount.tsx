@@ -18,7 +18,7 @@ function SearchAccount({ onSearch, totalAccounts }: SearchAccountProps) {
   const { classes } = useStyles();
 
   const [value, setValue] = useState('');
-  const [debouncedValue] = useDebouncedValue(value, 300);
+  const [debouncedValue] = useDebouncedValue(value, 100);
 
   useEffect(() => onSearch(debouncedValue), [debouncedValue]);
 
