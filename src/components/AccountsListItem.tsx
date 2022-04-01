@@ -39,7 +39,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
       onClick={() => console.log('clicked!')}
       className={classes.root}
       shadow="xs"
-      style={{ border: `0.1rem solid ${color}` }}
+      // style={{ border: `0.1rem solid ${color}` }}
     >
       <Group spacing="xs" direction="row" grow>
         <Group spacing="xs" direction="column">
@@ -87,7 +87,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
             <Text weight="lighter" size="sm">
               {token}
             </Text>
-            <CopyButton value={token} />
+            <CopyButton color={color} value={token} />
           </Group>
         </Group>
       </Group>

@@ -1,4 +1,4 @@
-import { ActionIcon, Text } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { IconBrandGithub } from '@tabler/icons';
 
 function GithubButton() {
