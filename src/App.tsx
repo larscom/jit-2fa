@@ -32,7 +32,7 @@ function App() {
             <Container size="xl">
               <Suspense fallback={<Loader />}>
                 <Routes>
-                  <Route path="/accounts" element={<AccountsPage onTotalAccounts={setTotalAccounts} />}></Route>
+                  <Route path="/accounts" element={<AccountsPage onTotalChange={setTotalAccounts} />}></Route>
                   <Route path="*" element={<Navigate to="/accounts"></Navigate>}></Route>
                 </Routes>
               </Suspense>

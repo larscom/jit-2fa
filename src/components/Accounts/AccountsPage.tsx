@@ -8,26 +8,32 @@ import DeleteAccountsButton from './DeleteAccountsButton';
 import SearchAccount from './SearchAccount';
 
 interface AccountsListProps {
-  onTotalAccounts: (total: number) => void;
+  onTotalChange: (totalAccounts: number) => void;
 }
 
-function AccountsPage({ onTotalAccounts }: AccountsListProps) {
+function AccountsPage({ onTotalChange }: AccountsListProps) {
   const [searchTerm, setSearchTherm] = useState('');
-  const [accounts] = useLocalStorage<Account[]>({
+  const [accounts, setAccounts] = useLocalStorage<Account[]>({
     key: 'accounts',
     defaultValue: []
   });
 
-  useEffect(() => onTotalAccounts(accounts.length), [accounts.length]);
+  useEffect(() => onTotalChange(accounts.length), [accounts.length]);
 
   return (
     <Stack spacing="xl">
       <Title order={2}>Accounts</Title>
-      <Group position="apart">
-        <SearchAccount totalAccounts={accounts.length} onSearch={setSearchTherm}></SearchAccount>
+      <Group
+        sx={(theme) => ({
+          paddingLeft: theme.spacing.xs,
+          paddingRight: theme.spacing.xs
+        })}
+        position="apart"
+      >
+        <SearchAccount total={accounts.length} onSearch={setSearchTherm}></SearchAccount>
         <Group>
           <AddAccountButton />
-          <DeleteAccountsButton />
+          <DeleteAccountsButton onDelete={() => setAccounts([])} total={accounts.length} />
         </Group>
       </Group>
       <ScrollArea offsetScrollbars style={{ height: '70vh' }}>

@@ -13,7 +13,7 @@ function AddAccountButton() {
   const { classes } = useStyles();
 
   return (
-    <ActionIcon color="teal" className={classes.root} size={30}>
+    <ActionIcon title="Add new account" color="teal" className={classes.root} size={30}>
       <IconUserPlus size={30} strokeWidth={1} />
     </ActionIcon>
   );

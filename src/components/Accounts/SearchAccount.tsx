@@ -10,11 +10,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface SearchAccountProps {
-  onSearch: (query: string) => void;
-  totalAccounts: number;
+  onSearch: (searchTerm: string) => void;
+  total: number;
 }
 
-function SearchAccount({ onSearch, totalAccounts }: SearchAccountProps) {
+function SearchAccount({ onSearch, total }: SearchAccountProps) {
   const { classes } = useStyles();
 
   const [value, setValue] = useState('');
@@ -30,7 +30,7 @@ function SearchAccount({ onSearch, totalAccounts }: SearchAccountProps) {
       autoFocus
       onChange={handleChange}
       icon={<IconSearch />}
-      placeholder={`Search ${totalAccounts} accounts`}
+      placeholder={`Search ${total} accounts`}
     />
   );
 }
