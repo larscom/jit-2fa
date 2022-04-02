@@ -1,17 +1,14 @@
 import { Account } from '$models/account';
-import { ScrollArea, Space, Stack, Title } from '@mantine/core';
-import { useLocalStorage } from '@mantine/hooks';
-import { useEffect, useState } from 'react';
+import { Stack } from '@mantine/core';
 import AccountsListItem from './AccountsListItem';
-import SearchAccount from './SearchAccount';
 
-const filterBy = (value: string, query: string) =>
-  Boolean(value) && value.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+const filterBy = (value: string, searchTerm: string) =>
+  Boolean(value) && value.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
 
-const sortBy = (valueA: string, valueB: string, query: string) => {
+const sortBy = (valueA: string, valueB: string, searchTerm: string) => {
   const a = valueA.toLocaleLowerCase();
   const b = valueB.toLocaleLowerCase();
-  const q = query.toLocaleLowerCase();
+  const q = searchTerm.toLocaleLowerCase();
 
   const aStartsWith = a.startsWith(q) && !b.startsWith(q);
   const bStartsWith = b.startsWith(q) && !a.startsWith(q);
@@ -20,35 +17,20 @@ const sortBy = (valueA: string, valueB: string, query: string) => {
 };
 
 interface AccountsListProps {
-  onTotalAccounts: (total: number) => void;
+  searchTerm: string;
+  accounts: Account[];
 }
 
-function AccountsList({ onTotalAccounts }: AccountsListProps) {
-  const [query, setQuery] = useState('');
-  const [accounts] = useLocalStorage<Account[]>({
-    key: 'accounts',
-    defaultValue: []
-  });
-
-  useEffect(() => onTotalAccounts(accounts.length), [accounts.length]);
-
+function AccountsList({ accounts, searchTerm }: AccountsListProps) {
   return (
-    <>
-      <Title order={2}>Accounts</Title>
-      <Space h="xl" />
-      <SearchAccount totalAccounts={accounts.length} onSearch={setQuery}></SearchAccount>
-      <Space h="xl" />
-      <ScrollArea style={{ height: '70vh' }}>
-        <Stack spacing="xs">
-          {accounts
-            .filter(({ issuer, label }) => filterBy(issuer, query) || filterBy(label, query))
-            .sort(({ issuer: issuerA }, { issuer: issuerB }) => sortBy(issuerA, issuerB, query))
-            .map((account) => {
-              return <AccountsListItem key={account.secret} account={account}></AccountsListItem>;
-            })}
-        </Stack>
-      </ScrollArea>
-    </>
+    <Stack spacing="xs">
+      {accounts
+        .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
+        .sort(({ issuer: issuerA }, { issuer: issuerB }) => sortBy(issuerA, issuerB, searchTerm))
+        .map((account) => {
+          return <AccountsListItem key={account.secret} account={account}></AccountsListItem>;
+        })}
+    </Stack>
   );
 }
 

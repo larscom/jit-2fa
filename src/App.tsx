@@ -1,10 +1,12 @@
-import AccountsList from '$components/Accounts/AccountsList';
+import AccountsPage from '$components/Accounts/AccountsPage';
 import Navigation from '$components/Navigation/Navigation';
 import TopBar from '$components/TopBar/TopBar';
-import { AppShell, ColorScheme, ColorSchemeProvider, Loader, MantineProvider } from '@mantine/core';
+import { AppShell, ColorScheme, ColorSchemeProvider, Container, Loader, MantineProvider } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { Suspense, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
+const toggle = (c: ColorScheme): ColorScheme => (c === 'dark' ? 'light' : 'dark');
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -13,8 +15,7 @@ function App() {
   });
   const [totalAccounts, setTotalAccounts] = useState(0);
 
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value ? value : colorScheme === 'dark' ? 'light' : 'dark');
+  const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value ? value : toggle(colorScheme));
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
@@ -28,12 +29,14 @@ function App() {
               main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] }
             })}
           >
-            <Suspense fallback={<Loader />}>
-              <Routes>
-                <Route path="/accounts" element={<AccountsList onTotalAccounts={setTotalAccounts} />}></Route>
-                <Route path="*" element={<Navigate to="/accounts"></Navigate>}></Route>
-              </Routes>
-            </Suspense>
+            <Container size="xl">
+              <Suspense fallback={<Loader />}>
+                <Routes>
+                  <Route path="/accounts" element={<AccountsPage onTotalAccounts={setTotalAccounts} />}></Route>
+                  <Route path="*" element={<Navigate to="/accounts"></Navigate>}></Route>
+                </Routes>
+              </Suspense>
+            </Container>
           </AppShell>
         </BrowserRouter>
       </MantineProvider>

@@ -24,7 +24,7 @@ function Navigation({ totalAccounts }: NavigationProps) {
 
   const { classes } = useStyles();
   return (
-    <Navbar width={{ base: 275 }} p="xs">
+    <Navbar width={{ base: 300 }} p="xs">
       <Navbar.Section grow mt="md">
         <UnstyledButton className={classes.button}>
           <Group>
