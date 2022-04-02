@@ -36,7 +36,7 @@ function Timer({ period, onFinished, onColor }: TimerProps) {
       thickness={4}
       sections={[{ value, color }]}
       label={
-        <Text color={getColor(timer)} weight={700} align="center" size="md">
+        <Text color={color} weight={700} align="center" size="md">
           {timer}
         </Text>
       }

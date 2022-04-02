@@ -18,7 +18,7 @@ function SearchAccount({ onSearch, totalAccounts }: SearchAccountProps) {
   const { classes } = useStyles();
 
   const [value, setValue] = useState('');
-  const [debouncedValue] = useDebouncedValue(value, 250);
+  const [debouncedValue] = useDebouncedValue(value, 200, { leading: true });
 
   useEffect(() => onSearch(debouncedValue), [debouncedValue]);
 
@@ -30,7 +30,7 @@ function SearchAccount({ onSearch, totalAccounts }: SearchAccountProps) {
       autoFocus
       onChange={handleChange}
       icon={<IconSearch />}
-      placeholder={totalAccounts ? `Search ${totalAccounts} accounts` : 'Search'}
+      placeholder={`Search ${totalAccounts} accounts`}
     />
   );
 }

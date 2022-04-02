@@ -1,5 +1,5 @@
 import { Account } from '$models/account';
-import { Group, ScrollArea, Space, Title } from '@mantine/core';
+import { ScrollArea, Space, Stack, Title } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import AccountsListItem from './AccountsListItem';
@@ -30,7 +30,7 @@ function AccountsList({ onTotalAccounts }: AccountsListProps) {
     defaultValue: []
   });
 
-  useEffect(() => onTotalAccounts(accounts.length), [accounts]);
+  useEffect(() => onTotalAccounts(accounts.length), [accounts.length]);
 
   return (
     <>
@@ -39,14 +39,14 @@ function AccountsList({ onTotalAccounts }: AccountsListProps) {
       <SearchAccount totalAccounts={accounts.length} onSearch={setQuery}></SearchAccount>
       <Space h="xl" />
       <ScrollArea style={{ height: '70vh' }}>
-        <Group direction="column" spacing="xs" grow>
+        <Stack spacing="xs">
           {accounts
             .filter(({ issuer, label }) => filterBy(issuer, query) || filterBy(label, query))
             .sort(({ issuer: issuerA }, { issuer: issuerB }) => sortBy(issuerA, issuerB, query))
             .map((account) => {
               return <AccountsListItem key={account.secret} account={account}></AccountsListItem>;
             })}
-        </Group>
+        </Stack>
       </ScrollArea>
     </>
   );

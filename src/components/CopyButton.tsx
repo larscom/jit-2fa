@@ -1,4 +1,4 @@
-import { ActionIcon, createStyles, useMantineTheme } from '@mantine/core';
+import { ActionIcon, createStyles } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy } from '@tabler/icons';
 
@@ -19,7 +19,6 @@ function CopyButton({ value, color }: CopyButtonProps) {
   const { classes } = useStyles();
 
   const clipboard = useClipboard({ timeout: 1000 });
-  const { colors } = useMantineTheme();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -30,12 +29,12 @@ function CopyButton({ value, color }: CopyButtonProps) {
   return (
     <ActionIcon
       className={classes.root}
-      size={30}
+      size={34}
       onClick={handleClick}
-      color={clipboard.copied ? colors.dark[5] : color}
+      color={clipboard.copied ? 'gray' : color}
       title={`Copy ${value} to clipboard`}
     >
-      <IconCopy size={30} strokeWidth={1} />
+      <IconCopy size={34} strokeWidth={1} />
     </ActionIcon>
   );
 }

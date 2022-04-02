@@ -21,7 +21,7 @@ function App() {
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
         <BrowserRouter>
           <AppShell
-            padding="md"
+            padding="xl"
             header={<TopBar />}
             navbar={<Navigation totalAccounts={totalAccounts} />}
             styles={(theme) => ({
