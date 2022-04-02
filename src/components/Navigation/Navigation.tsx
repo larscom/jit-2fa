@@ -32,7 +32,7 @@ function Navigation({ totalAccounts }: NavigationProps) {
               <IconUsers size={30} />
             </ThemeIcon>
             <Text size="sm">Accounts</Text>
-            {totalAccounts && <Badge color="blue">{totalAccounts}</Badge>}
+            {totalAccounts && <Badge color="indigo">{totalAccounts}</Badge>}
           </Group>
         </UnstyledButton>
         <UnstyledButton className={classes.button}>

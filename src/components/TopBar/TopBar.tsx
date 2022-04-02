@@ -1,5 +1,5 @@
-import { ActionIcon, createStyles, Group, Header, Text } from '@mantine/core';
-import { Icon2fa } from '@tabler/icons';
+import { ActionIcon, createStyles, Group, Header, Text, useMantineTheme } from '@mantine/core';
+import { Icon2fa, IconMoodSmile } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
 import ColorSchemeButton from './ColorSchemeButton';
 import GithubButton from './GithubButton';
@@ -23,7 +23,9 @@ function TopBar() {
           <ActionIcon title="Navigate to start" onClick={() => navigate('/')}>
             <Icon2fa size={32} />
           </ActionIcon>
-          <Text size="lg">Just In Time</Text>
+          <Text size="lg">
+            Just In Time <IconMoodSmile color="white" size={18} />
+          </Text>
         </Group>
       </Group>
       <Group px="xs" position="right">
