@@ -8,7 +8,6 @@ import Timer from './Timer';
 const useStyles = createStyles((theme) => ({
   root: {
     height: 90,
-    // maxWidth: theme.breakpoints.xl,
     padding: theme.spacing.xs,
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],

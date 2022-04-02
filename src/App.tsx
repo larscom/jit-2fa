@@ -1,6 +1,6 @@
-import AccountsList from '$components/AccountsList';
-import Navigation from '$components/Navigation';
-import TopBar from '$components/TopBar';
+import AccountsList from '$components/Accounts/AccountsList';
+import Navigation from '$components/Navigation/Navigation';
+import TopBar from '$components/TopBar/TopBar';
 import { AppShell, ColorScheme, ColorSchemeProvider, Loader, MantineProvider } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { Suspense, useState } from 'react';

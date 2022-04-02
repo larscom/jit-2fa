@@ -1,0 +1,16 @@
+{
+  "short_name": "jit-2fa",
+  "name": "Two Factor Authentication - Just In Time",
+  "description": "Web based HOTP & TOTP accounts, everything stays in the browser",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0ca678",
+  "background_color": "#ffffff"
+}
