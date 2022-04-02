@@ -1,6 +1,6 @@
-import { Badge, createStyles, Group, Navbar, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
+import { createStyles, Group, Navbar, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
 import { IconFileExport, IconFileImport, IconHelp, IconUsers } from '@tabler/icons';
-import { useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -12,27 +12,25 @@ const useStyles = createStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
     }
+  },
+  selected: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
   }
 }));
 
-interface NavigationProps {
-  totalAccounts: number;
-}
-
-function Navigation({ totalAccounts }: NavigationProps) {
+function Navigation() {
   const navigate = useNavigate();
 
   const { classes } = useStyles();
   return (
     <Navbar width={{ base: 300 }} p="xs">
       <Navbar.Section grow mt="md">
-        <UnstyledButton className={classes.button}>
+        <UnstyledButton className={`${classes.button} ${useMatch('accounts') ? classes.selected : ''}`}>
           <Group>
             <ThemeIcon color="teal" variant="light" onClick={() => navigate('/accounts')}>
               <IconUsers size={30} />
             </ThemeIcon>
             <Text size="sm">Accounts</Text>
-            {totalAccounts && <Badge color="indigo">{totalAccounts}</Badge>}
           </Group>
         </UnstyledButton>
         <UnstyledButton className={classes.button}>

@@ -13,7 +13,6 @@ function App() {
     key: 'jit-2fa-color',
     defaultValue: 'light'
   });
-  const [totalAccounts, setTotalAccounts] = useState(0);
 
   const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value ? value : toggle(colorScheme));
 
@@ -24,7 +23,7 @@ function App() {
           <AppShell
             padding="xl"
             header={<TopBar />}
-            navbar={<Navigation totalAccounts={totalAccounts} />}
+            navbar={<Navigation />}
             styles={(theme) => ({
               main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] }
             })}
@@ -32,7 +31,7 @@ function App() {
             <Container size="xl">
               <Suspense fallback={<Loader />}>
                 <Routes>
-                  <Route path="/accounts" element={<AccountsPage onTotalChange={setTotalAccounts} />}></Route>
+                  <Route path="/accounts" element={<AccountsPage />}></Route>
                   <Route path="*" element={<Navigate to="/accounts"></Navigate>}></Route>
                 </Routes>
               </Suspense>

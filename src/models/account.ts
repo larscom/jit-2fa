@@ -1,4 +1,5 @@
 export interface Account {
+  uuid: string;
   label: string;
   issuer: string;
   secret: string;

@@ -1,5 +1,5 @@
 import { Account } from '$models/account';
-import { Badge, createStyles, Group, Stack, Paper, Text } from '@mantine/core';
+import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
 import { TOTP } from 'otpauth';
 import { useMemo, useState } from 'react';
 import CopyButton from './CopyButton';
@@ -35,7 +35,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
 
   return (
     <Paper
-      onClick={() => console.log('clicked!')}
+      onClick={() => console.log('clicked! ', account.uuid)}
       className={classes.root}
       shadow="xs"
       style={{ border: `0.1rem dashed ${color}` }}

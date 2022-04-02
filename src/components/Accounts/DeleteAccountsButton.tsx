@@ -47,7 +47,9 @@ function DeleteAccountsButton({ total, onDelete }: DeleteAccountsButtonProps) {
         onCancel={handleCanceled}
         onSumbit={handleSubmit}
       >
-        <Text size="md">Are you sure you want to delete all your accounts?</Text>
+        <Text size="md">
+          Are you sure you want to delete all your <b>{total}</b> accounts?
+        </Text>
       </SimpleDialog>
     </>
   );
