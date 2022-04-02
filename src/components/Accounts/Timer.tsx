@@ -11,10 +11,10 @@ const getColor = (count: number) => (count <= 5 ? 'red' : count <= 10 ? 'orange'
 interface TimerProps {
   period: number;
   onFinished: () => void;
-  onColor?: (color: ReturnType<typeof getColor>) => void;
+  onColorChange: (color: ReturnType<typeof getColor>) => void;
 }
 
-function Timer({ period, onFinished, onColor }: TimerProps) {
+function Timer({ period, onFinished, onColorChange }: TimerProps) {
   const timer = useTimer(period);
 
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
@@ -23,10 +23,11 @@ function Timer({ period, onFinished, onColor }: TimerProps) {
   const value = useMemo(() => calculateValue(timer, period), [timer, period]);
 
   useEffect(() => {
-    if (onColor) onColor(color);
     if (timer > 1) return;
     timeoutRef.current = setTimeout(onFinished, 1150);
   }, [timer]);
+
+  useEffect(() => onColorChange(color), [color]);
 
   useEffect(() => () => clearTimeout(timeoutRef.current), []);
 

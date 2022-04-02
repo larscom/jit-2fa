@@ -42,7 +42,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
     >
       <Group spacing="xs" direction="row" grow>
         <Stack spacing="xs">
-          <Timer period={account.period} onColor={setColor} onFinished={handleFinished} />
+          <Timer period={account.period} onColorChange={setColor} onFinished={handleFinished} />
         </Stack>
         <Stack spacing="xs">
           <Text weight="bold" size="sm">
