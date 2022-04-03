@@ -1,4 +1,5 @@
-import { ActionIcon, createStyles } from '@mantine/core';
+import { useNotification } from '$hooks/use-notification';
+import { ActionIcon, createStyles, Text } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy } from '@tabler/icons';
 
@@ -19,11 +20,18 @@ function CopyButton({ value, color }: CopyButtonProps) {
   const { classes } = useStyles();
 
   const clipboard = useClipboard({ timeout: 1000 });
+  const { success } = useNotification();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     clipboard.copy(value);
+
+    success(
+      <Text size="sm">
+        Copied <b>{value}</b> to clipboard!
+      </Text>
+    );
   };
 
   return (

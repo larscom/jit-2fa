@@ -22,13 +22,13 @@ function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps)
   const { classes } = useStyles();
   const [dialogOpened, setDialogOpened] = useState(false);
 
-  const { showSuccess } = useNotification({ success: () => `All your accounts (${total}) have been deleted` });
+  const { success } = useNotification();
 
   const handleCanceled = () => setDialogOpened(false);
   const handleSubmit = () => {
     setDialogOpened(false);
     setAccounts([]);
-    showSuccess();
+    success(`All your accounts (${total}) have been deleted`);
   };
 
   return (
