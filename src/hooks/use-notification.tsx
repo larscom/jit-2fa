@@ -9,22 +9,22 @@ interface NotificationProps {
 }
 
 export function useNotification({ error, success }: NotificationProps) {
-  const showSuccess = () =>
-    showNotification({
-      color: 'teal',
-      message: success!(),
-      icon: <CheckIcon />
-    });
-
-  const showError = () =>
-    showNotification({
-      color: 'red',
-      message: error!(),
-      icon: <Cross1Icon />
-    });
-
   return {
-    showSuccess: success ? showSuccess : noop,
-    showError: error ? showError : noop
+    showSuccess: success
+      ? () =>
+          showNotification({
+            color: 'teal',
+            message: success!(),
+            icon: <CheckIcon />
+          })
+      : noop,
+    showError: error
+      ? () =>
+          showNotification({
+            color: 'red',
+            message: error!(),
+            icon: <Cross1Icon />
+          })
+      : noop
   };
 }

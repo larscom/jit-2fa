@@ -1,5 +1,6 @@
 import { ActionIcon, createStyles } from '@mantine/core';
 import { IconUserPlus } from '@tabler/icons';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -12,8 +13,10 @@ const useStyles = createStyles((theme) => ({
 function AddAccountButton() {
   const { classes } = useStyles();
 
+  const navigate = useNavigate();
+
   return (
-    <ActionIcon title="Add new account" color="teal" className={classes.root} size={30}>
+    <ActionIcon onClick={() => navigate('add')} title="Add new account" color="teal" className={classes.root} size={30}>
       <IconUserPlus size={30} strokeWidth={1} />
     </ActionIcon>
   );

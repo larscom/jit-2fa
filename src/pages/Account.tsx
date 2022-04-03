@@ -1,5 +1,11 @@
+import { useAccount } from '$hooks/use-account';
+import { useParams } from 'react-router-dom';
+
 function Account() {
-  return <h1>Account</h1>;
+  const { uuid } = useParams();
+  const account = useAccount(String(uuid));
+
+  return <div>ACCOUNT={account ? JSON.stringify(account) : 'is new account...'}</div>;
 }
 
 export default Account;

@@ -9,10 +9,11 @@ import { NotificationsProvider } from '@mantine/notifications';
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
+const Account = lazy(() => import('$pages/Account'));
 const AccountDetails = lazy(() => import('$pages/AccountDetails'));
+
 const Import = lazy(() => import('$pages/Import'));
 const Export = lazy(() => import('$pages/Export'));
-const Account = lazy(() => import('$pages/Account'));
 
 const toggle = (c: ColorScheme): ColorScheme => (c === 'dark' ? 'light' : 'dark');
 
@@ -41,8 +42,10 @@ function App() {
                 <Routes>
                   <Route path="accounts" element={<Page />}>
                     <Route index element={<Accounts />}></Route>
-                    <Route path=":uuid" element={<SuspenseWithoutFallback children={<AccountDetails />} />}></Route>
+
                     <Route path="add" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
+                    <Route path=":uuid" element={<SuspenseWithoutFallback children={<AccountDetails />} />}></Route>
+                    <Route path=":uuid/edit" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
                   </Route>
 
                   <Route path="export" element={<SuspenseWithoutFallback children={<Export />} />}></Route>
