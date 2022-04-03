@@ -1,21 +1,21 @@
-import { Account } from '$models/account';
-import { Group, ScrollArea, Stack, Title } from '@mantine/core';
+import { IAccount } from '$models/account';
+import { Group, ScrollArea, Title } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { useState } from 'react';
-import AccountsList from './AccountsList';
-import AddAccountButton from './AddAccountButton';
-import DeleteAccountsButton from './DeleteAccountsButton';
-import SearchAccount from './SearchAccount';
+import AccountsList from '../components/Accounts/AccountsList';
+import AddAccountButton from '../components/Accounts/AddAccountButton';
+import DeleteAccountsButton from '../components/Accounts/DeleteAccountsButton';
+import SearchAccount from '../components/Accounts/SearchAccount';
 
-function AccountsPage() {
+function Accounts() {
   const [searchTerm, setSearchTherm] = useState('');
-  const [accounts, setAccounts] = useLocalStorage<Account[]>({
+  const [accounts, setAccounts] = useLocalStorage<IAccount[]>({
     key: 'accounts',
     defaultValue: []
   });
 
   return (
-    <Stack spacing="xl">
+    <>
       <Title order={2}>Accounts</Title>
       <Group
         sx={(theme) => ({
@@ -27,14 +27,14 @@ function AccountsPage() {
         <SearchAccount total={accounts.length} onSearch={setSearchTherm}></SearchAccount>
         <Group>
           <AddAccountButton />
-          <DeleteAccountsButton onDelete={() => setAccounts([])} total={accounts.length} />
+          <DeleteAccountsButton setAccounts={setAccounts} total={accounts.length} />
         </Group>
       </Group>
       <ScrollArea offsetScrollbars style={{ height: '70vh' }}>
         <AccountsList searchTerm={searchTerm} accounts={accounts} />
       </ScrollArea>
-    </Stack>
+    </>
   );
 }
 
-export default AccountsPage;
+export default Accounts;

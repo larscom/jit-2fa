@@ -1,4 +1,4 @@
-import { Account } from '$models/account';
+import { IAccount } from '$models/account';
 import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
 import { TOTP } from 'otpauth';
 import { useMemo, useState } from 'react';
@@ -16,14 +16,15 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-const createTotp = ({ issuer, label, algorithm, digits, period, secret }: Account) =>
+const createTotp = ({ issuer, label, algorithm, digits, period, secret }: IAccount) =>
   new TOTP({ issuer, label, algorithm, digits, period, secret });
 
 interface AccountsListItemProps {
-  account: Account;
+  account: IAccount;
+  onClick: (account: IAccount) => void;
 }
 
-function AccountsListItem({ account }: AccountsListItemProps) {
+function AccountsListItem({ account, onClick }: AccountsListItemProps) {
   const { classes } = useStyles();
 
   const totp = useMemo(() => createTotp(account), [account]);
@@ -35,7 +36,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
 
   return (
     <Paper
-      onClick={() => console.log('clicked! ', account.uuid)}
+      onClick={() => onClick(account)}
       className={classes.root}
       shadow="xs"
       style={{ border: `0.1rem dashed ${color}` }}

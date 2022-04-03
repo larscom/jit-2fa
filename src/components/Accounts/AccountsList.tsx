@@ -1,5 +1,6 @@
-import { Account } from '$models/account';
+import { IAccount } from '$models/account';
 import { Stack } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 import AccountsListItem from './AccountsListItem';
 
 const filterBy = (value: string, searchTerm: string) =>
@@ -18,17 +19,25 @@ const sortBy = (valueA: string, valueB: string, searchTerm: string) => {
 
 interface AccountsListProps {
   searchTerm: string;
-  accounts: Account[];
+  accounts: IAccount[];
 }
 
 function AccountsList({ accounts, searchTerm }: AccountsListProps) {
+  const navigate = useNavigate();
+
   return (
     <Stack spacing="xs">
       {accounts
         .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
         .sort(({ issuer: issuerA }, { issuer: issuerB }) => sortBy(issuerA, issuerB, searchTerm))
         .map((account) => {
-          return <AccountsListItem key={account.secret} account={account}></AccountsListItem>;
+          return (
+            <AccountsListItem
+              onClick={({ uuid }) => navigate(uuid)}
+              key={account.secret}
+              account={account}
+            ></AccountsListItem>
+          );
         })}
     </Stack>
   );

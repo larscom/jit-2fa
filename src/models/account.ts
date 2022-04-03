@@ -1,4 +1,4 @@
-export interface Account {
+export interface IAccount {
   uuid: string;
   label: string;
   issuer: string;

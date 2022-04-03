@@ -25,33 +25,33 @@ function Navigation() {
   return (
     <Navbar width={{ base: 300 }} p="xs">
       <Navbar.Section grow mt="md">
-        <UnstyledButton className={`${classes.button} ${useMatch('accounts') ? classes.selected : ''}`}>
-          <Group>
-            <ThemeIcon color="teal" variant="light" onClick={() => navigate('/accounts')}>
+        <UnstyledButton className={`${classes.button} ${useMatch('accounts/*') ? classes.selected : ''}`}>
+          <Group onClick={() => navigate('accounts')}>
+            <ThemeIcon color="teal" variant="light">
               <IconUsers size={30} />
             </ThemeIcon>
             <Text size="sm">Accounts</Text>
           </Group>
         </UnstyledButton>
-        <UnstyledButton className={classes.button}>
-          <Group>
-            <ThemeIcon color="indigo" variant="light" onClick={() => navigate('/accounts')}>
+        <UnstyledButton className={`${classes.button} ${useMatch('export/*') ? classes.selected : ''}`}>
+          <Group onClick={() => navigate('export')}>
+            <ThemeIcon color="indigo" variant="light">
               <IconFileExport size={30} />
             </ThemeIcon>
             <Text size="sm">Export (backup)</Text>
           </Group>
         </UnstyledButton>
-        <UnstyledButton className={classes.button}>
-          <Group>
-            <ThemeIcon color="indigo" variant="light" onClick={() => navigate('/accounts')}>
+        <UnstyledButton className={`${classes.button} ${useMatch('import/*') ? classes.selected : ''}`}>
+          <Group onClick={() => navigate('import')}>
+            <ThemeIcon color="indigo" variant="light">
               <IconFileImport size={30} />
             </ThemeIcon>
             <Text size="sm">Import (restore)</Text>
           </Group>
         </UnstyledButton>
-        <UnstyledButton className={classes.button}>
-          <Group>
-            <ThemeIcon color="orange" variant="light" onClick={() => navigate('/accounts')}>
+        <UnstyledButton className={`${classes.button} ${useMatch('help/*') ? classes.selected : ''}`}>
+          <Group onClick={() => navigate('help')}>
+            <ThemeIcon color="orange" variant="light">
               <IconHelp size={30} />
             </ThemeIcon>
             <Text size="sm">Help</Text>

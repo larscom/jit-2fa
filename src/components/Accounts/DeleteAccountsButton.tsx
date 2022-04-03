@@ -1,4 +1,6 @@
 import SimpleDialog from '$components/Dialogs/SimpleDialog';
+import { useNotification } from '$hooks/use-notification';
+import { IAccount } from '$models/account';
 import { ActionIcon, createStyles, Text } from '@mantine/core';
 import { IconTrash } from '@tabler/icons';
 import { useState } from 'react';
@@ -13,17 +15,20 @@ const useStyles = createStyles((theme) => ({
 
 interface DeleteAccountsButtonProps {
   total: number;
-  onDelete: () => void;
+  setAccounts: (val: IAccount[] | ((prevState: IAccount[]) => IAccount[])) => void;
 }
 
-function DeleteAccountsButton({ total, onDelete }: DeleteAccountsButtonProps) {
+function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps) {
   const { classes } = useStyles();
   const [dialogOpened, setDialogOpened] = useState(false);
+
+  const { showSuccess } = useNotification({ success: () => `All your accounts (${total}) have been deleted` });
 
   const handleCanceled = () => setDialogOpened(false);
   const handleSubmit = () => {
     setDialogOpened(false);
-    onDelete();
+    setAccounts([]);
+    showSuccess();
   };
 
   return (
@@ -46,11 +51,12 @@ function DeleteAccountsButton({ total, onDelete }: DeleteAccountsButtonProps) {
         opened={dialogOpened}
         onCancel={handleCanceled}
         onSumbit={handleSubmit}
-      >
-        <Text size="md">
-          Are you sure you want to delete all your <b>{total}</b> accounts?
-        </Text>
-      </SimpleDialog>
+        children={
+          <Text size="md">
+            Are you sure you want to delete all your <b>{total}</b> accounts?
+          </Text>
+        }
+      />
     </>
   );
 }

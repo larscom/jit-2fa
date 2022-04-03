@@ -1,10 +1,18 @@
-import AccountsPage from '$components/Accounts/AccountsPage';
 import Navigation from '$components/Navigation/Navigation';
+import SuspenseWithoutFallback from '$components/SuspenseWithoutFallback';
 import TopBar from '$components/TopBar/TopBar';
-import { AppShell, ColorScheme, ColorSchemeProvider, Container, Loader, MantineProvider } from '@mantine/core';
+import Accounts from '$pages/Accounts';
+import Page from '$pages/Page';
+import { AppShell, ColorScheme, ColorSchemeProvider, Container, MantineProvider } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import { Suspense, useState } from 'react';
+import { NotificationsProvider } from '@mantine/notifications';
+import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
+const AccountDetails = lazy(() => import('$pages/AccountDetails'));
+const Import = lazy(() => import('$pages/Import'));
+const Export = lazy(() => import('$pages/Export'));
+const Account = lazy(() => import('$pages/Account'));
 
 const toggle = (c: ColorScheme): ColorScheme => (c === 'dark' ? 'light' : 'dark');
 
@@ -19,25 +27,33 @@ function App() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
-        <BrowserRouter>
-          <AppShell
-            padding="xl"
-            header={<TopBar />}
-            navbar={<Navigation />}
-            styles={(theme) => ({
-              main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] }
-            })}
-          >
-            <Container size="xl">
-              <Suspense fallback={<Loader />}>
+        <NotificationsProvider>
+          <BrowserRouter>
+            <AppShell
+              padding="xl"
+              header={<TopBar />}
+              navbar={<Navigation />}
+              styles={(theme) => ({
+                main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] }
+              })}
+            >
+              <Container size="xl">
                 <Routes>
-                  <Route path="/accounts" element={<AccountsPage />}></Route>
-                  <Route path="*" element={<Navigate to="/accounts"></Navigate>}></Route>
+                  <Route path="accounts" element={<Page />}>
+                    <Route index element={<Accounts />}></Route>
+                    <Route path=":uuid" element={<SuspenseWithoutFallback children={<AccountDetails />} />}></Route>
+                    <Route path="add" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
+                  </Route>
+
+                  <Route path="export" element={<SuspenseWithoutFallback children={<Export />} />}></Route>
+                  <Route path="import" element={<SuspenseWithoutFallback children={<Import />} />}></Route>
+
+                  <Route path="*" element={<Navigate to="accounts"></Navigate>}></Route>
                 </Routes>
-              </Suspense>
-            </Container>
-          </AppShell>
-        </BrowserRouter>
+              </Container>
+            </AppShell>
+          </BrowserRouter>
+        </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );
