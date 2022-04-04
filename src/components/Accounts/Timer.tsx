@@ -17,7 +17,7 @@ interface TimerProps {
 function Timer({ period, onFinished, onColorChange }: TimerProps) {
   const timer = useTimer(period);
 
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const color = useMemo(() => getColor(timer), [timer]);
   const value = useMemo(() => calculateValue(timer, period), [timer, period]);
@@ -29,7 +29,7 @@ function Timer({ period, onFinished, onColorChange }: TimerProps) {
 
   useEffect(() => onColorChange(color), [color]);
 
-  useEffect(() => () => clearTimeout(timeoutRef.current), []);
+  useEffect(() => () => timeoutRef.current && clearTimeout(timeoutRef.current), []);
 
   return (
     <RingProgress
