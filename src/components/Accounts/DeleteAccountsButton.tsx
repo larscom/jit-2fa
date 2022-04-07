@@ -1,9 +1,8 @@
-import SimpleDialog from '$components/Dialogs/SimpleDialog';
 import { useNotification } from '$hooks/use-notification';
 import { IAccount } from '$models/account';
 import { ActionIcon, createStyles, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
 import { IconTrash } from '@tabler/icons';
-import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -20,44 +19,32 @@ interface DeleteAccountsButtonProps {
 
 function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps) {
   const { classes } = useStyles();
-  const [dialogOpened, setDialogOpened] = useState(false);
-
   const { success } = useNotification();
 
-  const handleCanceled = () => setDialogOpened(false);
-  const handleSubmit = () => {
-    setDialogOpened(false);
+  const modals = useModals();
+
+  const onConfirm = () => {
     setAccounts([]);
-    success(`All your accounts (${total}) have been deleted`);
+    success(<Text size="sm">All your {total} accounts have been deleted</Text>);
   };
 
   return (
-    <>
-      <ActionIcon
-        onClick={() => setDialogOpened(true)}
-        title={`Delete all ${total} accounts`}
-        color="red"
-        className={classes.root}
-        size={30}
-      >
-        <IconTrash size={30} strokeWidth={1} />
-      </ActionIcon>
-      <SimpleDialog
-        title={
-          <Text weight="bold" size="lg">
-            Delete all accounts
-          </Text>
-        }
-        opened={dialogOpened}
-        onCancel={handleCanceled}
-        onSumbit={handleSubmit}
-        children={
-          <Text size="md">
-            Are you sure you want to delete all your <b>{total}</b> accounts?
-          </Text>
-        }
-      />
-    </>
+    <ActionIcon
+      onClick={() =>
+        modals.openConfirmModal({
+          title: 'Are you sure?',
+          children: <Text size="sm">You are about to delete all your accounts</Text>,
+          labels: { confirm: 'Confirm', cancel: 'Cancel' },
+          onConfirm
+        })
+      }
+      title={`Delete all ${total} accounts`}
+      color="red"
+      className={classes.root}
+      size={30}
+    >
+      <IconTrash size={30} strokeWidth={1} />
+    </ActionIcon>
   );
 }
 

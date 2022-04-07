@@ -1,5 +1,7 @@
+import { Title } from '@mantine/core';
+
 function Help() {
-  return <h1>Help</h1>;
+  return <Title order={2}>Help</Title>;
 }
 
 export default Help;

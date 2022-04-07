@@ -5,6 +5,7 @@ import Accounts from '$pages/Accounts';
 import Page from '$pages/Page';
 import { AppShell, ColorScheme, ColorSchemeProvider, Container, MantineProvider } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
+import { ModalsProvider } from '@mantine/modals';
 import { NotificationsProvider } from '@mantine/notifications';
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -29,36 +30,46 @@ function App() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
-        <NotificationsProvider>
-          <BrowserRouter>
-            <AppShell
-              padding="xl"
-              header={<TopBar />}
-              navbar={<Navigation />}
-              styles={(theme) => ({
-                main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] }
-              })}
-            >
-              <Container size="xl">
-                <Routes>
-                  <Route path="accounts" element={<Page />}>
-                    <Route index element={<Accounts />}></Route>
+        <ModalsProvider>
+          <NotificationsProvider>
+            <BrowserRouter>
+              <AppShell
+                padding="xl"
+                header={<TopBar />}
+                navbar={<Navigation />}
+                styles={(theme) => ({
+                  main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] }
+                })}
+              >
+                <Container size="xl">
+                  <Routes>
+                    <Route path="accounts" element={<Page />}>
+                      <Route index element={<Accounts />}></Route>
 
-                    <Route path="add" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
-                    <Route path=":uuid" element={<SuspenseWithoutFallback children={<AccountDetails />} />}></Route>
-                    <Route path=":uuid/edit" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
-                  </Route>
+                      <Route path="add" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
+                      <Route path=":uuid" element={<SuspenseWithoutFallback children={<AccountDetails />} />}></Route>
+                      <Route path=":uuid/edit" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
+                    </Route>
 
-                  <Route path="export" element={<SuspenseWithoutFallback children={<Export />} />}></Route>
-                  <Route path="import" element={<SuspenseWithoutFallback children={<Import />} />}></Route>
-                  <Route path="help" element={<SuspenseWithoutFallback children={<Help />} />}></Route>
+                    <Route path="export" element={<Page />}>
+                      <Route index element={<SuspenseWithoutFallback children={<Export />} />}></Route>
+                    </Route>
 
-                  <Route path="*" element={<Navigate to="accounts"></Navigate>}></Route>
-                </Routes>
-              </Container>
-            </AppShell>
-          </BrowserRouter>
-        </NotificationsProvider>
+                    <Route path="import" element={<Page />}>
+                      <Route index element={<SuspenseWithoutFallback children={<Import />} />}></Route>
+                    </Route>
+
+                    <Route path="help" element={<Page />}>
+                      <Route index element={<SuspenseWithoutFallback children={<Help />} />}></Route>
+                    </Route>
+
+                    <Route path="*" element={<Navigate to="accounts"></Navigate>}></Route>
+                  </Routes>
+                </Container>
+              </AppShell>
+            </BrowserRouter>
+          </NotificationsProvider>
+        </ModalsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

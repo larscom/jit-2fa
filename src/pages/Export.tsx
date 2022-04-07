@@ -1,5 +1,7 @@
+import { Title } from '@mantine/core';
+
 function Export() {
-  return <h1>Export</h1>;
+  return <Title order={2}>Export</Title>;
 }
 
 export default Export;
