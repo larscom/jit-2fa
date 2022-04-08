@@ -1,7 +1,7 @@
+import { useToken } from '$hooks/use-token';
 import { IAccount } from '$models/account';
 import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
-import { TOTP } from 'otpauth';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import CopyButton from './CopyButton';
 import Timer from './Timer';
 
@@ -16,9 +16,6 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-const createTotp = ({ issuer, label, algorithm, digits, period, secret }: IAccount) =>
-  new TOTP({ issuer, label, algorithm, digits, period, secret });
-
 interface AccountsListItemProps {
   account: IAccount;
   onClick: (account: IAccount) => void;
@@ -27,12 +24,9 @@ interface AccountsListItemProps {
 function AccountsListItem({ account, onClick }: AccountsListItemProps) {
   const { classes } = useStyles();
 
-  const totp = useMemo(() => createTotp(account), [account]);
+  const [color, setColor] = useState('teal');
 
-  const [color, setColor] = useState<string>('teal');
-  const [token, setToken] = useState(totp.generate());
-
-  const handleFinished = () => setToken(totp.generate());
+  const token = useToken(account);
 
   return (
     <Paper
@@ -43,7 +37,7 @@ function AccountsListItem({ account, onClick }: AccountsListItemProps) {
     >
       <Group spacing="xs" direction="row" grow>
         <Stack spacing="xs">
-          <Timer period={account.period} onColorChange={setColor} onFinished={handleFinished} />
+          <Timer period={account.period} onColorChange={setColor} />
         </Stack>
         <Stack spacing="xs">
           <Text weight="bold" size="sm">
