@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mantine/core": "^4.1.2",
+    "@mantine/form": "^4.1.2",
     "@mantine/hooks": "^4.1.2",
     "@mantine/modals": "^4.1.2",
     "@mantine/notifications": "^4.1.2",
