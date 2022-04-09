@@ -35,6 +35,7 @@ function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps)
           title: 'Are you sure?',
           children: <Text size="sm">You are about to delete all your accounts</Text>,
           labels: { confirm: 'Confirm', cancel: 'Cancel' },
+          confirmProps: { color: 'red' },
           onConfirm
         })
       }

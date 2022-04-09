@@ -1,6 +1,5 @@
-import { IAccount } from '$models/account';
+import { useAccounts } from '$hooks/use-account';
 import { Button, createStyles, Group, ScrollArea, Text, Title } from '@mantine/core';
-import { useLocalStorage } from '@mantine/hooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountsList from '../components/Accounts/AccountsList';
@@ -18,10 +17,7 @@ const useStyles = createStyles((theme) => ({
 function Accounts() {
   const [searchTerm, setSearchTherm] = useState('');
 
-  const [accounts, setAccounts] = useLocalStorage<IAccount[]>({
-    key: 'accounts',
-    defaultValue: []
-  });
+  const [accounts, setAccounts] = useAccounts();
 
   const { classes } = useStyles();
 

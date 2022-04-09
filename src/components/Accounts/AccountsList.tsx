@@ -34,7 +34,7 @@ function AccountsList({ accounts, searchTerm }: AccountsListProps) {
           return (
             <AccountsListItem
               onClick={({ uuid }) => navigate(uuid)}
-              key={account.secret}
+              key={account.uuid}
               account={account}
             ></AccountsListItem>
           );
