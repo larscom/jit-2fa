@@ -1,7 +1,7 @@
-import { Title } from '@mantine/core';
+import PageTitle from '$components/PageTitle';
 
 function Help() {
-  return <Title order={2}>Help</Title>;
+  return <PageTitle title="Help" />;
 }
 
 export default Help;

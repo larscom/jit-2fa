@@ -1,6 +1,6 @@
 import AccountForm from '$components/Accounts/AccountForm';
+import PageTitle from '$components/PageTitle';
 import { useAccount } from '$hooks/use-account';
-import { Title } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 
 function Account() {
@@ -10,7 +10,7 @@ function Account() {
 
   return (
     <>
-      <Title order={2}>{account ? 'Edit Account' : 'Add Account'}</Title>
+      <PageTitle title={account ? 'Edit Account' : 'Add Account'} />
       <AccountForm account={account}></AccountForm>
     </>
   );

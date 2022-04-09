@@ -1,5 +1,6 @@
+import PageTitle from '$components/PageTitle';
 import { useAccount } from '$hooks/use-account';
-import { Button, Text, Title } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -18,9 +19,10 @@ function AccountDetails() {
 
   return (
     <>
-      <Title order={2}>{account.issuer}</Title>
-      <Text size="sm">ACCOUNT={JSON.stringify(account)}</Text>
-      <Button onClick={() => navigate('edit')}>Edit</Button>
+      <PageTitle title={account.issuer} />
+      <Group>
+        <Button onClick={() => navigate('edit')}>Edit</Button>
+      </Group>
     </>
   );
 }

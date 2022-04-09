@@ -1,5 +1,6 @@
+import PageTitle from '$components/PageTitle';
 import { useAccounts } from '$hooks/use-account';
-import { Button, createStyles, Group, ScrollArea, Text, Title } from '@mantine/core';
+import { Button, createStyles, Group, ScrollArea, Text } from '@mantine/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountsList from '../components/Accounts/AccountsList';
@@ -26,7 +27,7 @@ function Accounts() {
   const renderNoAccounts = () => {
     return (
       <>
-        <Text>You don't have any accounts yet.</Text>
+        <Text>You don't have any account yet.</Text>
         <Group>
           <Button onClick={() => navigate('add')}>Create account</Button>
         </Group>
@@ -53,7 +54,7 @@ function Accounts() {
 
   return (
     <>
-      <Title order={2}>Accounts</Title>
+      <PageTitle title="Accounts" disablePrevious />
       {accounts.length ? renderAccounts() : renderNoAccounts()}
     </>
   );

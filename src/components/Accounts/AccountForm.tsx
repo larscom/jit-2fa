@@ -7,8 +7,11 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-const isValidSecret = (chars: string[]) =>
-  chars.map((c) => c.toUpperCase()).every((c) => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'.includes(c));
+const isValidSecret = (secret: string) =>
+  secret
+    .toUpperCase()
+    .split('')
+    .every((char) => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'.includes(char));
 
 interface AccountFormProps {
   account?: IAccount;
@@ -21,18 +24,20 @@ function AccountForm({ account }: AccountFormProps) {
 
   const navigate = useNavigate();
 
-  const isEdit = useMemo(() => account !== undefined, [account]);
+  const isUpdate = useMemo(() => !!account, [account]);
+
+  const initialValues = account || {
+    uuid: v4(),
+    issuer: '',
+    label: '',
+    secret: '',
+    algorithm: 'SHA256',
+    period: 30,
+    digits: 6
+  };
 
   const form = useForm<IAccount>({
-    initialValues: account || {
-      uuid: v4(),
-      issuer: '',
-      label: '',
-      secret: '',
-      algorithm: 'SHA256',
-      period: 30,
-      digits: 6
-    },
+    initialValues,
     validate: {
       issuer: (value) => (value.length > 40 ? 'Maximum length is 40 characters' : null),
       label: (value) => (value.length > 40 ? 'Maximum length is 40 characters' : null),
@@ -41,13 +46,12 @@ function AccountForm({ account }: AccountFormProps) {
           return 'Secret must have a minimum length of 16 characters';
         }
 
-        const secretUpperCase = value.toUpperCase();
-        if (!isValidSecret(secretUpperCase.split(''))) {
+        if (!isValidSecret(value)) {
           return 'Secret contains illegal characters';
         }
 
         const foundAccount = accounts.find(
-          ({ secret, uuid }) => secret.toUpperCase() === secretUpperCase && account.uuid !== uuid
+          ({ secret, uuid }) => secret.toUpperCase() === value.toUpperCase() && account.uuid !== uuid
         );
 
         if (foundAccount) {
@@ -61,17 +65,13 @@ function AccountForm({ account }: AccountFormProps) {
 
   const handleSubmit = (account: typeof form.values) => {
     setAccounts((currentAccounts) => {
-      const current = isEdit ? currentAccounts.filter(({ uuid }) => uuid !== account.uuid) : currentAccounts;
-      return [...current, { ...account, secret: account.secret.toUpperCase() }];
+      const accounts = isUpdate ? currentAccounts.filter(({ uuid }) => uuid !== account.uuid) : currentAccounts;
+      return [...accounts, { ...account, secret: account.secret.toUpperCase() }];
     });
 
     setTimeout(() => {
       navigate('/');
-      success(
-        <Text>
-          Account ({account.issuer}) successfully {isEdit ? 'edited' : 'created'}
-        </Text>
-      );
+      success(<Text size="sm">Account successfully {isUpdate ? 'edited' : 'created'}</Text>);
     });
   };
 
@@ -95,7 +95,7 @@ function AccountForm({ account }: AccountFormProps) {
           />
           <PasswordInput
             required
-            autoComplete="off"
+            autoComplete="new-password"
             placeholder="Secret"
             label="Secret"
             description="The secret retrieved from the issuer"

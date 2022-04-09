@@ -25,7 +25,7 @@ function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps)
 
   const onConfirm = () => {
     setAccounts([]);
-    success(<Text size="sm">All your {total} accounts have been deleted</Text>);
+    success(<Text size="sm">All your accounts have been deleted</Text>);
   };
 
   return (
@@ -39,7 +39,7 @@ function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps)
           onConfirm
         })
       }
-      title={`Delete all ${total} accounts`}
+      title={`Delete ${total} accounts`}
       color="red"
       className={classes.root}
       size={30}
