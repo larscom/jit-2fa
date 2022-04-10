@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 
 export function useAccounts() {
   const [accounts, setAccounts] = useLocalStorage<IAccount[]>({
-    key: 'accounts',
+    key: 'totp-accounts',
     defaultValue: []
   });
 

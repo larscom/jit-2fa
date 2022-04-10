@@ -1,9 +1,20 @@
 import { useAccounts } from '$accounts/hooks/use-account';
 import { IAccount } from '$accounts/models/account';
 import { useNotification } from '$core/hooks/use-notification';
-import { Button, Chip, Chips, Group, InputWrapper, PasswordInput, Stack, Text, TextInput } from '@mantine/core';
+import {
+  Button,
+  Chip,
+  Chips,
+  createStyles,
+  Group,
+  InputWrapper,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
@@ -13,6 +24,11 @@ const isValidSecret = (secret: string) =>
     .split('')
     .every((char) => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'.includes(char));
 
+const useStyles = createStyles((theme) => ({
+  root: {
+    maxWidth: theme.breakpoints.xs / 1.9
+  }
+}));
 interface AccountFormProps {
   account?: IAccount;
 }
@@ -22,16 +38,18 @@ function AccountForm({ account }: AccountFormProps) {
 
   const { success } = useNotification();
 
+  const { classes } = useStyles();
+
   const navigate = useNavigate();
 
-  const isUpdate = useMemo(() => !!account, [account]);
+  const isUpdate = !!account;
 
   const initialValues = account || {
     uuid: v4(),
     issuer: '',
     label: '',
     secret: '',
-    algorithm: 'SHA256',
+    algorithm: 'SHA1',
     period: 30,
     digits: 6
   };
@@ -39,8 +57,8 @@ function AccountForm({ account }: AccountFormProps) {
   const form = useForm<IAccount>({
     initialValues,
     validate: {
-      issuer: (value) => (value.length > 40 ? 'Maximum length is 40 characters' : null),
-      label: (value) => (value.length > 40 ? 'Maximum length is 40 characters' : null),
+      issuer: (value) => (value.length > 35 ? 'Maximum length is 35 characters' : null),
+      label: (value) => (value.length > 35 ? 'Maximum length is 35 characters' : null),
       secret: (value, account) => {
         if (value.length < 16) {
           return 'Secret must have a minimum length of 16 characters';
@@ -55,13 +73,23 @@ function AccountForm({ account }: AccountFormProps) {
         );
 
         if (foundAccount) {
-          return `${foundAccount.issuer} (${foundAccount.label}) already uses this secret`;
+          return `${foundAccount.issuer} with label '${foundAccount.label}' already uses this secret`;
         }
 
         return null;
       }
     }
   });
+
+  const getNumberInputProps = useCallback(
+    (key: keyof IAccount) => {
+      return {
+        onChange: (value: string) => form.setFieldValue(key, Number(value)),
+        value: String(form.getInputProps(key).value)
+      };
+    },
+    [form]
+  );
 
   const handleSubmit = (account: typeof form.values) => {
     setAccounts((currentAccounts) => {
@@ -76,14 +104,14 @@ function AccountForm({ account }: AccountFormProps) {
   };
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Group>
-        <Stack>
+    <Group className={classes.root} grow direction="column">
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Stack spacing="lg">
           <TextInput
             required
             placeholder="Issuer"
             label="Issuer"
-            description="The service that hands out the secret"
+            description="Name of the service that hands out the secret"
             {...form.getInputProps('issuer')}
           />
           <TextInput
@@ -103,33 +131,34 @@ function AccountForm({ account }: AccountFormProps) {
           />
 
           <InputWrapper required description="Algorithm used to generate a token" label="Algorithm">
-            <Chips {...form.getInputProps('algorithm')}>
+            <Chips color="violet" {...form.getInputProps('algorithm')}>
               <Chip value="SHA1">SHA1</Chip>
               <Chip value="SHA256">SHA256</Chip>
               <Chip value="SHA512">SHA512</Chip>
             </Chips>
           </InputWrapper>
 
-          <InputWrapper required description="Token expire time" label="Period">
-            <Chips {...form.getInputProps('period')}>
-              <Chip value={30}>30</Chip>
-              <Chip value={60}>60</Chip>
-              <Chip value={90}>90</Chip>
+          <InputWrapper required description="Token expire time (seconds)" label="Period">
+            <Chips color="grape" {...getNumberInputProps('period')}>
+              <Chip value="30">30</Chip>
+              <Chip value="60">60</Chip>
+              <Chip value="90">90</Chip>
             </Chips>
           </InputWrapper>
 
           <InputWrapper required description="Token length" label="Digits">
-            <Chips {...form.getInputProps('digits')}>
-              <Chip value={6}>6</Chip>
-              <Chip value={8}>8</Chip>
-              <Chip value={10}>10</Chip>
+            <Chips color="indigo" {...getNumberInputProps('digits')}>
+              <Chip value="6">6</Chip>
+              <Chip value="8">8</Chip>
+              <Chip value="10">10</Chip>
             </Chips>
           </InputWrapper>
-
-          <Button type="submit">{account ? 'Edit' : 'Create'}</Button>
         </Stack>
-      </Group>
-    </form>
+        <Group position="right">
+          <Button type="submit">{account ? 'Edit' : 'Create'}</Button>
+        </Group>
+      </form>
+    </Group>
   );
 }
 
