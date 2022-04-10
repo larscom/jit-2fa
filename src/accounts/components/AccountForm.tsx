@@ -1,7 +1,7 @@
 import { useAccounts } from '$accounts/hooks/use-account';
 import { IAccount } from '$accounts/models/account';
 import { useNotification } from '$core/hooks/use-notification';
-import { Button, Group, PasswordInput, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Chip, Chips, Group, InputWrapper, PasswordInput, Stack, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -101,6 +101,31 @@ function AccountForm({ account }: AccountFormProps) {
             description="The secret retrieved from the issuer"
             {...form.getInputProps('secret')}
           />
+
+          <InputWrapper required description="Algorithm used to generate a token" label="Algorithm">
+            <Chips {...form.getInputProps('algorithm')}>
+              <Chip value="SHA1">SHA1</Chip>
+              <Chip value="SHA256">SHA256</Chip>
+              <Chip value="SHA512">SHA512</Chip>
+            </Chips>
+          </InputWrapper>
+
+          <InputWrapper required description="Token expire time" label="Period">
+            <Chips {...form.getInputProps('period')}>
+              <Chip value={30}>30</Chip>
+              <Chip value={60}>60</Chip>
+              <Chip value={90}>90</Chip>
+            </Chips>
+          </InputWrapper>
+
+          <InputWrapper required description="Token length" label="Digits">
+            <Chips {...form.getInputProps('digits')}>
+              <Chip value={6}>6</Chip>
+              <Chip value={8}>8</Chip>
+              <Chip value={10}>10</Chip>
+            </Chips>
+          </InputWrapper>
+
           <Button type="submit">{account ? 'Edit' : 'Create'}</Button>
         </Stack>
       </Group>
