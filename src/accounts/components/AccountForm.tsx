@@ -1,6 +1,6 @@
-import { useAccounts } from '$hooks/use-account';
-import { useNotification } from '$hooks/use-notification';
-import { IAccount } from '$models/account';
+import { useAccounts } from '$accounts/hooks/use-account';
+import { IAccount } from '$accounts/models/account';
+import { useNotification } from '$core/hooks/use-notification';
 import { Button, Group, PasswordInput, Stack, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMemo } from 'react';

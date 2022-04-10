@@ -17,10 +17,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "$components/*": ["src/components/*"],
-      "$pages/*": ["src/pages/*"],
-      "$hooks/*": ["src/hooks/*"],
-      "$models/*": ["src/models/*"]
+      "$accounts/*": ["src/accounts/*"],
+      "$core/*": ["src/core/*"],
+      "$export/*": ["src/export/*"],
+      "$help/*": ["src/help/*"],
+      "$import/*": ["src/import/*"]
     }
   },
   "include": ["src"],

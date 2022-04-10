@@ -1,8 +1,8 @@
-import Navigation from '$components/Navigation/Navigation';
-import SuspenseWithoutFallback from '$components/SuspenseWithoutFallback';
-import TopBar from '$components/TopBar/TopBar';
-import Accounts from '$pages/Accounts';
-import Page from '$pages/Page';
+import Accounts from '$accounts/pages/Accounts';
+import Navigation from '$core/components/Navigation';
+import SuspenseWithoutFallback from '$core/components/SuspenseWithoutFallback';
+import TopBar from '$core/components/TopBar';
+import Page from '$core/pages/Page';
 import { AppShell, ColorScheme, ColorSchemeProvider, Container, MantineProvider } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { ModalsProvider } from '@mantine/modals';
@@ -10,18 +10,18 @@ import { NotificationsProvider } from '@mantine/notifications';
 import { lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-const Account = lazy(() => import('$pages/Account'));
-const AccountDetails = lazy(() => import('$pages/AccountDetails'));
+const Account = lazy(() => import('$accounts/pages/Account'));
+const AccountDetails = lazy(() => import('$accounts/pages/AccountDetails'));
 
-const Import = lazy(() => import('$pages/Import'));
-const Export = lazy(() => import('$pages/Export'));
-const Help = lazy(() => import('$pages/Help'));
+const Import = lazy(() => import('$import/pages/Import'));
+const Export = lazy(() => import('$export/pages/Export'));
+const Help = lazy(() => import('$help/pages/Help'));
 
 const toggle = (c: ColorScheme): ColorScheme => (c === 'dark' ? 'light' : 'dark');
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: 'jit-2fa-color',
+    key: 'color-scheme',
     defaultValue: 'light'
   });
 

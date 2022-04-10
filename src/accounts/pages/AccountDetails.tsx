@@ -1,5 +1,5 @@
-import PageTitle from '$components/PageTitle';
-import { useAccount } from '$hooks/use-account';
+import { useAccount } from '$accounts/hooks/use-account';
+import PageTitle from '$core/components/PageTitle';
 import { Button, Group } from '@mantine/core';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';

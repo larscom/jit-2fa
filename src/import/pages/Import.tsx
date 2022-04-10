@@ -1,4 +1,4 @@
-import PageTitle from '$components/PageTitle';
+import PageTitle from '$core/components/PageTitle';
 
 function Import() {
   return <PageTitle title="Import" />;

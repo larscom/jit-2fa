@@ -1,6 +1,6 @@
-import AccountForm from '$components/Accounts/AccountForm';
-import PageTitle from '$components/PageTitle';
-import { useAccount } from '$hooks/use-account';
+import AccountForm from '$accounts/components/AccountForm';
+import { useAccount } from '$accounts/hooks/use-account';
+import PageTitle from '$core/components/PageTitle';
 import { useParams } from 'react-router-dom';
 
 function Account() {

@@ -1,4 +1,4 @@
-import { IAccount } from '$models/account';
+import { IAccount } from '$accounts/models/account';
 import { Stack } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import AccountsListItem from './AccountsListItem';

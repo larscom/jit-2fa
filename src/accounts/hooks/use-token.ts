@@ -1,4 +1,4 @@
-import { IAccount } from '$models/account';
+import { IAccount } from '$accounts/models/account';
 import { TOTP } from 'otpauth';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTimer } from './use-timer';

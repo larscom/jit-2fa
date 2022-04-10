@@ -1,4 +1,4 @@
-import { useTimer } from '$hooks/use-timer';
+import { useTimer } from '$accounts/hooks/use-timer';
 import { RingProgress, Text } from '@mantine/core';
 import { useEffect, useMemo } from 'react';
 

@@ -1,5 +1,5 @@
-import { useNotification } from '$hooks/use-notification';
-import { IAccount } from '$models/account';
+import { IAccount } from '$accounts/models/account';
+import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, createStyles, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { IconTrash } from '@tabler/icons';

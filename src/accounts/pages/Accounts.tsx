@@ -1,12 +1,12 @@
-import PageTitle from '$components/PageTitle';
-import { useAccounts } from '$hooks/use-account';
+import AccountsList from '$accounts/components/AccountsList';
+import AddAccountButton from '$accounts/components/AddAccountButton';
+import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
+import SearchAccount from '$accounts/components/SearchAccount';
+import { useAccounts } from '$accounts/hooks/use-account';
+import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, ScrollArea, Text } from '@mantine/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AccountsList from '../components/Accounts/AccountsList';
-import AddAccountButton from '../components/Accounts/AddAccountButton';
-import DeleteAccountsButton from '../components/Accounts/DeleteAccountsButton';
-import SearchAccount from '../components/Accounts/SearchAccount';
 
 const useStyles = createStyles((theme) => ({
   actions: {

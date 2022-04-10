@@ -1,4 +1,4 @@
-import { ActionIcon, createStyles, Group, Header, Text, useMantineTheme } from '@mantine/core';
+import { ActionIcon, createStyles, Group, Header, Text } from '@mantine/core';
 import { Icon2fa, IconMoodSmile } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
 import ColorSchemeButton from './ColorSchemeButton';

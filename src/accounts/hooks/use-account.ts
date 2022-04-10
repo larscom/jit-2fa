@@ -1,4 +1,4 @@
-import { IAccount } from '$models/account';
+import { IAccount } from '$accounts/models/account';
 import { useLocalStorage } from '@mantine/hooks';
 import { useMemo } from 'react';
 

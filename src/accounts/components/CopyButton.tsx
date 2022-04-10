@@ -1,4 +1,4 @@
-import { useNotification } from '$hooks/use-notification';
+import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, createStyles, Text } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy } from '@tabler/icons';

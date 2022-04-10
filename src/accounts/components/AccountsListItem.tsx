@@ -1,5 +1,5 @@
-import { useToken } from '$hooks/use-token';
-import { IAccount } from '$models/account';
+import { useToken } from '$accounts/hooks/use-token';
+import { IAccount } from '$accounts/models/account';
 import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
 import { useState } from 'react';
 import CopyButton from './CopyButton';
