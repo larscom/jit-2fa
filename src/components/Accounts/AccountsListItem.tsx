@@ -13,6 +13,9 @@ const useStyles = createStyles((theme) => ({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       cursor: 'pointer'
     }
+  },
+  issuer: {
+    textTransform: 'capitalize'
   }
 }));
 
@@ -43,7 +46,9 @@ function AccountsListItem({ account, onClick }: AccountsListItemProps) {
           <Text weight="bold" size="sm">
             Issuer
           </Text>
-          <Text size="sm">{account.issuer}</Text>
+          <Text className={classes.issuer} size="sm">
+            {account.issuer}
+          </Text>
         </Stack>
         <Stack spacing="xs">
           <Text weight="bold" size="sm">

@@ -10,7 +10,7 @@ const getColor = (count: number) => (count <= 5 ? 'red' : count <= 10 ? 'orange'
 
 interface TimerProps {
   period: number;
-  onColorChange: (color: ReturnType<typeof getColor>) => void;
+  onColorChange?: (color: ReturnType<typeof getColor>) => void;
 }
 
 function Timer({ period, onColorChange }: TimerProps) {
@@ -19,7 +19,7 @@ function Timer({ period, onColorChange }: TimerProps) {
   const color = useMemo(() => getColor(timer), [timer]);
   const value = useMemo(() => calculateValue(timer, period), [timer, period]);
 
-  useEffect(() => onColorChange(color), [color]);
+  useEffect(() => onColorChange && onColorChange(color), [color]);
 
   return (
     <RingProgress
