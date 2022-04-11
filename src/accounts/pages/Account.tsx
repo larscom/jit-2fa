@@ -10,7 +10,7 @@ function Account() {
 
   return (
     <>
-      <PageTitle title={account ? 'Edit Account' : 'Add Account'} />
+      <PageTitle title={account ? 'Edit Account' : 'Create Account'} />
       <AccountForm account={account}></AccountForm>
     </>
   );

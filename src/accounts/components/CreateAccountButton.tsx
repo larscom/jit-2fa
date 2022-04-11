@@ -10,16 +10,22 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-function AddAccountButton() {
+function CreateAccountButton() {
   const { classes } = useStyles();
 
   const navigate = useNavigate();
 
   return (
-    <ActionIcon onClick={() => navigate('add')} title="Add new account" color="teal" className={classes.root} size={30}>
+    <ActionIcon
+      onClick={() => navigate('create')}
+      title="Create new account"
+      color="teal"
+      className={classes.root}
+      size={30}
+    >
       <IconUserPlus size={30} strokeWidth={1} />
     </ActionIcon>
   );
 }
 
-export default AddAccountButton;
+export default CreateAccountButton;

@@ -1,5 +1,5 @@
 import AccountsList from '$accounts/components/AccountsList';
-import AddAccountButton from '$accounts/components/AddAccountButton';
+import CreateAccountButton from '$accounts/components/CreateAccountButton';
 import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
 import SearchAccount from '$accounts/components/SearchAccount';
 import { useAccounts } from '$accounts/hooks/use-account';
@@ -27,9 +27,9 @@ function Accounts() {
   const renderNoAccounts = () => {
     return (
       <>
-        <Text>You don't have any account yet.</Text>
+        <Text>You don't have any account yet...</Text>
         <Group>
-          <Button onClick={() => navigate('add')}>Create account</Button>
+          <Button onClick={() => navigate('create')}>Create account</Button>
         </Group>
       </>
     );
@@ -41,7 +41,7 @@ function Accounts() {
         <Group className={classes.actions} position="apart">
           <SearchAccount total={accounts.length} onSearch={setSearchTherm}></SearchAccount>
           <Group>
-            <AddAccountButton />
+            <CreateAccountButton />
             <DeleteAccountsButton setAccounts={setAccounts} total={accounts.length} />
           </Group>
         </Group>

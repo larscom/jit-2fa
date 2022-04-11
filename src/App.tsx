@@ -46,7 +46,7 @@ function App() {
                     <Route path="accounts" element={<Page />}>
                       <Route index element={<Accounts />}></Route>
 
-                      <Route path="add" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
+                      <Route path="create" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
                       <Route path=":uuid" element={<SuspenseWithoutFallback children={<AccountDetails />} />}></Route>
                       <Route path=":uuid/edit" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
                     </Route>

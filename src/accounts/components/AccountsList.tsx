@@ -9,10 +9,10 @@ const filterBy = (value: string, searchTerm: string) =>
 const sortBy = (valueA: string, valueB: string, searchTerm: string) => {
   const a = valueA.toLocaleLowerCase();
   const b = valueB.toLocaleLowerCase();
-  const q = searchTerm.toLocaleLowerCase();
+  const s = searchTerm.toLocaleLowerCase();
 
-  const aStartsWith = a.startsWith(q) && !b.startsWith(q);
-  const bStartsWith = b.startsWith(q) && !a.startsWith(q);
+  const aStartsWith = a.startsWith(s) && !b.startsWith(s);
+  const bStartsWith = b.startsWith(s) && !a.startsWith(s);
 
   return aStartsWith ? -1 : bStartsWith ? 1 : a.localeCompare(b);
 };
@@ -39,7 +39,9 @@ function AccountsList({ accounts, searchTerm }: AccountsListProps) {
     });
 
   return (
-    <Stack spacing="xs">{filteredAccounts.length ? filteredAccounts : <Text size="sm">No accounts found...</Text>}</Stack>
+    <Stack spacing="xs">
+      {filteredAccounts.length ? filteredAccounts : <Text size="sm">No accounts found...</Text>}
+    </Stack>
   );
 }
 
