@@ -1,5 +1,5 @@
 import { IAccount } from '$accounts/models/account';
-import { Stack } from '@mantine/core';
+import { Stack, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import AccountsListItem from './AccountsListItem';
 
@@ -25,21 +25,21 @@ interface AccountsListProps {
 function AccountsList({ accounts, searchTerm }: AccountsListProps) {
   const navigate = useNavigate();
 
+  const filteredAccounts = accounts
+    .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
+    .sort(({ issuer: issuerA }, { issuer: issuerB }) => sortBy(issuerA, issuerB, searchTerm))
+    .map((account) => {
+      return (
+        <AccountsListItem
+          onClick={({ uuid }) => navigate(uuid)}
+          key={account.uuid}
+          account={account}
+        ></AccountsListItem>
+      );
+    });
+
   return (
-    <Stack spacing="xs">
-      {accounts
-        .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
-        .sort(({ issuer: issuerA }, { issuer: issuerB }) => sortBy(issuerA, issuerB, searchTerm))
-        .map((account) => {
-          return (
-            <AccountsListItem
-              onClick={({ uuid }) => navigate(uuid)}
-              key={account.uuid}
-              account={account}
-            ></AccountsListItem>
-          );
-        })}
-    </Stack>
+    <Stack spacing="xs">{filteredAccounts.length ? filteredAccounts : <Text size="sm">No accounts found...</Text>}</Stack>
   );
 }
 

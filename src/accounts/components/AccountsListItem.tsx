@@ -7,15 +7,15 @@ import Timer from './Timer';
 
 const useStyles = createStyles((theme) => ({
   root: {
-    height: 90,
+    height: 95,
     padding: theme.spacing.xs,
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       cursor: 'pointer'
     }
   },
-  issuer: {
-    textTransform: 'capitalize'
+  textWrap: {
+    overflowWrap: 'anywhere'
   }
 }));
 
@@ -46,7 +46,7 @@ function AccountsListItem({ account, onClick }: AccountsListItemProps) {
           <Text weight="bold" size="sm">
             Issuer
           </Text>
-          <Text className={classes.issuer} size="sm">
+          <Text transform="capitalize" className={classes.textWrap} size="sm">
             {account.issuer}
           </Text>
         </Stack>
@@ -54,7 +54,9 @@ function AccountsListItem({ account, onClick }: AccountsListItemProps) {
           <Text weight="bold" size="sm">
             Label
           </Text>
-          <Text size="sm">{account.label}</Text>
+          <Text className={classes.textWrap} size="sm">
+            {account.label}
+          </Text>
         </Stack>
 
         <Group spacing="md">

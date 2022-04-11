@@ -155,7 +155,7 @@ function AccountForm({ account }: AccountFormProps) {
           </InputWrapper>
         </Stack>
         <Group position="right">
-          <Button type="submit">{account ? 'Edit' : 'Create'}</Button>
+          <Button type="submit">{account ? 'Edit' : 'Add'}</Button>
         </Group>
       </form>
     </Group>
