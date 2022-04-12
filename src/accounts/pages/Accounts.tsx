@@ -12,6 +12,9 @@ const useStyles = createStyles((theme) => ({
   actions: {
     paddingLeft: theme.spacing.xs,
     paddingRight: theme.spacing.xs
+  },
+  accounts: {
+    height: '70vh'
   }
 }));
 
@@ -24,12 +27,14 @@ function Accounts() {
 
   const navigate = useNavigate();
 
+  const handleCreateAccount = () => navigate('create');
+
   const renderNoAccounts = () => {
     return (
       <>
         <Text>You don't have any account yet...</Text>
         <Group>
-          <Button onClick={() => navigate('create')}>Create account</Button>
+          <Button onClick={handleCreateAccount}>Create account</Button>
         </Group>
       </>
     );
@@ -41,11 +46,11 @@ function Accounts() {
         <Group className={classes.actions} position="apart">
           <SearchAccount total={accounts.length} onSearch={setSearchTherm}></SearchAccount>
           <Group>
-            <CreateAccountButton />
+            <CreateAccountButton onClick={handleCreateAccount} />
             <DeleteAccountsButton setAccounts={setAccounts} total={accounts.length} />
           </Group>
         </Group>
-        <ScrollArea offsetScrollbars style={{ height: '70vh' }}>
+        <ScrollArea className={classes.accounts} offsetScrollbars>
           <AccountsList searchTerm={searchTerm} accounts={accounts} />
         </ScrollArea>
       </>

@@ -19,30 +19,31 @@ interface DeleteAccountsButtonProps {
 
 function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps) {
   const { classes } = useStyles();
+
   const { success } = useNotification();
 
   const modals = useModals();
 
-  const onConfirm = () => {
-    setAccounts([]);
-    success(<Text size="sm">All your accounts have been deleted</Text>);
+  const handleDelete = () => {
+    modals.openConfirmModal({
+      title: 'Are you sure?',
+      children: <Text size="sm">You are about to delete all your accounts</Text>,
+      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      confirmProps: { color: 'red' },
+      onConfirm: () => {
+        setAccounts([]);
+        success(<Text size="sm">All your accounts have been deleted</Text>);
+      }
+    });
   };
 
   return (
     <ActionIcon
-      onClick={() =>
-        modals.openConfirmModal({
-          title: 'Are you sure?',
-          children: <Text size="sm">You are about to delete all your accounts</Text>,
-          labels: { confirm: 'Confirm', cancel: 'Cancel' },
-          confirmProps: { color: 'red' },
-          onConfirm
-        })
-      }
+      className={classes.root}
       title={`Delete ${total} accounts`}
       color="red"
-      className={classes.root}
       size={30}
+      onClick={handleDelete}
     >
       <IconTrash size={30} strokeWidth={1} />
     </ActionIcon>

@@ -1,6 +1,5 @@
 import { ActionIcon, createStyles } from '@mantine/core';
 import { IconUserPlus } from '@tabler/icons';
-import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -10,19 +9,15 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-function CreateAccountButton() {
+interface CreateAccountButtonProps {
+  onClick: () => void;
+}
+
+function CreateAccountButton({ onClick }: CreateAccountButtonProps) {
   const { classes } = useStyles();
 
-  const navigate = useNavigate();
-
   return (
-    <ActionIcon
-      onClick={() => navigate('create')}
-      title="Create new account"
-      color="teal"
-      className={classes.root}
-      size={30}
-    >
+    <ActionIcon onClick={onClick} title="Create new account" color="teal" className={classes.root} size={30}>
       <IconUserPlus size={30} strokeWidth={1} />
     </ActionIcon>
   );
