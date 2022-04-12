@@ -12,17 +12,17 @@ function AccountDetails() {
   const navigate = useNavigate();
   const account = useAccount(String(uuid));
 
-  useEffect(() => {
-    if (!account) navigate('accounts');
-  }, [account]);
-
-  if (!account) return null;
-
   const modals = useModals();
 
   const { success } = useNotification();
 
-  const [_, setAccounts] = useAccounts();
+  const [, setAccounts] = useAccounts();
+
+  useEffect(() => {
+    if (!account) navigate('accounts');
+  }, [account, navigate]);
+
+  if (!account) return null;
 
   const handleDelete = () => {
     modals.openConfirmModal({

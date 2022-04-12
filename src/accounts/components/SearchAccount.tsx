@@ -20,7 +20,7 @@ function SearchAccount({ onSearch, total }: SearchAccountProps) {
   const [value, setValue] = useState('');
   const [debouncedValue] = useDebouncedValue(value, 200, { leading: true });
 
-  useEffect(() => onSearch(debouncedValue), [debouncedValue]);
+  useEffect(() => onSearch(debouncedValue), [debouncedValue, onSearch]);
 
   const handleChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setValue(value);
 

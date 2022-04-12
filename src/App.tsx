@@ -45,22 +45,63 @@ function App() {
                   <Routes>
                     <Route path="accounts" element={<Page />}>
                       <Route index element={<Accounts />}></Route>
-
-                      <Route path="create" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
-                      <Route path=":uuid" element={<SuspenseWithoutFallback children={<AccountDetails />} />}></Route>
-                      <Route path=":uuid/edit" element={<SuspenseWithoutFallback children={<Account />} />}></Route>
+                      <Route
+                        path="create"
+                        element={
+                          <SuspenseWithoutFallback>
+                            <Account />
+                          </SuspenseWithoutFallback>
+                        }
+                      ></Route>
+                      <Route
+                        path=":uuid"
+                        element={
+                          <SuspenseWithoutFallback>
+                            <AccountDetails />
+                          </SuspenseWithoutFallback>
+                        }
+                      ></Route>
+                      <Route
+                        path=":uuid/edit"
+                        element={
+                          <SuspenseWithoutFallback>
+                            <Account />
+                          </SuspenseWithoutFallback>
+                        }
+                      ></Route>
                     </Route>
 
                     <Route path="export" element={<Page />}>
-                      <Route index element={<SuspenseWithoutFallback children={<Export />} />}></Route>
+                      <Route
+                        index
+                        element={
+                          <SuspenseWithoutFallback>
+                            <Export />
+                          </SuspenseWithoutFallback>
+                        }
+                      ></Route>
                     </Route>
 
                     <Route path="import" element={<Page />}>
-                      <Route index element={<SuspenseWithoutFallback children={<Import />} />}></Route>
+                      <Route
+                        index
+                        element={
+                          <SuspenseWithoutFallback>
+                            <Import />
+                          </SuspenseWithoutFallback>
+                        }
+                      ></Route>
                     </Route>
 
                     <Route path="help" element={<Page />}>
-                      <Route index element={<SuspenseWithoutFallback children={<Help />} />}></Route>
+                      <Route
+                        index
+                        element={
+                          <SuspenseWithoutFallback>
+                            <Help />
+                          </SuspenseWithoutFallback>
+                        }
+                      ></Route>
                     </Route>
 
                     <Route path="*" element={<Navigate to="accounts"></Navigate>}></Route>
