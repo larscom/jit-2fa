@@ -1,7 +1,8 @@
+import Timer from '$accounts/components/Timer';
 import { useAccount, useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
 import { useNotification } from '$core/hooks/use-notification';
-import { Button, Group, Text } from '@mantine/core';
+import { Button, Group, Stack, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -43,12 +44,15 @@ function AccountDetails() {
   return (
     <>
       <PageTitle title={account.issuer} />
-      <Group>
-        <Button color="red" onClick={handleDelete}>
-          Delete
-        </Button>
-        <Button onClick={() => navigate('edit')}>Edit</Button>
-      </Group>
+      <Stack>
+        <Timer period={account.period} />
+        <Group>
+          <Button color="red" onClick={handleDelete}>
+            Delete
+          </Button>
+          <Button onClick={() => navigate('edit')}>Edit</Button>
+        </Group>
+      </Stack>
     </>
   );
 }

@@ -68,15 +68,15 @@ function AccountsListItem({ account, onClick }: AccountsListItemProps) {
           </Stack>
           <Stack spacing="xs">
             <Text weight="bold" size="sm">
-              Period
-            </Text>
-            <Badge color="grape">{account.period}</Badge>
-          </Stack>
-          <Stack spacing="xs">
-            <Text weight="bold" size="sm">
               Digits
             </Text>
             <Badge color="indigo">{account.digits}</Badge>
+          </Stack>
+          <Stack spacing="xs">
+            <Text weight="bold" size="sm">
+              Period
+            </Text>
+            <Badge color="grape">{account.period}</Badge>
           </Stack>
         </Group>
 

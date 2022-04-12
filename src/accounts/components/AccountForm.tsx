@@ -3,12 +3,11 @@ import { IAccount } from '$accounts/models/account';
 import { useNotification } from '$core/hooks/use-notification';
 import {
   Button,
-  Chip,
-  Chips,
   createStyles,
   Group,
   InputWrapper,
   PasswordInput,
+  SegmentedControl,
   Stack,
   Text,
   TextInput
@@ -131,28 +130,41 @@ function AccountForm({ account }: AccountFormProps) {
           />
 
           <InputWrapper required description="Algorithm used to generate a token" label="Algorithm">
-            <Chips color="violet" {...form.getInputProps('algorithm')}>
-              <Chip value="SHA1">SHA1</Chip>
-              <Chip value="SHA256">SHA256</Chip>
-              <Chip value="SHA512">SHA512</Chip>
-            </Chips>
-          </InputWrapper>
-
-          <InputWrapper required description="Token expire time (seconds)" label="Period">
-            <Chips color="grape" {...getNumberInputProps('period')}>
-              <Chip value="30">30</Chip>
-              <Chip value="60">60</Chip>
-              <Chip value="90">90</Chip>
-            </Chips>
+            <SegmentedControl
+              color="violet"
+              data={[
+                { label: 'SHA1', value: 'SHA1' },
+                { label: 'SHA256', value: 'SHA256' },
+                { label: 'SHA512', value: 'SHA512' }
+              ]}
+              {...form.getInputProps('algorithm')}
+            />
           </InputWrapper>
 
           <InputWrapper required description="Token length" label="Digits">
-            <Chips color="indigo" {...getNumberInputProps('digits')}>
-              <Chip value="6">6</Chip>
-              <Chip value="8">8</Chip>
-              <Chip value="10">10</Chip>
-            </Chips>
+            <SegmentedControl
+              color="indigo"
+              data={[
+                { label: '6', value: '6' },
+                { label: '8', value: '8' },
+                { label: '10', value: '10' }
+              ]}
+              {...getNumberInputProps('digits')}
+            />
           </InputWrapper>
+
+          <InputWrapper required description="Token expire time (seconds)" label="Period">
+            <SegmentedControl
+              color="grape"
+              data={[
+                { label: '30', value: '30' },
+                { label: '60', value: '60' },
+                { label: '90', value: '90' }
+              ]}
+              {...getNumberInputProps('period')}
+            />
+          </InputWrapper>
+ 
         </Stack>
         <Group position="right">
           <Button type="submit">{account ? 'Edit' : 'Create'}</Button>
