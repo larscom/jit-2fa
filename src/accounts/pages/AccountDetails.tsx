@@ -24,12 +24,19 @@ function AccountDetails() {
 
   const [_, setAccounts] = useAccounts();
 
-  const onConfirm = () => {
-    setAccounts((accounts) => accounts.filter((account) => account.uuid !== uuid));
-
-    setTimeout(() => {
-      navigate('/');
-      success(<Text size="sm">Account is successfully deleted</Text>);
+  const handleDelete = () => {
+    modals.openConfirmModal({
+      title: 'Are you sure?',
+      children: <Text size="sm">You are about to delete '{account.issuer}'</Text>,
+      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      confirmProps: { color: 'red' },
+      onConfirm: () => {
+        setAccounts((accounts) => accounts.filter((account) => account.uuid !== uuid));
+        setTimeout(() => {
+          navigate('/');
+          success(<Text size="sm">Account is successfully deleted</Text>);
+        });
+      }
     });
   };
 
@@ -37,18 +44,7 @@ function AccountDetails() {
     <>
       <PageTitle title={account.issuer} />
       <Group>
-        <Button
-          color="red"
-          onClick={() =>
-            modals.openConfirmModal({
-              title: 'Are you sure?',
-              children: <Text size="sm">You are about to delete '{account.issuer}'</Text>,
-              labels: { confirm: 'Confirm', cancel: 'Cancel' },
-              confirmProps: { color: 'red' },
-              onConfirm
-            })
-          }
-        >
+        <Button color="red" onClick={handleDelete}>
           Delete
         </Button>
         <Button onClick={() => navigate('edit')}>Edit</Button>

@@ -49,7 +49,7 @@ export function useSessionStorage<T = string>({
         setValue(val);
       }
     },
-    [key]
+    [key, serialize]
   );
 
   useWindowEvent('storage', (event) => {
