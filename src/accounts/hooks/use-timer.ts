@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const tick = 1000;
 const calculate = (period: number) => period - (Math.round(Date.now() / tick) % period);
 
-export function useTimer(period: number): number {
+export function useTimer(period: number) {
   const [timer, setTimer] = useState(calculate(period));
 
   useEffect(() => {

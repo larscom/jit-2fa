@@ -35,7 +35,7 @@ function Navigation() {
         </UnstyledButton>
         <UnstyledButton className={`${classes.button} ${useMatch('export/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('export')}>
-            <ThemeIcon color="indigo" variant="light">
+            <ThemeIcon color="grape" variant="light">
               <IconFileExport size={30} />
             </ThemeIcon>
             <Text size="sm">Export (backup)</Text>
@@ -43,7 +43,7 @@ function Navigation() {
         </UnstyledButton>
         <UnstyledButton className={`${classes.button} ${useMatch('import/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('import')}>
-            <ThemeIcon color="indigo" variant="light">
+            <ThemeIcon color="grape" variant="light">
               <IconFileImport size={30} />
             </ThemeIcon>
             <Text size="sm">Import (restore)</Text>
@@ -51,7 +51,7 @@ function Navigation() {
         </UnstyledButton>
         <UnstyledButton className={`${classes.button} ${useMatch('help/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('help')}>
-            <ThemeIcon color="orange" variant="light">
+            <ThemeIcon color="indigo" variant="light">
               <IconHelp size={30} />
             </ThemeIcon>
             <Text size="sm">Help</Text>

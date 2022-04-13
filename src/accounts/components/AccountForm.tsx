@@ -30,9 +30,10 @@ const useStyles = createStyles((theme) => ({
 }));
 interface AccountFormProps {
   account?: IAccount;
+  style: React.CSSProperties;
 }
 
-function AccountForm({ account }: AccountFormProps) {
+function AccountForm({ account, style }: AccountFormProps) {
   const [accounts, setAccounts] = useAccounts();
 
   const { success } = useNotification();
@@ -103,7 +104,7 @@ function AccountForm({ account }: AccountFormProps) {
   };
 
   return (
-    <Group className={classes.root} grow direction="column">
+    <Group style={style} className={classes.root} grow direction="column">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack spacing="lg">
           <TextInput
@@ -164,10 +165,9 @@ function AccountForm({ account }: AccountFormProps) {
               {...getNumberInputProps('period')}
             />
           </InputWrapper>
- 
         </Stack>
         <Group position="right">
-          <Button type="submit">{account ? 'Edit' : 'Create'}</Button>
+          <Button type="submit">{account ? 'Save' : 'Create'}</Button>
         </Group>
       </form>
     </Group>

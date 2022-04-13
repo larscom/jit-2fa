@@ -1,8 +1,9 @@
 import Timer from '$accounts/components/Timer';
 import { useAccount, useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
+import { useMounted } from '$core/hooks/use-mounted';
 import { useNotification } from '$core/hooks/use-notification';
-import { Button, Group, Stack, Text } from '@mantine/core';
+import { Button, Group, Stack, Text, Transition } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,14 +11,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 function AccountDetails() {
   const { uuid } = useParams();
 
+  const { success } = useNotification();
+
+  const [, setAccounts] = useAccounts();
+
   const navigate = useNavigate();
+
   const account = useAccount(String(uuid));
 
   const modals = useModals();
 
-  const { success } = useNotification();
-
-  const [, setAccounts] = useAccounts();
+  const mounted = useMounted();
 
   useEffect(() => {
     if (!account) navigate('accounts');
@@ -44,15 +48,19 @@ function AccountDetails() {
   return (
     <>
       <PageTitle title={account.issuer} />
-      <Stack>
-        <Timer period={account.period} />
-        <Group>
-          <Button color="red" onClick={handleDelete}>
-            Delete
-          </Button>
-          <Button onClick={() => navigate('edit')}>Edit</Button>
-        </Group>
-      </Stack>
+      <Transition mounted={mounted} transition="fade">
+        {(style) => (
+          <Stack style={style}>
+            <Timer period={account.period} />
+            <Group>
+              <Button color="red" onClick={handleDelete}>
+                Delete
+              </Button>
+              <Button onClick={() => navigate('edit')}>Edit</Button>
+            </Group>
+          </Stack>
+        )}
+      </Transition>
     </>
   );
 }
