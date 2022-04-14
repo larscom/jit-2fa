@@ -1,22 +1,18 @@
-import { useToken } from '$accounts/hooks/use-token';
 import { IAccount } from '$accounts/models/account';
 import { useMounted } from '$core/hooks/use-mounted';
 import { Badge, createStyles, Group, Paper, Stack, Text, Transition } from '@mantine/core';
-import { useState } from 'react';
-import CopyButton from './CopyButton';
-import Timer from './Timer';
+import Token from './Token';
 
 const useStyles = createStyles((theme) => ({
   root: {
-    height: 95,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     padding: theme.spacing.xs,
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       cursor: 'pointer'
     }
-  },
-  textWrap: {
-    overflowWrap: 'anywhere'
   }
 }));
 
@@ -28,10 +24,6 @@ interface AccountsListItemProps {
 function AccountsListItem({ account, onClick }: AccountsListItemProps) {
   const { classes } = useStyles();
 
-  const [color, setColor] = useState('teal');
-
-  const token = useToken(account);
-
   const mounted = useMounted();
 
   return (
@@ -41,59 +33,56 @@ function AccountsListItem({ account, onClick }: AccountsListItemProps) {
           onClick={() => onClick(account)}
           className={classes.root}
           shadow="xs"
-          style={{ ...style, border: `0.1rem dashed ${color}` }}
+          sx={(theme) => ({
+            ...style,
+            border: `0.1rem dashed ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`
+          })}
         >
-          <Group spacing="xs" direction="row" grow>
-            <Stack spacing="xs">
-              <Timer period={account.period} onColorChange={setColor} />
-            </Stack>
-            <Stack spacing="xs">
-              <Text weight="bold" size="sm">
-                Issuer
-              </Text>
-              <Text transform="capitalize" className={classes.textWrap} size="sm">
-                {account.issuer}
-              </Text>
-            </Stack>
-            <Stack spacing="xs">
-              <Text weight="bold" size="sm">
-                Label
-              </Text>
-              <Text className={classes.textWrap} size="sm">
-                {account.label}
-              </Text>
-            </Stack>
-
-            <Group spacing="md">
+          <Group spacing="xs" grow>
+            <Group position="left" grow>
               <Stack spacing="xs">
                 <Text weight="bold" size="sm">
-                  Algorithm
+                  Issuer
                 </Text>
-                <Badge color="violet">{account.algorithm}</Badge>
-              </Stack>
-              <Stack spacing="xs">
-                <Text weight="bold" size="sm">
-                  Digits
+                <Text transform="capitalize" size="sm">
+                  {account.issuer}
                 </Text>
-                <Badge color="indigo">{account.digits}</Badge>
-              </Stack>
-              <Stack spacing="xs">
-                <Text weight="bold" size="sm">
-                  Period
-                </Text>
-                <Badge color="grape">{account.period}</Badge>
               </Stack>
             </Group>
 
-            <Stack spacing="xs">
-              <Text weight="bold" size="sm">
-                Token
-              </Text>
-              <Group spacing="xs" grow>
-                <Text size="sm">{token}</Text>
-                <CopyButton color={color} value={token} />
+            <Group grow spacing="xs">
+              <Stack spacing="xs">
+                <Text weight="bold" size="sm">
+                  Label
+                </Text>
+                <Text size="sm">{account.label}</Text>
+              </Stack>
+
+              <Group spacing="xl" noWrap>
+                <Stack spacing="md">
+                  <Text weight="bold" size="sm">
+                    Algorithm
+                  </Text>
+                  <Badge color="violet">{account.algorithm}</Badge>
+                </Stack>
+                <Stack spacing="md">
+                  <Text weight="bold" size="sm">
+                    Digits
+                  </Text>
+                  <Badge color="indigo">{account.digits}</Badge>
+                </Stack>
+                <Stack spacing="md">
+                  <Text weight="bold" size="sm">
+                    Period
+                  </Text>
+                  <Badge color="grape">{account.period}</Badge>
+                </Stack>
               </Group>
-            </Stack>
+            </Group>
+
+            <Group position="right">
+              <Token account={account} />
+            </Group>
           </Group>
         </Paper>
       )}

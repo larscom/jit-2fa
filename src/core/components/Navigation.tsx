@@ -43,7 +43,7 @@ function Navigation() {
         </UnstyledButton>
         <UnstyledButton className={`${classes.button} ${useMatch('import/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('import')}>
-            <ThemeIcon color="grape" variant="light">
+            <ThemeIcon color="violet" variant="light">
               <IconFileImport size={30} />
             </ThemeIcon>
             <Text size="sm">Import (restore)</Text>

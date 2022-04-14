@@ -1,4 +1,3 @@
-import Timer from '$accounts/components/Timer';
 import { useAccount, useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
 import { useMounted } from '$core/hooks/use-mounted';
@@ -51,7 +50,6 @@ function AccountDetails() {
       <Transition mounted={mounted} transition="fade">
         {(style) => (
           <Stack style={style}>
-            <Timer period={account.period} />
             <Group>
               <Button color="red" onClick={handleDelete}>
                 Delete
