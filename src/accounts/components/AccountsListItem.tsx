@@ -1,6 +1,7 @@
 import { IAccount } from '$accounts/models/account';
 import { useMounted } from '$core/hooks/use-mounted';
-import { Badge, createStyles, Group, Paper, Stack, Text, Transition } from '@mantine/core';
+import { ActionIcon, Badge, createStyles, Group, Paper, Stack, Text, Transition } from '@mantine/core';
+import { IconStar } from '@tabler/icons';
 import Token from './Token';
 
 const useStyles = createStyles((theme) => ({
@@ -18,19 +19,31 @@ const useStyles = createStyles((theme) => ({
 
 interface AccountsListItemProps {
   account: IAccount;
-  onClick: (account: IAccount) => void;
+  isFavorite: boolean;
+  onClick: () => void;
+  onFavoriteClick: () => void;
 }
 
-function AccountsListItem({ account, onClick }: AccountsListItemProps) {
+function AccountsListItem({ account, isFavorite, onClick, onFavoriteClick }: AccountsListItemProps) {
   const { classes } = useStyles();
 
   const mounted = useMounted();
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    onClick();
+  };
+
+  const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onFavoriteClick();
+  };
 
   return (
     <Transition mounted={mounted} transition="fade">
       {(style) => (
         <Paper
-          onClick={() => onClick(account)}
+          onClick={handleClick}
           className={classes.root}
           shadow="xs"
           sx={(theme) => ({
@@ -39,7 +52,16 @@ function AccountsListItem({ account, onClick }: AccountsListItemProps) {
           })}
         >
           <Group spacing="xs" grow>
-            <Group position="left" grow>
+            <Group spacing="xl" position="left">
+              <ActionIcon
+                size={30}
+                onClick={handleFavoriteClick}
+                variant="transparent"
+                color={isFavorite ? 'yellow' : 'gray'}
+                title={isFavorite ? 'Marked as favorite' : 'Make favorite'}
+              >
+                <IconStar size={30} />
+              </ActionIcon>
               <Stack spacing="xs">
                 <Text weight="bold" size="sm">
                   Issuer

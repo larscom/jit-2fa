@@ -1,3 +1,4 @@
+import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
 import { Stack, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
@@ -6,15 +7,34 @@ import AccountsListItem from './AccountsListItem';
 const filterBy = (value: string, searchTerm: string) =>
   Boolean(value) && value.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
 
-const sortBy = (valueA: string, valueB: string, searchTerm: string) => {
-  const a = valueA.toLocaleLowerCase();
-  const b = valueB.toLocaleLowerCase();
+const sortAccounts = (
+  { issuer: issuerA, uuid: uuidA }: IAccount,
+  { issuer: issuerB, uuid: uuidB }: IAccount,
+  favorites: string[],
+  searchTerm: string
+) => {
+  const aInFavorites = favorites.includes(uuidA);
+  const bInFavorites = favorites.includes(uuidB);
+
+  const aIssuer = issuerA.toLocaleLowerCase();
+  const bIssuer = issuerB.toLocaleLowerCase();
   const s = searchTerm.toLocaleLowerCase();
 
-  const aStartsWith = a.startsWith(s) && !b.startsWith(s);
-  const bStartsWith = b.startsWith(s) && !a.startsWith(s);
+  const aOnlyFavorite = aInFavorites && !bInFavorites;
+  const bOnlyFavorite = !aInFavorites && bInFavorites;
 
-  return aStartsWith ? -1 : bStartsWith ? 1 : a.localeCompare(b);
+  const aIssuerStartsWith = aIssuer.startsWith(s) && !bIssuer.startsWith(s);
+  const bIssuerStartsWith = bIssuer.startsWith(s) && !aIssuer.startsWith(s);
+
+  return aOnlyFavorite
+    ? -1
+    : bOnlyFavorite
+    ? 1
+    : aIssuerStartsWith
+    ? -1
+    : bIssuerStartsWith
+    ? 1
+    : aIssuer.localeCompare(bIssuer);
 };
 
 interface AccountsListProps {
@@ -25,15 +45,24 @@ interface AccountsListProps {
 function AccountsList({ accounts, searchTerm }: AccountsListProps) {
   const navigate = useNavigate();
 
+  const [favorites, setFavorites] = useFavorites();
+
   const filteredAccounts = accounts
     .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
-    .sort(({ issuer: issuerA }, { issuer: issuerB }) => sortBy(issuerA, issuerB, searchTerm))
+    .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm))
     .map((account) => {
+      const { uuid } = account;
       return (
         <AccountsListItem
-          onClick={({ uuid }) => navigate(uuid)}
-          key={account.uuid}
+          onClick={() => navigate(uuid)}
+          key={uuid}
           account={account}
+          isFavorite={favorites.includes(uuid)}
+          onFavoriteClick={() => {
+            setFavorites((favorites) =>
+              favorites.includes(uuid) ? favorites.filter((favorite) => favorite !== uuid) : [...favorites, uuid]
+            );
+          }}
         ></AccountsListItem>
       );
     });
