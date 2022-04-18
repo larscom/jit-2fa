@@ -1,5 +1,6 @@
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
+import { ISearchFilters } from '$accounts/models/search-filters';
 import { useNotification } from '$core/hooks/use-notification';
 import { Stack, Text } from '@mantine/core';
 import { useCallback, useMemo } from 'react';
@@ -40,34 +41,36 @@ const sortAccounts = (
 };
 
 interface AccountsListProps {
-  searchTerm: string;
   accounts: IAccount[];
+  filters: ISearchFilters;
 }
 
-function AccountsList({ accounts, searchTerm }: AccountsListProps) {
+function AccountsList({ accounts, filters }: AccountsListProps) {
   const navigate = useNavigate();
 
   const [favorites, setFavorites] = useFavorites();
+
   const { success } = useNotification();
 
   const handleFavoriteClick = useCallback(
     (uuid: string) => {
       setFavorites((favorites) => {
-        const isPresent = favorites.includes(uuid);
-        if (isPresent) {
+        if (favorites.includes(uuid)) {
           success(<Text size="sm">Removed from favorites</Text>);
           return favorites.filter((favorite) => favorite !== uuid);
-        } else {
-          success(<Text size="sm">Added to favorites</Text>);
-          return [...favorites, uuid];
         }
+
+        success(<Text size="sm">Added to favorites</Text>);
+        return [...favorites, uuid];
       });
     },
     [setFavorites, success]
   );
 
   const filteredAccounts = useMemo(() => {
+    const { searchTerm, favoritesChecked } = filters;
     return accounts
+      .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
       .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
       .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm))
       .map((account) => {
@@ -82,7 +85,7 @@ function AccountsList({ accounts, searchTerm }: AccountsListProps) {
           ></AccountsListItem>
         );
       });
-  }, [accounts, favorites, navigate, searchTerm, handleFavoriteClick]);
+  }, [accounts, favorites, navigate, filters, handleFavoriteClick]);
 
   return (
     <Stack spacing="xs">

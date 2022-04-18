@@ -1,9 +1,8 @@
-import { useWindowEvent } from '@mantine/hooks';
 import { useCallback, useEffect, useState } from 'react';
 
 interface UseSessionStorage<T> {
   key: string;
-  defaultValue?: T;
+  defaultValue: T;
   serialize?(value: T): string;
   deserialize?(value?: string): T;
 }
@@ -31,7 +30,7 @@ export function useSessionStorage<T = string>({
   serialize = serializeJSON
 }: UseSessionStorage<T>) {
   const [value, setValue] = useState<T>(
-    typeof window !== 'undefined' && 'localStorage' in window
+    typeof window !== 'undefined' && 'sessionStorage' in window
       ? deserialize(window.sessionStorage.getItem(key) ?? undefined)
       : ((defaultValue ?? '') as T)
   );
@@ -51,12 +50,6 @@ export function useSessionStorage<T = string>({
     },
     [key, serialize]
   );
-
-  useWindowEvent('storage', (event) => {
-    if (event.storageArea === window.sessionStorage && event.key === key) {
-      setValue(deserialize(event.newValue ?? undefined));
-    }
-  });
 
   useEffect(() => {
     if (defaultValue !== undefined && value === undefined) {
