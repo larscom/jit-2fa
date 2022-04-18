@@ -39,10 +39,8 @@ function AccountsListItem({ account, isFavorite, onClick, onFavoriteClick }: Acc
     onFavoriteClick();
   };
 
-  const transition = Math.random() > 0.5 ? 'slide-left' : 'slide-right';
-
   return (
-    <Transition mounted={mounted} duration={300} transition={transition}>
+    <Transition mounted={mounted} duration={300} transition="fade">
       {(style) => (
         <Paper
           onClick={handleClick}

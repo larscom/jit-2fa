@@ -99,7 +99,7 @@ function AccountForm({ account, style }: AccountFormProps) {
 
     setTimeout(() => {
       navigate('/');
-      success(<Text size="sm">Account successfully {isUpdate ? 'edited' : 'created'}</Text>);
+      success(<Text size="sm">Account {isUpdate ? 'edited' : 'created'}</Text>);
     });
   };
 

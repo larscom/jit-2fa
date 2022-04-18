@@ -38,7 +38,7 @@ function AccountDetails() {
         setAccounts((accounts) => accounts.filter((account) => account.uuid !== uuid));
         setTimeout(() => {
           navigate('/');
-          success(<Text size="sm">Account is successfully deleted</Text>);
+          success(<Text size="sm">Account deleted</Text>);
         });
       }
     });
