@@ -9,6 +9,7 @@ interface UseSessionStorage<T> {
 
 function serializeJSON<T>(value: T) {
   try {
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     return JSON.stringify(value);
   } catch (error: any) {
     throw new Error(`Failed to serialize the value`, { cause: error });

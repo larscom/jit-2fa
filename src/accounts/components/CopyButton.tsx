@@ -1,15 +1,7 @@
 import { useNotification } from '$core/hooks/use-notification';
-import { ActionIcon, createStyles, Text } from '@mantine/core';
+import { ActionIcon, Text } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy } from '@tabler/icons';
-
-const useStyles = createStyles((theme) => ({
-  root: {
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1]
-    }
-  }
-}));
 
 interface CopyButtonProps {
   value: string;
@@ -17,8 +9,6 @@ interface CopyButtonProps {
 }
 
 function CopyButton({ value, color }: CopyButtonProps) {
-  const { classes } = useStyles();
-
   const clipboard = useClipboard({ timeout: 1000 });
   const { success } = useNotification();
 
@@ -36,7 +26,6 @@ function CopyButton({ value, color }: CopyButtonProps) {
 
   return (
     <ActionIcon
-      className={classes.root}
       size={34}
       onClick={handleClick}
       color={clipboard.copied ? 'gray' : color}
