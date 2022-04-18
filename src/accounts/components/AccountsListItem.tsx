@@ -56,7 +56,6 @@ function AccountsListItem({ account, isFavorite, onClick, onFavoriteClick }: Acc
               <ActionIcon
                 size={30}
                 onClick={handleFavoriteClick}
-                variant="transparent"
                 color={isFavorite ? 'yellow' : 'gray'}
                 title={isFavorite ? 'Marked as favorite' : 'Make favorite'}
               >

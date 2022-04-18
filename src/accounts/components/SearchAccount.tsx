@@ -1,24 +1,15 @@
 import { ISearchFilters } from '$accounts/models/search-filters';
 import { useSessionStorage } from '$core/hooks/use-session-storage';
-import { createStyles, Group, Input, Switch } from '@mantine/core';
+import { Group, Input, Switch } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 
-const useStyles = createStyles((theme) => ({
-  root: {
-    width: theme.breakpoints.xs / 2
-  }
-}));
-
 interface SearchAccountProps {
-  total: number;
   onFilterChange: (filters: ISearchFilters) => void;
 }
 
-function SearchAccount({ total, onFilterChange }: SearchAccountProps) {
-  const { classes } = useStyles();
-
+function SearchAccount({ onFilterChange }: SearchAccountProps) {
   const [{ searchTerm, favoritesChecked }, setSearchFilters] = useSessionStorage<ISearchFilters>({
     key: 'search-filters',
     defaultValue: {
@@ -43,13 +34,12 @@ function SearchAccount({ total, onFilterChange }: SearchAccountProps) {
 
   return (
     <Group grow>
-      <Group position="right">
+      <Group>
         <Input
-          className={classes.root}
           value={localSearchTerm}
           onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setLocalSearchTerm(value)}
           icon={<IconSearch />}
-          placeholder={`Search ${total} accounts`}
+          placeholder={localFavoritesChecked ? 'Search favorites only...' : 'Search all accounts...'}
           autoFocus
         />
         <Switch

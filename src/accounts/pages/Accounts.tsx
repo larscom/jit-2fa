@@ -48,7 +48,7 @@ function Accounts() {
     return (
       <>
         <Group className={classes.actions} position="apart">
-          <SearchAccount onFilterChange={setFilters} total={accounts.length}></SearchAccount>
+          <SearchAccount onFilterChange={setFilters}></SearchAccount>
           <Group>
             <CreateAccountButton onClick={handleCreateAccount} />
             <DeleteAccountsButton setAccounts={setAccounts} total={accounts.length} />
