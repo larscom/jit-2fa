@@ -1,9 +1,8 @@
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
-import { ISearchFilters } from '$accounts/models/search-filters';
 import { useNotification } from '$core/hooks/use-notification';
 import { Stack, Text } from '@mantine/core';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountsListItem from './AccountsListItem';
 
@@ -42,10 +41,11 @@ const sortAccounts = (
 
 interface AccountsListProps {
   accounts: IAccount[];
-  filters: ISearchFilters;
+  favoritesChecked: boolean;
+  searchTerm: string;
 }
 
-function AccountsList({ accounts, filters }: AccountsListProps) {
+function AccountsList({ accounts, searchTerm, favoritesChecked }: AccountsListProps) {
   const navigate = useNavigate();
 
   const [favorites, setFavorites] = useFavorites();
@@ -67,25 +67,22 @@ function AccountsList({ accounts, filters }: AccountsListProps) {
     [setFavorites, success]
   );
 
-  const filteredAccounts = useMemo(() => {
-    const { searchTerm, favoritesChecked } = filters;
-    return accounts
-      .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
-      .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
-      .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm))
-      .map((account) => {
-        const { uuid } = account;
-        return (
-          <AccountsListItem
-            key={uuid}
-            account={account}
-            isFavorite={favorites.includes(uuid)}
-            onClick={() => navigate(uuid)}
-            onFavoriteClick={() => handleFavoriteClick(uuid)}
-          ></AccountsListItem>
-        );
-      });
-  }, [accounts, favorites, navigate, filters, handleFavoriteClick]);
+  const filteredAccounts = accounts
+    .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
+    .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
+    .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm))
+    .map((account) => {
+      const { uuid } = account;
+      return (
+        <AccountsListItem
+          key={uuid}
+          account={account}
+          isFavorite={favorites.includes(uuid)}
+          onClick={() => navigate(uuid)}
+          onFavoriteClick={() => handleFavoriteClick(uuid)}
+        ></AccountsListItem>
+      );
+    });
 
   return (
     <Stack spacing="xs">

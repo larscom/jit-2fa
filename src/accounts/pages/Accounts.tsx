@@ -3,7 +3,6 @@ import CreateAccountButton from '$accounts/components/CreateAccountButton';
 import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
 import SearchAccount from '$accounts/components/SearchAccount';
 import { useAccounts } from '$accounts/hooks/use-account';
-import { ISearchFilters } from '$accounts/models/search-filters';
 import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, ScrollArea, Text } from '@mantine/core';
 import { useState } from 'react';
@@ -20,16 +19,13 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Accounts() {
-  const [accounts, setAccounts] = useAccounts();
-
-  const [filters, setFilters] = useState<ISearchFilters>({
-    favoritesChecked: false,
-    searchTerm: ''
-  });
-
   const { classes } = useStyles();
 
   const navigate = useNavigate();
+
+  const [accounts, setAccounts] = useAccounts();
+  const [favoritesChecked, setFavoritesChecked] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleCreateAccount = () => navigate('create');
 
@@ -45,17 +41,23 @@ function Accounts() {
   };
 
   const renderAccounts = () => {
+    const accountListProps = {
+      accounts,
+      favoritesChecked,
+      searchTerm
+    };
+
     return (
       <>
         <Group className={classes.actions} position="apart">
-          <SearchAccount onFilterChange={setFilters}></SearchAccount>
+          <SearchAccount onFavoritesChecked={setFavoritesChecked} onInputChange={setSearchTerm}></SearchAccount>
           <Group>
             <CreateAccountButton onClick={handleCreateAccount} />
             <DeleteAccountsButton setAccounts={setAccounts} total={accounts.length} />
           </Group>
         </Group>
         <ScrollArea className={classes.accounts} offsetScrollbars>
-          <AccountsList filters={filters} accounts={accounts} />
+          <AccountsList {...accountListProps} />
         </ScrollArea>
       </>
     );

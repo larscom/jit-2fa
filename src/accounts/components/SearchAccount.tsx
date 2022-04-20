@@ -1,4 +1,3 @@
-import { ISearchFilters } from '$accounts/models/search-filters';
 import { useSessionStorage } from '$core/hooks/use-session-storage';
 import { Group, Input, Switch } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
@@ -6,38 +5,34 @@ import { IconSearch } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 
 interface SearchAccountProps {
-  onFilterChange: (filters: ISearchFilters) => void;
+  onFavoritesChecked: (checked: boolean) => void;
+  onInputChange: (searchTerm: string) => void;
 }
 
-function SearchAccount({ onFilterChange }: SearchAccountProps) {
-  const [{ searchTerm, favoritesChecked }, setSearchFilters] = useSessionStorage<ISearchFilters>({
-    key: 'search-filters',
-    defaultValue: {
-      searchTerm: '',
-      favoritesChecked: false
-    }
+function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps) {
+  const [favoritesChecked, setFavoritesChecked] = useSessionStorage<boolean>({
+    key: 'favorites-checked',
+    defaultValue: false
   });
 
-  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
-  const [debouncedSearchTerm] = useDebouncedValue(localSearchTerm, 200, { leading: true });
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm] = useDebouncedValue(searchTerm, 200, { leading: true });
 
   const [localFavoritesChecked, setLocalFavoritesChecked] = useState(favoritesChecked);
 
   useEffect(() => {
-    const filters = {
-      favoritesChecked: localFavoritesChecked,
-      searchTerm: debouncedSearchTerm
-    };
-    setSearchFilters(filters);
-    onFilterChange(filters);
-  }, [debouncedSearchTerm, localFavoritesChecked, setSearchFilters, onFilterChange]);
+    setFavoritesChecked(localFavoritesChecked);
+    onFavoritesChecked(localFavoritesChecked);
+  }, [localFavoritesChecked, onFavoritesChecked, setFavoritesChecked]);
+
+  useEffect(() => onInputChange(debouncedSearchTerm), [debouncedSearchTerm, onInputChange]);
 
   return (
     <Group grow>
       <Group>
         <Input
-          value={localSearchTerm}
-          onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setLocalSearchTerm(value)}
+          value={searchTerm}
+          onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(value)}
           icon={<IconSearch />}
           placeholder={localFavoritesChecked ? 'Search favorites only...' : 'Search all accounts...'}
           autoFocus
