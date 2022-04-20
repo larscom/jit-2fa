@@ -6,12 +6,14 @@ export function useNotification() {
     success: (message: React.ReactNode) =>
       showNotification({
         message,
+        title: 'Success',
         color: 'teal',
         icon: <CheckIcon />
       }),
     error: (message: React.ReactNode) =>
       showNotification({
         message,
+        title: 'Failed',
         color: 'red',
         icon: <Cross1Icon />
       })

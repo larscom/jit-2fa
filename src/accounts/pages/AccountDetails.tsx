@@ -28,6 +28,8 @@ function AccountDetails() {
 
   if (!account) return null;
 
+  const handleEdit = () => navigate('edit');
+
   const handleDelete = () => {
     modals.openConfirmModal({
       title: 'Are you sure?',
@@ -46,7 +48,7 @@ function AccountDetails() {
 
   return (
     <>
-      <PageTitle title={account.issuer} />
+      <PageTitle title={account.issuer} subtitle={account.label} />
       <Transition mounted={mounted} transition="fade">
         {(style) => (
           <Stack style={style}>
@@ -54,7 +56,7 @@ function AccountDetails() {
               <Button color="red" onClick={handleDelete}>
                 Delete
               </Button>
-              <Button onClick={() => navigate('edit')}>Edit</Button>
+              <Button onClick={handleEdit}>Edit</Button>
             </Group>
           </Stack>
         )}

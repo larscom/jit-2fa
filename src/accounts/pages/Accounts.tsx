@@ -41,12 +41,6 @@ function Accounts() {
   };
 
   const renderAccounts = () => {
-    const accountListProps = {
-      accounts,
-      favoritesChecked,
-      searchTerm
-    };
-
     return (
       <>
         <Group className={classes.actions} position="apart">
@@ -57,7 +51,7 @@ function Accounts() {
           </Group>
         </Group>
         <ScrollArea className={classes.accounts} offsetScrollbars>
-          <AccountsList {...accountListProps} />
+          <AccountsList {...{ accounts, favoritesChecked, searchTerm }} />
         </ScrollArea>
       </>
     );

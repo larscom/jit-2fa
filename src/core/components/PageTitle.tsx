@@ -1,4 +1,4 @@
-import { ActionIcon, createStyles, Group, Title } from '@mantine/core';
+import { ActionIcon, createStyles, Group, Text, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,17 +15,19 @@ const useStyles = createStyles((theme) => ({
 
 interface PageTitleProps {
   title: string;
+  subtitle?: string;
   disablePrevious?: boolean;
 }
 
-function PageTitle({ title, disablePrevious }: PageTitleProps) {
+function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
   const navigate = useNavigate();
 
   const { classes } = useStyles();
 
   const renderTitle = () => (
-    <Title className={classes.title} order={2}>
-      {title}
+    <Title order={2}>
+      <span className={classes.title}>{title}</span>
+      {subtitle && <Text size="xs">{subtitle}</Text>}
     </Title>
   );
 

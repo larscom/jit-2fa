@@ -10,7 +10,7 @@ interface SearchAccountProps {
 }
 
 function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps) {
-  const [favoritesChecked, setFavoritesChecked] = useSessionStorage<boolean>({
+  const [favoritesChecked, setFavoritesChecked] = useSessionStorage({
     key: 'favorites-checked',
     defaultValue: false
   });
@@ -29,12 +29,12 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
 
   return (
     <Group grow>
-      <Group>
+      <Group spacing="xs">
         <Input
           value={searchTerm}
           onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(value)}
           icon={<IconSearch />}
-          placeholder={localFavoritesChecked ? 'Search favorites only...' : 'Search all accounts...'}
+          placeholder={localFavoritesChecked ? 'Search favorites...' : 'Search all...'}
           autoFocus
         />
         <Switch
