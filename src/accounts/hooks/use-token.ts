@@ -17,7 +17,7 @@ export function useToken(account: IAccount) {
     if (timer > 1) return;
     timeoutRef.current = setTimeout(() => {
       setToken(totp.generate());
-    }, 1075);
+    }, 1100);
   }, [timer, totp]);
 
   useEffect(() => () => timeoutRef.current && clearTimeout(timeoutRef.current), []);
