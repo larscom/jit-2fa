@@ -7,9 +7,7 @@ import { useParams } from 'react-router-dom';
 
 function Account() {
   const { uuid } = useParams();
-
   const mounted = useMounted();
-
   const account = useAccount(String(uuid));
 
   return (

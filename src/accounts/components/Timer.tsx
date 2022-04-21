@@ -15,7 +15,6 @@ interface TimerProps {
 
 function Timer({ period, onColorChange }: TimerProps) {
   const timer = useTimer(period);
-
   const color = useMemo(() => getColor(timer), [timer]);
   const value = useMemo(() => calculateValue(timer, period), [timer, period]);
 

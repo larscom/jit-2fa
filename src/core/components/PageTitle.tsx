@@ -1,4 +1,5 @@
 import { ActionIcon, createStyles, Group, Text, Title } from '@mantine/core';
+import { useDocumentTitle } from '@mantine/hooks';
 import { IconArrowLeft } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,9 +21,10 @@ interface PageTitleProps {
 }
 
 function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
-  const navigate = useNavigate();
-
   const { classes } = useStyles();
+  const navigate = useNavigate();
+  
+  useDocumentTitle(`JIT | ${title.toLocaleUpperCase()}`);
 
   const renderTitle = () => (
     <Title order={2}>

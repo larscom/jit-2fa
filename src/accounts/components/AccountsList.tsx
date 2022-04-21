@@ -1,6 +1,7 @@
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
 import { Stack, Text } from '@mantine/core';
+import { useCallback } from 'react';
 import AccountsListItem from './AccountsListItem';
 
 const filterBy = (value: string, searchTerm: string) =>
@@ -43,7 +44,9 @@ interface AccountsListProps {
 }
 
 function AccountsList({ accounts, searchTerm, favoritesChecked }: AccountsListProps) {
-  const [favorites, setFavorites] = useFavorites();
+  const [favorites, _setFavorites] = useFavorites();
+
+  const setFavorites = useCallback(_setFavorites, [_setFavorites]);
 
   const filteredAccounts = accounts
     .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))

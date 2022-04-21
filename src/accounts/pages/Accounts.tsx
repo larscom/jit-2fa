@@ -20,9 +20,7 @@ const useStyles = createStyles((theme) => ({
 
 function Accounts() {
   const { classes } = useStyles();
-
   const navigate = useNavigate();
-
   const [accounts, setAccounts] = useAccounts();
   const [favoritesChecked, setFavoritesChecked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');

@@ -11,7 +11,6 @@ interface TokenProps {
 
 function Token({ account }: TokenProps) {
   const [color, setColor] = useState('teal');
-
   const token = useToken(account);
 
   return (

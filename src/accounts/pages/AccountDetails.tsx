@@ -9,17 +9,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function AccountDetails() {
   const { uuid } = useParams();
-
   const { success } = useNotification();
-
   const [, setAccounts] = useAccounts();
-
   const navigate = useNavigate();
-
   const account = useAccount(String(uuid));
-
   const modals = useModals();
-
   const mounted = useMounted();
 
   useEffect(() => {

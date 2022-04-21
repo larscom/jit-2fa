@@ -14,10 +14,8 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
     key: 'favorites-checked',
     defaultValue: false
   });
-
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm] = useDebouncedValue(searchTerm, 200, { leading: true });
-
   const [localFavoritesChecked, setLocalFavoritesChecked] = useState(favoritesChecked);
 
   useEffect(() => {

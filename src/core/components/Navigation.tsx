@@ -19,9 +19,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Navigation() {
-  const navigate = useNavigate();
-
   const { classes } = useStyles();
+  const navigate = useNavigate();
+  
   return (
     <Navbar width={{ base: 300 }} p="xs">
       <Navbar.Section grow mt="md">

@@ -19,9 +19,7 @@ interface DeleteAccountsButtonProps {
 
 function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps) {
   const { classes } = useStyles();
-
   const { success } = useNotification();
-
   const modals = useModals();
 
   const handleDelete = () => {

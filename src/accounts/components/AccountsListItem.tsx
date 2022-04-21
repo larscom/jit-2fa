@@ -1,8 +1,7 @@
 import { IAccount } from '$accounts/models/account';
-import { ActionIcon, Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
-import { IconStar } from '@tabler/icons';
-import { useCallback } from 'react';
+import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import FavoriteButton from './FavoriteButton';
 import Token from './Token';
 
 const useStyles = createStyles((theme) => ({
@@ -26,7 +25,6 @@ interface AccountsListItemProps {
 
 function AccountsListItem({ account, isFavorite, setFavorites }: AccountsListItemProps) {
   const { classes } = useStyles();
-
   const navigate = useNavigate();
 
   const { uuid } = account;
@@ -36,17 +34,6 @@ function AccountsListItem({ account, isFavorite, setFavorites }: AccountsListIte
 
     navigate(uuid);
   };
-
-  const handleFavoriteClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation();
-
-      setFavorites((favorites) => {
-        return favorites.includes(uuid) ? favorites.filter((favorite) => favorite !== uuid) : [...favorites, uuid];
-      });
-    },
-    [setFavorites, uuid]
-  );
 
   return (
     <Paper
@@ -59,14 +46,7 @@ function AccountsListItem({ account, isFavorite, setFavorites }: AccountsListIte
     >
       <Group spacing="xs" grow>
         <Group spacing="xl" position="left">
-          <ActionIcon
-            size={30}
-            onClick={handleFavoriteClick}
-            color={isFavorite ? 'yellow' : 'gray'}
-            title={isFavorite ? 'Marked as favorite' : 'Make favorite'}
-          >
-            <IconStar size={30} />
-          </ActionIcon>
+          <FavoriteButton account={account} isFavorite={isFavorite} setFavorites={setFavorites} />
           <Stack spacing="xs">
             <Text weight="bold" size="sm">
               Issuer
