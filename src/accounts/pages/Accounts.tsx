@@ -5,7 +5,7 @@ import SearchAccount from '$accounts/components/SearchAccount';
 import { useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, ScrollArea, Text } from '@mantine/core';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -25,6 +25,10 @@ function Accounts() {
   const [favoritesChecked, setFavoritesChecked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const handleInputChange = useCallback((value: string) => setSearchTerm(value), []);
+
+  const handleFavoritesChecked = useCallback((value: boolean) => setFavoritesChecked(value), []);
+
   const handleCreateAccount = () => navigate('create');
 
   const renderNoAccounts = () => {
@@ -42,7 +46,7 @@ function Accounts() {
     return (
       <>
         <Group className={classes.actions} position="apart">
-          <SearchAccount onFavoritesChecked={setFavoritesChecked} onInputChange={setSearchTerm}></SearchAccount>
+          <SearchAccount onFavoritesChecked={handleFavoritesChecked} onInputChange={handleInputChange}></SearchAccount>
           <Group>
             <CreateAccountButton onClick={handleCreateAccount} />
             <DeleteAccountsButton setAccounts={setAccounts} total={accounts.length} />
