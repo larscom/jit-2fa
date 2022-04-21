@@ -1,9 +1,6 @@
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
-import { useNotification } from '$core/hooks/use-notification';
 import { Stack, Text } from '@mantine/core';
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AccountsListItem from './AccountsListItem';
 
 const filterBy = (value: string, searchTerm: string) =>
@@ -46,26 +43,7 @@ interface AccountsListProps {
 }
 
 function AccountsList({ accounts, searchTerm, favoritesChecked }: AccountsListProps) {
-  const navigate = useNavigate();
-
   const [favorites, setFavorites] = useFavorites();
-
-  const { success } = useNotification();
-
-  const handleFavoriteClick = useCallback(
-    (uuid: string) => {
-      setFavorites((favorites) => {
-        if (favorites.includes(uuid)) {
-          success(<Text size="sm">Removed from favorites</Text>);
-          return favorites.filter((favorite) => favorite !== uuid);
-        }
-
-        success(<Text size="sm">Added to favorites</Text>);
-        return [...favorites, uuid];
-      });
-    },
-    [setFavorites, success]
-  );
 
   const filteredAccounts = accounts
     .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
@@ -78,9 +56,8 @@ function AccountsList({ accounts, searchTerm, favoritesChecked }: AccountsListPr
           key={uuid}
           account={account}
           isFavorite={favorites.includes(uuid)}
-          onClick={() => navigate(uuid)}
-          onFavoriteClick={() => handleFavoriteClick(uuid)}
-        ></AccountsListItem>
+          setFavorites={setFavorites}
+        />
       );
     });
 

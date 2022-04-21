@@ -1,6 +1,8 @@
 import { IAccount } from '$accounts/models/account';
 import { ActionIcon, Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
 import { IconStar } from '@tabler/icons';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Token from './Token';
 
 const useStyles = createStyles((theme) => ({
@@ -19,22 +21,32 @@ const useStyles = createStyles((theme) => ({
 interface AccountsListItemProps {
   account: IAccount;
   isFavorite: boolean;
-  onClick: () => void;
-  onFavoriteClick: () => void;
+  setFavorites: (val: string[] | ((prevState: string[]) => string[])) => void;
 }
 
-function AccountsListItem({ account, isFavorite, onClick, onFavoriteClick }: AccountsListItemProps) {
+function AccountsListItem({ account, isFavorite, setFavorites }: AccountsListItemProps) {
   const { classes } = useStyles();
+
+  const navigate = useNavigate();
+
+  const { uuid } = account;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    onClick();
+
+    navigate(uuid);
   };
 
-  const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    onFavoriteClick();
-  };
+  const handleFavoriteClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+
+      setFavorites((favorites) => {
+        return favorites.includes(uuid) ? favorites.filter((favorite) => favorite !== uuid) : [...favorites, uuid];
+      });
+    },
+    [setFavorites, uuid]
+  );
 
   return (
     <Paper
