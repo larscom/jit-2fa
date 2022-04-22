@@ -4,7 +4,8 @@
   "scripts": {
     "start": "npm run dev",
     "test": "exit 0",
-    "dev": "vite",
+    "e2e" : "bash e2e/run.sh",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "explore": "source-map-explorer dist/**/*.js"

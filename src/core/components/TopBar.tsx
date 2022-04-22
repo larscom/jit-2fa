@@ -23,7 +23,7 @@ function TopBar() {
           <ActionIcon title="Navigate to start" onClick={() => navigate('/')}>
             <Icon2fa size={32} />
           </ActionIcon>
-          <Text size="lg">
+          <Text size="lg" id="top-bar-title">
             Just In Time <IconMoodSmile color="white" size={18} />
           </Text>
         </Group>
