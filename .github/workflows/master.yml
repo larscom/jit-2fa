@@ -107,7 +107,7 @@ jobs:
       - name: Download Build
         uses: actions/download-artifact@v2
         with:
-          name: jit-2fa-build
+          name: jit-2fa-app
           path: dist
       - name: Firebase deploy
         uses: w9jds/firebase-action@master
