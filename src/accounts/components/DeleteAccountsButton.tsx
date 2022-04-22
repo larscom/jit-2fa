@@ -1,8 +1,9 @@
-import { IAccount } from '$accounts/models/account';
+import { AccountsContext } from '$accounts/contexts/accounts-context';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, createStyles, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { IconTrash } from '@tabler/icons';
+import { useContext } from 'react';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -12,14 +13,11 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-interface DeleteAccountsButtonProps {
-  total: number;
-  setAccounts: (val: IAccount[] | ((prevState: IAccount[]) => IAccount[])) => void;
-}
-
-function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps) {
+function DeleteAccountsButton() {
   const { classes } = useStyles();
   const { success } = useNotification();
+  const { accounts, setAccounts } = useContext(AccountsContext);
+
   const modals = useModals();
 
   const handleDelete = () => {
@@ -38,7 +36,7 @@ function DeleteAccountsButton({ total, setAccounts }: DeleteAccountsButtonProps)
   return (
     <ActionIcon
       className={classes.root}
-      title={`Delete ${total} accounts`}
+      title={`Delete ${accounts.length} accounts`}
       color="red"
       size={30}
       onClick={handleDelete}

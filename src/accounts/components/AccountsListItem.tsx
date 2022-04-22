@@ -1,5 +1,6 @@
 import { IAccount } from '$accounts/models/account';
 import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import Token from './Token';
@@ -19,20 +20,16 @@ const useStyles = createStyles((theme) => ({
 
 interface AccountsListItemProps {
   account: IAccount;
-  isFavorite: boolean;
-  setFavorites: (val: string[] | ((prevState: string[]) => string[])) => void;
 }
 
-function AccountsListItem({ account, isFavorite, setFavorites }: AccountsListItemProps) {
+function AccountsListItem({ account }: AccountsListItemProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
-
-  const { uuid } = account;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
 
-    navigate(uuid);
+    navigate(account.uuid);
   };
 
   return (
@@ -46,7 +43,7 @@ function AccountsListItem({ account, isFavorite, setFavorites }: AccountsListIte
     >
       <Group spacing="xs" grow>
         <Group spacing="xl" position="left">
-          <FavoriteButton account={account} isFavorite={isFavorite} setFavorites={setFavorites} />
+          <FavoriteButton account={account} />
           <Stack spacing="xs">
             <Text weight="bold" size="sm">
               Issuer
@@ -95,4 +92,4 @@ function AccountsListItem({ account, isFavorite, setFavorites }: AccountsListIte
   );
 }
 
-export default AccountsListItem;
+export default memo(AccountsListItem);

@@ -2,6 +2,7 @@ import AccountsList from '$accounts/components/AccountsList';
 import CreateAccountButton from '$accounts/components/CreateAccountButton';
 import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
 import SearchAccount from '$accounts/components/SearchAccount';
+import { AccountsContextProvider } from '$accounts/contexts/accounts-context';
 import { useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, ScrollArea, Text } from '@mantine/core';
@@ -20,16 +21,17 @@ const useStyles = createStyles((theme) => ({
 
 function Accounts() {
   const { classes } = useStyles();
-  const navigate = useNavigate();
   const [accounts, setAccounts] = useAccounts();
   const [favoritesChecked, setFavoritesChecked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const navigate = useNavigate();
 
   const handleInputChange = useCallback((value: string) => setSearchTerm(value), []);
 
   const handleFavoritesChecked = useCallback((value: boolean) => setFavoritesChecked(value), []);
 
-  const handleCreateAccount = () => navigate('create');
+  const handleCreateAccount = useCallback(() => navigate('create'), [navigate]);
 
   const renderNoAccounts = () => {
     return (
@@ -49,21 +51,21 @@ function Accounts() {
           <SearchAccount onFavoritesChecked={handleFavoritesChecked} onInputChange={handleInputChange}></SearchAccount>
           <Group>
             <CreateAccountButton onClick={handleCreateAccount} />
-            <DeleteAccountsButton setAccounts={setAccounts} total={accounts.length} />
+            <DeleteAccountsButton />
           </Group>
         </Group>
         <ScrollArea className={classes.accounts} offsetScrollbars>
-          <AccountsList {...{ accounts, favoritesChecked, searchTerm }} />
+          <AccountsList />
         </ScrollArea>
       </>
     );
   };
 
   return (
-    <>
+    <AccountsContextProvider value={{ accounts, setAccounts, favoritesChecked, searchTerm }}>
       <PageTitle title="Accounts" disablePrevious />
       {accounts.length ? renderAccounts() : renderNoAccounts()}
-    </>
+    </AccountsContextProvider>
   );
 }
 

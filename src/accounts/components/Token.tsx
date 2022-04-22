@@ -1,7 +1,7 @@
 import { useToken } from '$accounts/hooks/use-token';
 import { IAccount } from '$accounts/models/account';
 import { Group, Stack, Text } from '@mantine/core';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import CopyButton from './CopyButton';
 import Timer from './Timer';
 
@@ -33,4 +33,4 @@ function Token({ account }: TokenProps) {
   );
 }
 
-export default Token;
+export default memo(Token);

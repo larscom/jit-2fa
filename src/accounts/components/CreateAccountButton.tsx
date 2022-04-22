@@ -1,5 +1,6 @@
 import { ActionIcon, createStyles } from '@mantine/core';
 import { IconUserPlus } from '@tabler/icons';
+import { memo } from 'react';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -23,4 +24,4 @@ function CreateAccountButton({ onClick }: CreateAccountButtonProps) {
   );
 }
 
-export default CreateAccountButton;
+export default memo(CreateAccountButton);

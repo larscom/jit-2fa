@@ -2,7 +2,7 @@ import { useSessionStorage } from '$core/hooks/use-session-storage';
 import { Group, Input, Switch } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 interface SearchAccountProps {
   onFavoritesChecked: (checked: boolean) => void;
@@ -46,4 +46,4 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
   );
 }
 
-export default SearchAccount;
+export default memo(SearchAccount);
