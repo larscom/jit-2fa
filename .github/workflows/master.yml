@@ -6,7 +6,7 @@ on:
     tags:
       - 'v*.*.*'
 jobs:
-  build:
+  app:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -18,18 +18,87 @@ jobs:
       - name: Install packages
         run: npm ci --ignore-scripts
       - name: Unit test
-        run: npm run test       
-      - name: Build
+        run: npm run test
+      - name: Build app
         run: npm run build
-      - name: Upload Build
+      - name: Upload app
         uses: actions/upload-artifact@v2
         with:
-          name: jit-2fa-build
+          name: jit-2fa-app
+          path: dist       
+
+  app-docker:
+    needs:
+      - app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Download app
+        uses: actions/download-artifact@v2
+        with:
+          name: jit-2fa-app
           path: dist
+      - name: Setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: jit-2fa:latest
+          outputs: type=docker,dest=/tmp/jit-2fa.tar
+      - name: Upload docker image
+        uses: actions/upload-artifact@v2
+        with:
+          name: jit-2fa
+          path: /tmp/jit-2fa.tar             
+
+  e2e:
+    needs:
+      - app-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Download docker image
+        uses: actions/download-artifact@v2
+        with:
+          name: jit-2fa
+          path: /tmp
+      - name: Load docker image
+        run: |
+          docker load --input /tmp/jit-2fa.tar
+          docker image ls -a
+      - name: Run app container
+        uses: addnab/docker-run-action@v3
+        with:
+          image: jit-2fa:latest
+          docker_network: host
+          options: -p 127.0.0.1:80:80 -d
+          run: nginx -g "daemon off;"
+      - name: Smoke test
+        run: sleep 2 && curl http://127.0.0.1
+      - name: Automated test
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ppodgorsek/robot-framework:3.8.0
+          docker_network: host
+          options: --user=1001:121 -e ROBOT_UID=1001 -e ROBOT_GID=121 -e BASE_URL=http://127.0.0.1 -v ${{ github.workspace }}/e2e/tests:/opt/robotframework/tests -v ${{ github.workspace }}/e2e/reports:/opt/robotframework/reports
+          run: |
+            ls -ltra /opt/robotframework/tests
+            run-tests-in-virtual-screen.sh
+      - name: Upload test reports
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: reports
+          path: ${{ github.workspace }}/e2e/reports
 
   firebase:
     needs:
-      - build    
+      - app
+      - e2e
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:

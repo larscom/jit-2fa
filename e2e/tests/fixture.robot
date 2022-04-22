@@ -1,10 +1,10 @@
 *** Settings ***
-Library     SeleniumLibrary
-Library     OperatingSystem
+Library    SeleniumLibrary
+Library    OperatingSystem
 
 *** Variables ***
 ${BROWSER}            Chrome
-${BASE_URL}           %{BASE_URL=https://jit-2fa.web.app}
+${BASE_URL}           %{BASE_URL}
 ${DEFAULT_TIMEOUT}    2s
 
 *** Keywords ***
@@ -25,6 +25,7 @@ ChromeDriver Setup
     Set Window Size        1920                 1080
 
 Navigate To Home
+    Log                            ${BASE_URL}
     Go To                          ${BASE_URL}
     Wait Until Element Contains    css:div#top-bar-title    Just In Time    ${DEFAULT_TIMEOUT}
 

@@ -5,18 +5,26 @@ if [ -z "$(command -v docker)" ]; then
     exit 1
 fi
 
-if [ -n "$BASE_URL" ]; then
-    echo "=============================================================================="
-    echo "Target URL: $BASE_URL"
-    echo "=============================================================================="
+URL="https://jit-2fa.web.app"
+ROBOT_OPTIONS="-i default"
+
+if [ -n "${1}" ]; then
+    ROBOT_OPTIONS="-i ${1}"
 fi
 
-if [ -z "${1}" ]; then
-    export ROBOT_OPTIONS="-i default"
-else
-    export ROBOT_OPTIONS="-i ${1}"
+if [ -n "$BASE_URL" ]; then
+    URL="${BASE_URL}"
 fi
 
 e2e_dir="$(dirname "$(which "$0")")"
 
-docker run -e ROBOT_OPTIONS="${ROBOT_OPTIONS}" -e BASE_URL="${BASE_URL}" -v $e2e_dir/reports:/opt/robotframework/reports:Z -v $e2e_dir/tests:/opt/robotframework/tests:Z ppodgorsek/robot-framework:3.8.0
+echo "=============================================================================="
+echo "URL: ${URL}"
+echo "OPTIONS: ${ROBOT_OPTIONS}"
+echo "=============================================================================="
+
+docker run -v $e2e_dir/reports:/opt/robotframework/reports:Z \
+    -v $e2e_dir/tests:/opt/robotframework/tests:Z \
+    -e BASE_URL="${URL}" \
+    -e ROBOT_OPTIONS="${ROBOT_OPTIONS}" \
+    ppodgorsek/robot-framework:3.8.0
