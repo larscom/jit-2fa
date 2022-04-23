@@ -13,12 +13,12 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
   const [clicked, setClicked] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
 
-  const isFavorite = favorites.includes(account.uuid);
+  const { uuid } = account;
+  const isFavorite = favorites.includes(uuid);
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
-      const { uuid } = account;
 
       timeoutRef.current && clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
@@ -30,7 +30,7 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
 
       setClicked(true);
     },
-    [setFavorites, account, setClicked]
+    [setFavorites, uuid, setClicked]
   );
 
   useEffect(() => () => timeoutRef.current && clearTimeout(timeoutRef.current), []);
