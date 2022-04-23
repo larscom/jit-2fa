@@ -1,8 +1,11 @@
+import FavoriteButton from '$accounts/components/FavoriteButton';
+import { FavoritesContextProvider } from '$accounts/contexts/favorites-context';
 import { useAccount, useAccounts } from '$accounts/hooks/use-account';
+import { useFavorites } from '$accounts/hooks/use-favorites';
 import PageTitle from '$core/components/PageTitle';
 import { useMounted } from '$core/hooks/use-mounted';
 import { useNotification } from '$core/hooks/use-notification';
-import { Button, Group, Stack, Text, Transition } from '@mantine/core';
+import { Badge, Button, Group, Stack, Text, Transition } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +14,7 @@ function AccountDetails() {
   const { uuid } = useParams();
   const { success } = useNotification();
   const [, setAccounts] = useAccounts();
+  const [favorites, setFavorites] = useFavorites();
   const navigate = useNavigate();
   const account = useAccount(String(uuid));
   const modals = useModals();
@@ -41,12 +45,35 @@ function AccountDetails() {
   };
 
   return (
-    <>
-      <PageTitle title={account.issuer} subtitle={account.label} />
-      <Transition mounted={mounted} transition="fade">
+    <FavoritesContextProvider value={{ favorites, setFavorites }}>
+      <Group spacing="xl">
+        <PageTitle title={account.issuer} subtitle={account.label} />
+        <FavoriteButton account={account} />
+      </Group>
+      <Transition mounted={mounted} transition="pop">
         {(style) => (
           <Stack style={style}>
-            <Group>
+            <Group spacing="xs" noWrap>
+              <Stack spacing="md">
+                <Text weight="bold" size="sm">
+                  Algorithm
+                </Text>
+                <Badge color="violet">{account.algorithm}</Badge>
+              </Stack>
+              <Stack spacing="md">
+                <Text weight="bold" size="sm">
+                  Digits
+                </Text>
+                <Badge color="indigo">{account.digits}</Badge>
+              </Stack>
+              <Stack spacing="md">
+                <Text weight="bold" size="sm">
+                  Period
+                </Text>
+                <Badge color="grape">{account.period}</Badge>
+              </Stack>
+            </Group>
+            <Group noWrap>
               <Button color="red" onClick={handleDelete}>
                 Delete
               </Button>
@@ -55,7 +82,7 @@ function AccountDetails() {
           </Stack>
         )}
       </Transition>
-    </>
+    </FavoritesContextProvider>
   );
 }
 

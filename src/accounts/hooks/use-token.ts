@@ -3,11 +3,8 @@ import { TOTP } from 'otpauth';
 import { useMemo } from 'react';
 import { useTimer } from './use-timer';
 
-const createTotp = ({ issuer, label, algorithm, digits, period, secret }: IAccount) =>
-  new TOTP({ issuer, label, algorithm, digits, period, secret });
-
-export function useToken(account: IAccount) {
-  const totp = useMemo(() => createTotp(account), [account]);
-  const timer = useTimer(account.period);
+export function useToken({ issuer, label, algorithm, digits, period, secret }: IAccount) {
+  const totp = useMemo(() => new TOTP({ issuer, label, algorithm, digits, period, secret }), [secret]);
+  const timer = useTimer(period);
   return useMemo(() => totp.generate(), [timer]);
 }

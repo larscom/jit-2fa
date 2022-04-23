@@ -23,20 +23,20 @@ interface PageTitleProps {
 function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  
+
   useDocumentTitle(`JIT | ${title.toLocaleUpperCase()}`);
 
   const renderTitle = () => (
     <Title order={2}>
       <span className={classes.title}>{title}</span>
-      {subtitle && <Text size="xs">{subtitle}</Text>}
+      {subtitle && <Text size="xs">{subtitle.toLocaleLowerCase()}</Text>}
     </Title>
   );
 
   return disablePrevious ? (
     renderTitle()
   ) : (
-    <Group>
+    <Group spacing="xl">
       <ActionIcon className={classes.previous} onClick={() => navigate(-1)} title="Back to previous">
         <IconArrowLeft />
       </ActionIcon>
