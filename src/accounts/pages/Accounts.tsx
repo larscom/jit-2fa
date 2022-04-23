@@ -28,9 +28,7 @@ function Accounts() {
   const navigate = useNavigate();
 
   const handleInputChange = useCallback((value: string) => setSearchTerm(value), []);
-
   const handleFavoritesChecked = useCallback((value: boolean) => setFavoritesChecked(value), []);
-
   const handleCreateAccount = useCallback(() => navigate('create'), [navigate]);
 
   const renderNoAccounts = () => {

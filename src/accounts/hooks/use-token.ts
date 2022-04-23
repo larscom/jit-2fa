@@ -1,6 +1,6 @@
 import { IAccount } from '$accounts/models/account';
 import { TOTP } from 'otpauth';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTimer } from './use-timer';
 
 const createTotp = ({ issuer, label, algorithm, digits, period, secret }: IAccount) =>
@@ -9,18 +9,9 @@ const createTotp = ({ issuer, label, algorithm, digits, period, secret }: IAccou
 export function useToken(account: IAccount) {
   const totp = useMemo(() => createTotp(account), [account]);
   const [token, setToken] = useState(totp.generate());
-
-  const timeoutRef = useRef<NodeJS.Timeout>();
   const timer = useTimer(account.period);
 
-  useEffect(() => {
-    if (timer > 1) return;
-    timeoutRef.current = setTimeout(() => {
-      setToken(totp.generate());
-    }, 1100);
-  }, [timer, totp]);
-
-  useEffect(() => () => timeoutRef.current && clearTimeout(timeoutRef.current), []);
+  useEffect(() => setToken(totp.generate()), [timer, totp]);
 
   return token;
 }
