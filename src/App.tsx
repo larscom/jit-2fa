@@ -4,7 +4,7 @@ import SuspenseWithoutFallback from '$core/components/SuspenseWithoutFallback';
 import TopBar from '$core/components/TopBar';
 import Page from '$core/pages/Page';
 import { AppShell, ColorScheme, ColorSchemeProvider, Container, MantineProvider } from '@mantine/core';
-import { useLocalStorage } from '@mantine/hooks';
+import { useColorScheme, useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { ModalsProvider } from '@mantine/modals';
 import { NotificationsProvider } from '@mantine/notifications';
 import { lazy } from 'react';
@@ -20,12 +20,16 @@ const Help = lazy(() => import('$help/pages/Help'));
 const toggle = (c: ColorScheme): ColorScheme => (c === 'dark' ? 'light' : 'dark');
 
 function App() {
+  const preferredColorScheme = useColorScheme();
+
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'color-scheme',
-    defaultValue: 'light'
+    defaultValue: preferredColorScheme
   });
 
   const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value ? value : toggle(colorScheme));
+
+  useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>

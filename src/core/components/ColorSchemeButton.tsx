@@ -9,6 +9,7 @@ function ColorSchemeButton() {
   return (
     <ActionIcon
       id="switch-color-scheme"
+      variant='outline'
       color={dark ? 'yellow' : 'gray'}
       title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={() => toggleColorScheme()}

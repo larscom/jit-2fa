@@ -1,15 +1,23 @@
 import { useToken } from '$accounts/hooks/use-token';
 import { IAccount } from '$accounts/models/account';
-import { Group, Stack, Text } from '@mantine/core';
+import { createStyles, Group, Stack, Text } from '@mantine/core';
 import { memo, useCallback, useState } from 'react';
 import CopyButton from './CopyButton';
 import Timer from './Timer';
 
-interface TokenProps {
+const useStyles = createStyles(() => ({
+  token: {
+    width: 75
+  }
+}));
+
+interface TokenGroupProps {
   account: IAccount;
+  fixedWidth?: boolean;
 }
 
-function Token({ account }: TokenProps) {
+function TokenGroup({ account, fixedWidth }: TokenGroupProps) {
+  const { classes } = useStyles();
   const [color, setColor] = useState('teal');
   const token = useToken(account);
 
@@ -20,8 +28,8 @@ function Token({ account }: TokenProps) {
   }, []);
 
   return (
-    <Group spacing="xl">
-      <Stack spacing="xs">
+    <Group noWrap spacing="xl">
+      <Stack classNames={{ root: fixedWidth && classes.token }} spacing="xs">
         <Text weight="bold" size="sm">
           Token
         </Text>
@@ -33,4 +41,4 @@ function Token({ account }: TokenProps) {
   );
 }
 
-export default memo(Token);
+export default memo(TokenGroup);

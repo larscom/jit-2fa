@@ -3,7 +3,7 @@ import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
-import Token from './Token';
+import TokenGroup from './TokenGroup';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -37,7 +37,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
       className={classes.root}
       shadow="xs"
       sx={(theme) => ({
-        border: `0.1rem dashed ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`
+        border: `0.1rem solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`
       })}
       onClick={handleClick}
     >
@@ -85,7 +85,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
         </Group>
 
         <Group position="right">
-          <Token account={account} />
+          <TokenGroup account={account} fixedWidth />
         </Group>
       </Group>
     </Paper>

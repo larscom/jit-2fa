@@ -1,5 +1,5 @@
 import FavoriteButton from '$accounts/components/FavoriteButton';
-import Token from '$accounts/components/Token';
+import TokenGroup from '$accounts/components/TokenGroup';
 import { FavoritesContextProvider } from '$accounts/contexts/favorites-context';
 import { useAccount, useAccounts } from '$accounts/hooks/use-account';
 import { useFavorites } from '$accounts/hooks/use-favorites';
@@ -69,7 +69,7 @@ function AccountDetails() {
                     padding: theme.spacing.xs
                   })}
                 >
-                  <Token account={account}></Token>
+                  <TokenGroup account={account}></TokenGroup>
                 </Paper>
               </Group>
 

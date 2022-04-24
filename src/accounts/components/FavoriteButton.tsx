@@ -1,6 +1,6 @@
 import { FavoritesContext } from '$accounts/contexts/favorites-context';
 import { IAccount } from '$accounts/models/account';
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { IconStar } from '@tabler/icons';
 import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
@@ -11,6 +11,8 @@ interface FavoriteButtonProps {
 function FavoriteButton({ account }: FavoriteButtonProps) {
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const [clicked, setClicked] = useState(false);
+  const { colorScheme } = useMantineColorScheme();
+
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   const { uuid } = account;
@@ -40,8 +42,8 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
     <ActionIcon
       size={iconSize}
       onClick={handleClick}
-      variant={clicked ? 'outline' : 'transparent'}
-      color={isFavorite || clicked ? 'yellow' : 'gray'}
+      variant={clicked ? 'filled' : 'transparent'}
+      color={isFavorite || clicked ? 'yellow' : colorScheme === 'dark' ? 'dark' : 'gray'}
       title={isFavorite ? 'Marked as favorite' : 'Make favorite'}
     >
       <IconStar size={iconSize} />

@@ -5,8 +5,8 @@ function GithubButton() {
   return (
     <ActionIcon
       onClick={() => window.open('https://github.com/larscom/jit-2fa', '_blank')}
-      variant="transparent"
       color="gray"
+      variant='outline'
       title="View source code"
     >
       <IconBrandGithub />
