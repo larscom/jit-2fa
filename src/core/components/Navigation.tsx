@@ -21,14 +21,14 @@ const useStyles = createStyles((theme) => ({
 function Navigation() {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  
+
   return (
     <Navbar width={{ base: 300 }} p="xs">
       <Navbar.Section grow mt="md">
         <UnstyledButton className={`${classes.button} ${useMatch('accounts/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('accounts')}>
             <ThemeIcon color="teal" variant="light">
-              <IconUsers size={30} />
+              <IconUsers />
             </ThemeIcon>
             <Text size="sm">Accounts</Text>
           </Group>
@@ -36,7 +36,7 @@ function Navigation() {
         <UnstyledButton className={`${classes.button} ${useMatch('export/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('export')}>
             <ThemeIcon color="grape" variant="light">
-              <IconFileExport size={30} />
+              <IconFileExport />
             </ThemeIcon>
             <Text size="sm">Export (backup)</Text>
           </Group>
@@ -44,7 +44,7 @@ function Navigation() {
         <UnstyledButton className={`${classes.button} ${useMatch('import/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('import')}>
             <ThemeIcon color="violet" variant="light">
-              <IconFileImport size={30} />
+              <IconFileImport />
             </ThemeIcon>
             <Text size="sm">Import (restore)</Text>
           </Group>
@@ -52,7 +52,7 @@ function Navigation() {
         <UnstyledButton className={`${classes.button} ${useMatch('help/*') ? classes.selected : ''}`}>
           <Group onClick={() => navigate('help')}>
             <ThemeIcon color="indigo" variant="light">
-              <IconHelp size={30} />
+              <IconHelp />
             </ThemeIcon>
             <Text size="sm">Help</Text>
           </Group>

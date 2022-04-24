@@ -15,6 +15,7 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
 
   const { uuid } = account;
   const isFavorite = favorites.includes(uuid);
+  const iconSize = 32;
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,13 +38,13 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
 
   return (
     <ActionIcon
-      size={30}
+      size={iconSize}
       onClick={handleClick}
       variant={clicked ? 'outline' : 'transparent'}
       color={isFavorite || clicked ? 'yellow' : 'gray'}
       title={isFavorite ? 'Marked as favorite' : 'Make favorite'}
     >
-      <IconStar size={30} />
+      <IconStar size={iconSize} />
     </ActionIcon>
   );
 }

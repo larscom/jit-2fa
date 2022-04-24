@@ -9,12 +9,11 @@ function ColorSchemeButton() {
   return (
     <ActionIcon
       id="switch-color-scheme"
-      size={30}
       color={dark ? 'yellow' : 'gray'}
       title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={() => toggleColorScheme()}
     >
-      {dark ? <IconSun size={30} /> : <IconMoon size={30} />}
+      {dark ? <IconSun /> : <IconMoon />}
     </ActionIcon>
   );
 }

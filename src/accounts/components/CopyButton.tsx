@@ -12,6 +12,8 @@ function CopyButton({ value, color }: CopyButtonProps) {
   const clipboard = useClipboard({ timeout: 1000 });
   const { success } = useNotification();
 
+  const iconSize = 38;
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -26,12 +28,12 @@ function CopyButton({ value, color }: CopyButtonProps) {
 
   return (
     <ActionIcon
-      size={34}
+      size={iconSize}
       onClick={handleClick}
       color={clipboard.copied ? 'gray' : color}
       title={`Copy ${value} to clipboard`}
     >
-      <IconCopy size={34} strokeWidth={1} />
+      <IconCopy size={iconSize} strokeWidth={1} />
     </ActionIcon>
   );
 }

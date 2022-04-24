@@ -1,12 +1,14 @@
 import FavoriteButton from '$accounts/components/FavoriteButton';
+import Token from '$accounts/components/Token';
 import { FavoritesContextProvider } from '$accounts/contexts/favorites-context';
 import { useAccount, useAccounts } from '$accounts/hooks/use-account';
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import PageTitle from '$core/components/PageTitle';
 import { useMounted } from '$core/hooks/use-mounted';
 import { useNotification } from '$core/hooks/use-notification';
-import { Badge, Button, Group, Stack, Text, Transition } from '@mantine/core';
+import { ActionIcon, Group, Paper, Stack, Text, Transition } from '@mantine/core';
 import { useModals } from '@mantine/modals';
+import { IconEdit, IconQrcode, IconTrash } from '@tabler/icons';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -53,31 +55,39 @@ function AccountDetails() {
       <Transition mounted={mounted} transition="pop">
         {(style) => (
           <Stack style={style}>
-            <Group spacing="xs" noWrap>
-              <Stack spacing="md">
-                <Text weight="bold" size="sm">
-                  Algorithm
-                </Text>
-                <Badge color="violet">{account.algorithm}</Badge>
-              </Stack>
-              <Stack spacing="md">
-                <Text weight="bold" size="sm">
-                  Digits
-                </Text>
-                <Badge color="indigo">{account.digits}</Badge>
-              </Stack>
-              <Stack spacing="md">
-                <Text weight="bold" size="sm">
-                  Period
-                </Text>
-                <Badge color="grape">{account.period}</Badge>
-              </Stack>
-            </Group>
-            <Group noWrap>
-              <Button color="red" onClick={handleDelete}>
-                Delete
-              </Button>
-              <Button onClick={handleEdit}>Edit</Button>
+            <Group grow direction="column" style={{ maxWidth: 275 }}>
+              <Group grow>
+                <Paper
+                  shadow="xs"
+                  sx={(theme) => ({
+                    border: `0.1rem solid ${
+                      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+                    }`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: theme.spacing.xs
+                  })}
+                >
+                  <Token account={account}></Token>
+                </Paper>
+              </Group>
+
+              <Group
+                sx={(theme) => ({ paddingLeft: theme.spacing.xs, paddingRight: theme.spacing.xs })}
+                position="apart"
+                noWrap
+              >
+                <ActionIcon variant="transparent" color="blue" title="View QR Code">
+                  <IconQrcode />
+                </ActionIcon>
+                <ActionIcon variant="transparent" color="indigo" title="Edit account" onClick={handleEdit}>
+                  <IconEdit />
+                </ActionIcon>
+                <ActionIcon variant="transparent" color="red" title="Delete account" onClick={handleDelete}>
+                  <IconTrash />
+                </ActionIcon>
+              </Group>
             </Group>
           </Stack>
         )}
