@@ -9,7 +9,8 @@ import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, Group, Paper, Stack, Text, Transition } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { IconEdit, IconQrcode, IconTrash } from '@tabler/icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import ReactQrCode from 'react-qr-code';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function AccountDetails() {
@@ -21,6 +22,7 @@ function AccountDetails() {
   const account = useAccount(String(uuid));
   const modals = useModals();
   const mounted = useMounted();
+  const [qr, setQr] = useState(false);
 
   useEffect(() => {
     if (!account) navigate('accounts');
@@ -54,8 +56,28 @@ function AccountDetails() {
       </Group>
       <Transition mounted={mounted} transition="pop">
         {(style) => (
-          <Stack style={style}>
-            <Group grow direction="column" style={{ maxWidth: 275 }}>
+          <Stack style={{ ...style, maxWidth: 275 }}>
+            <Group position="center">
+              <Paper
+                shadow="xs"
+                sx={(theme) => ({
+                  border: `0.1rem dashed ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: theme.colorScheme === 'dark' && qr ? 'white' : 'transparent',
+                  padding: theme.spacing.xs / 2
+                })}
+              >
+                <ReactQrCode
+                  style={{ opacity: qr ? 1.0 : 0.1 }}
+                  size={180}
+                  value={`otpauth://totp/${account.label}?secret=${account.secret}&issuer=${account.issuer}&algorithm=${account.algorithm}&digits=${account.digits}&period=${account.period}`}
+                />
+              </Paper>
+            </Group>
+
+            <Group grow direction="column">
               <Group grow>
                 <Paper
                   shadow="xs"
@@ -78,11 +100,16 @@ function AccountDetails() {
                 position="apart"
                 noWrap
               >
-                <ActionIcon variant="transparent" color="blue" title="View QR Code">
-                  <IconQrcode />
-                </ActionIcon>
                 <ActionIcon variant="transparent" color="indigo" title="Edit account" onClick={handleEdit}>
                   <IconEdit />
+                </ActionIcon>
+                <ActionIcon
+                  variant="transparent"
+                  color={qr ? 'gray' : 'dark'}
+                  title="Show QR Code"
+                  onClick={() => setQr((q) => !q)}
+                >
+                  <IconQrcode />
                 </ActionIcon>
                 <ActionIcon variant="transparent" color="red" title="Delete account" onClick={handleDelete}>
                   <IconTrash />
