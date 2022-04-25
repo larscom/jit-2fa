@@ -1,6 +1,7 @@
 import { ActionIcon, createStyles, Group, Text, Title } from '@mantine/core';
 import { useDocumentTitle } from '@mantine/hooks';
 import { IconArrowLeft } from '@tabler/icons';
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -45,4 +46,4 @@ function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
   );
 }
 
-export default PageTitle;
+export default memo(PageTitle);

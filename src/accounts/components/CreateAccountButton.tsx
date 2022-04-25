@@ -1,6 +1,5 @@
 import { ActionIcon } from '@mantine/core';
 import { IconUserPlus } from '@tabler/icons';
-import { memo } from 'react';
 
 interface CreateAccountButtonProps {
   onClick: () => void;
@@ -14,4 +13,4 @@ function CreateAccountButton({ onClick }: CreateAccountButtonProps) {
   );
 }
 
-export default memo(CreateAccountButton);
+export default CreateAccountButton;

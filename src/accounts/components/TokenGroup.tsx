@@ -1,7 +1,8 @@
+import { memoAccount } from '$accounts/hofs/memo-account';
 import { useToken } from '$accounts/hooks/use-token';
 import { IAccount } from '$accounts/models/account';
 import { createStyles, Group, Stack, Text } from '@mantine/core';
-import { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import CopyButton from './CopyButton';
 import Timer from './Timer';
 
@@ -29,7 +30,7 @@ function TokenGroup({ account, fixedWidth }: TokenGroupProps) {
 
   return (
     <Group noWrap spacing="xl">
-      <Stack classNames={{ root: fixedWidth && classes.token }} spacing="xs">
+      <Stack className={fixedWidth ? classes.token : ''} spacing="xs">
         <Text weight="bold" size="sm">
           Token
         </Text>
@@ -41,4 +42,4 @@ function TokenGroup({ account, fixedWidth }: TokenGroupProps) {
   );
 }
 
-export default memo(TokenGroup);
+export default memoAccount(TokenGroup);

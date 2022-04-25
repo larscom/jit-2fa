@@ -2,6 +2,7 @@ import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, Text } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy } from '@tabler/icons';
+import { memo } from 'react';
 
 interface CopyButtonProps {
   value: string;
@@ -38,4 +39,4 @@ function CopyButton({ value, color }: CopyButtonProps) {
   );
 }
 
-export default CopyButton;
+export default memo(CopyButton);

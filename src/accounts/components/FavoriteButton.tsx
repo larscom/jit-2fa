@@ -1,8 +1,9 @@
-import { FavoritesContext } from '$accounts/contexts/favorites-context';
+import { FavoritesContext } from '$accounts/contexts/favorites';
+import { memoAccount } from '$accounts/hofs/memo-account';
 import { IAccount } from '$accounts/models/account';
 import { ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { IconStar } from '@tabler/icons';
-import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 interface FavoriteButtonProps {
   account: IAccount;
@@ -51,4 +52,4 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
   );
 }
 
-export default memo(FavoriteButton);
+export default memoAccount(FavoriteButton);

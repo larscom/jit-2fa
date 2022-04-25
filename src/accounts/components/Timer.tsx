@@ -1,6 +1,6 @@
 import { useTimer } from '$accounts/hooks/use-timer';
 import { RingProgress, Text } from '@mantine/core';
-import { useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 
 const calculateValue = (count: number, period: number) => {
   return Number(((count / period) * 100).toFixed(2));
@@ -34,4 +34,4 @@ function Timer({ period, onColorChange }: TimerProps) {
   );
 }
 
-export default Timer;
+export default memo(Timer);

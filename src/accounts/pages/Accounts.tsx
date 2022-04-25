@@ -2,7 +2,7 @@ import AccountsList from '$accounts/components/AccountsList';
 import CreateAccountButton from '$accounts/components/CreateAccountButton';
 import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
 import SearchAccount from '$accounts/components/SearchAccount';
-import { AccountsContextProvider } from '$accounts/contexts/accounts-context';
+import { AccountsContextProvider } from '$accounts/contexts/accounts';
 import { useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, ScrollArea, Text } from '@mantine/core';

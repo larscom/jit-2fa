@@ -1,5 +1,5 @@
-import { AccountsContext } from '$accounts/contexts/accounts-context';
-import { FavoritesContextProvider } from '$accounts/contexts/favorites-context';
+import { AccountsContext } from '$accounts/contexts/accounts';
+import { FavoritesContextProvider } from '$accounts/contexts/favorites';
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
 import { Stack, Text } from '@mantine/core';

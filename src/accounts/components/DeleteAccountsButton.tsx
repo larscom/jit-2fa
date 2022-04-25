@@ -1,4 +1,4 @@
-import { AccountsContext } from '$accounts/contexts/accounts-context';
+import { AccountsContext } from '$accounts/contexts/accounts';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';

@@ -1,6 +1,6 @@
+import { memoAccount } from '$accounts/hofs/memo-account';
 import { IAccount } from '$accounts/models/account';
 import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
-import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import TokenGroup from './TokenGroup';
@@ -11,6 +11,7 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     padding: theme.spacing.xs,
+    border: `0.1rem solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`,
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       cursor: 'pointer'
@@ -26,6 +27,8 @@ function AccountsListItem({ account }: AccountsListItemProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
+  const { issuer, label, algorithm, digits, period } = account;
+
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
 
@@ -33,14 +36,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
   };
 
   return (
-    <Paper
-      className={classes.root}
-      shadow="xs"
-      sx={(theme) => ({
-        border: `0.1rem solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`
-      })}
-      onClick={handleClick}
-    >
+    <Paper className={classes.root} shadow="xs" onClick={handleClick}>
       <Group spacing="xs" grow>
         <Group spacing="xl" position="left">
           <FavoriteButton account={account} />
@@ -49,7 +45,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
               Issuer
             </Text>
             <Text transform="capitalize" size="sm">
-              {account.issuer}
+              {issuer}
             </Text>
           </Stack>
         </Group>
@@ -59,7 +55,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
             <Text weight="bold" size="sm">
               Label
             </Text>
-            <Text size="sm">{account.label}</Text>
+            <Text size="sm">{label}</Text>
           </Stack>
 
           <Group spacing="xl" noWrap>
@@ -67,19 +63,19 @@ function AccountsListItem({ account }: AccountsListItemProps) {
               <Text weight="bold" size="sm">
                 Algorithm
               </Text>
-              <Badge color="violet">{account.algorithm}</Badge>
+              <Badge color="violet">{algorithm}</Badge>
             </Stack>
             <Stack spacing="md">
               <Text weight="bold" size="sm">
                 Digits
               </Text>
-              <Badge color="indigo">{account.digits}</Badge>
+              <Badge color="indigo">{digits}</Badge>
             </Stack>
             <Stack spacing="md">
               <Text weight="bold" size="sm">
                 Period
               </Text>
-              <Badge color="grape">{account.period}</Badge>
+              <Badge color="grape">{period}</Badge>
             </Stack>
           </Group>
         </Group>
@@ -92,4 +88,4 @@ function AccountsListItem({ account }: AccountsListItemProps) {
   );
 }
 
-export default memo(AccountsListItem);
+export default memoAccount(AccountsListItem);

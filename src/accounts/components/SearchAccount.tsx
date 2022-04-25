@@ -18,6 +18,8 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
   const [debouncedSearchTerm] = useDebouncedValue(searchTerm, 200, { leading: true });
   const [localFavoritesChecked, setLocalFavoritesChecked] = useState(favoritesChecked);
 
+  const placeholder = localFavoritesChecked ? 'Search favorites...' : 'Search all...';
+
   useEffect(() => {
     setFavoritesChecked(localFavoritesChecked);
     onFavoritesChecked(localFavoritesChecked);
@@ -32,7 +34,8 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
           value={searchTerm}
           onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(value)}
           icon={<IconSearch />}
-          placeholder={localFavoritesChecked ? 'Search favorites...' : 'Search all...'}
+          placeholder={placeholder}
+          aria-label={placeholder}
           autoFocus
         />
         <Switch
