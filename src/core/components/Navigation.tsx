@@ -22,39 +22,44 @@ function Navigation() {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
+  const helpPath = useMatch('help/*');
+  const accountsPath = useMatch('accounts/*');
+  const exportPath = useMatch('export/*');
+  const importPath = useMatch('import/*');
+
   return (
-    <Navbar width={{ base: 300 }} p="xs">
+    <Navbar width={{ base: 275 }} p="xs">
       <Navbar.Section grow mt="md">
-        <UnstyledButton className={`${classes.button} ${useMatch('accounts/*') ? classes.selected : ''}`}>
+        <UnstyledButton className={`${classes.button} ${helpPath ? classes.selected : ''}`}>
+          <Group onClick={() => navigate('help')}>
+            <ThemeIcon color="teal">
+              <IconHelp />
+            </ThemeIcon>
+            <Text size="sm">Help</Text>
+          </Group>
+        </UnstyledButton>
+        <UnstyledButton className={`${classes.button} ${accountsPath ? classes.selected : ''}`}>
           <Group onClick={() => navigate('accounts')}>
-            <ThemeIcon color="teal" variant="light">
+            <ThemeIcon color="orange">
               <IconUsers />
             </ThemeIcon>
             <Text size="sm">Accounts</Text>
           </Group>
         </UnstyledButton>
-        <UnstyledButton className={`${classes.button} ${useMatch('export/*') ? classes.selected : ''}`}>
+        <UnstyledButton className={`${classes.button} ${exportPath ? classes.selected : ''}`}>
           <Group onClick={() => navigate('export')}>
-            <ThemeIcon color="grape" variant="light">
+            <ThemeIcon color="grape">
               <IconFileExport />
             </ThemeIcon>
             <Text size="sm">Export (backup)</Text>
           </Group>
         </UnstyledButton>
-        <UnstyledButton className={`${classes.button} ${useMatch('import/*') ? classes.selected : ''}`}>
+        <UnstyledButton className={`${classes.button} ${importPath ? classes.selected : ''}`}>
           <Group onClick={() => navigate('import')}>
-            <ThemeIcon color="violet" variant="light">
+            <ThemeIcon color="violet">
               <IconFileImport />
             </ThemeIcon>
             <Text size="sm">Import (restore)</Text>
-          </Group>
-        </UnstyledButton>
-        <UnstyledButton className={`${classes.button} ${useMatch('help/*') ? classes.selected : ''}`}>
-          <Group onClick={() => navigate('help')}>
-            <ThemeIcon color="indigo" variant="light">
-              <IconHelp />
-            </ThemeIcon>
-            <Text size="sm">Help</Text>
           </Group>
         </UnstyledButton>
       </Navbar.Section>

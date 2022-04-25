@@ -108,14 +108,14 @@ function AccountForm({ account, style }: AccountFormProps) {
             required
             placeholder="Issuer"
             label="Issuer"
-            description="Name of the service that hands out the secret"
+            description="Name of the application that hands out the secret"
             {...form.getInputProps('issuer')}
           />
           <TextInput
             required
             placeholder="Label"
             label="Label"
-            description="This could be your username"
+            description="Something like a username or nickname"
             {...form.getInputProps('label')}
           />
           <PasswordInput
