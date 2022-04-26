@@ -23,7 +23,7 @@ echo "URL: ${URL}"
 echo "OPTIONS: ${ROBOT_OPTIONS}"
 echo "=============================================================================="
 
-docker run -v $e2e_dir/reports:/opt/robotframework/reports:Z \
+docker run --rm -v $e2e_dir/reports:/opt/robotframework/reports:Z \
     -v $e2e_dir/tests:/opt/robotframework/tests:Z \
     -e BASE_URL="${URL}" \
     -e ROBOT_OPTIONS="${ROBOT_OPTIONS}" \

@@ -7,11 +7,22 @@ import { useAccount } from '$accounts/hooks/use-account';
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import PageTitle from '$core/components/PageTitle';
 import { useMounted } from '$core/hooks/use-mounted';
-import { Group, Paper, Stack, Transition } from '@mantine/core';
+import { createStyles, Group, Paper, Stack, Transition } from '@mantine/core';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+const useStyles = createStyles((theme) => ({
+  tokenGroup: {
+    border: `0.1rem solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: theme.spacing.xs
+  }
+}));
+
 function AccountDetails() {
+  const { classes } = useStyles();
   const [favorites, setFavorites] = useFavorites();
   const { uuid } = useParams();
   const account = useAccount(String(uuid));
@@ -38,16 +49,7 @@ function AccountDetails() {
             </Group>
 
             <Group grow direction="column">
-              <Paper
-                shadow="xs"
-                sx={(theme) => ({
-                  border: `0.1rem solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: theme.spacing.xs
-                })}
-              >
+              <Paper className={classes.tokenGroup} shadow="xs">
                 <TokenGroup account={account}></TokenGroup>
               </Paper>
 
