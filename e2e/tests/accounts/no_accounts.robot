@@ -25,7 +25,6 @@ Navigate To Accounts Page
 
     Should Show Message About Having No Accounts
 
-
 Create New Account For First Time
     [Tags]    default    accounts    no_accounts
 
@@ -42,8 +41,9 @@ Validate Newly Created Account
 
     Should Be On Accounts Page    
 
-    Validate Account Card    
+    Should Have 1 Account Cards
 
+    Validate Account Card    
 
 *** Keywords ***
 Validate Account Card

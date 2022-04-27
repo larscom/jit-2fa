@@ -37,7 +37,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
   };
 
   return (
-    <Paper className={classes.root} shadow="xs" onClick={handleClick}>
+    <Paper id="account" className={classes.root} shadow="xs" onClick={handleClick}>
       <Group spacing="xs" grow>
         <Group spacing="xl" position="left">
           <FavoriteButton account={account} />
