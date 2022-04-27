@@ -40,6 +40,6 @@ Toggle Color Scheme
 Should Have Color Scheme
     [Arguments]    ${colorScheme}
 
-    ${style}=                     Get CSS Property Value    class:mantine-AppShell-main    background-color
+    ${style}=                     Get CSS Property Value    ${CSS_MAIN_CONTENT}    background-color
     Log                           ${style}
     Should Be Equal As Strings    ${style}                  ${colorScheme}

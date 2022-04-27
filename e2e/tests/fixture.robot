@@ -3,6 +3,8 @@ Library    SeleniumLibrary
 Library    OperatingSystem
 Library    String
 
+Resource    ./css_selectors.robot
+
 *** Variables ***
 ${BROWSER}            Chrome
 ${GITHUB_SOURCE}      https://github.com/larscom/jit-2fa
@@ -32,8 +34,8 @@ Navigate To Home
     Wait Until Element Contains    css:div#top-bar-title    Just In Time    ${DEFAULT_TIMEOUT}
 
 Get CSS Property Value
-    [Arguments]    ${locator}    ${property_name}
+    [Arguments]    ${locator}    ${propertyName}
 
     ${css}=      Get WebElement    ${locator}
-    ${value}=    Call Method       ${css}        value_of_css_property    ${property_name}
+    ${value}=    Call Method       ${css}        value_of_css_property    ${propertyName}
     [Return]     ${value}          

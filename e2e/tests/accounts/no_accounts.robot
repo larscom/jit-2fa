@@ -47,39 +47,39 @@ Validate Newly Created Account
 
 *** Keywords ***
 Validate Account Card
-    Element Text Should Be         css:.mantine-AppShell-main #issuer       ${issuer}    
-    Element Text Should Be         css:.mantine-AppShell-main #label        ${label}     
-    Element Text Should Be         css:.mantine-AppShell-main #algorithm    SHA1
-    Element Text Should Be         css:.mantine-AppShell-main #digits       6
-    Element Text Should Be         css:.mantine-AppShell-main #period       30
-    Page Should Contain Element    css:.mantine-AppShell-main #copy
+    Element Text Should Be         ${CSS_MAIN_CONTENT} #issuer       ${issuer}    
+    Element Text Should Be         ${CSS_MAIN_CONTENT} #label        ${label}     
+    Element Text Should Be         ${CSS_MAIN_CONTENT} #algorithm    SHA1
+    Element Text Should Be         ${CSS_MAIN_CONTENT} #digits       6
+    Element Text Should Be         ${CSS_MAIN_CONTENT} #period       30
+    Page Should Contain Element    ${CSS_MAIN_CONTENT} #copy
     Validate Generated Token       
 
 Validate Generated Token
-    ${token}=         Get Text              css:.mantine-AppShell-main #token    
-    ${match}=         Get Regexp Matches    ${token}                             ^[0-9]{6}$
+    ${token}=         Get Text              ${CSS_MAIN_CONTENT} #token    
+    ${match}=         Get Regexp Matches    ${token}                      ^[0-9]{6}$
     Should Be True    ${match}
 
 Click Create Button
-    Click Element    css:.mantine-AppShell-main #submit-account
+    Click Element    ${CSS_MAIN_CONTENT} #submit-account
 
 Fill Required Fields
-    Input Text    css:.mantine-AppShell-main #issuer    ${issuer} 
-    Input Text    css:.mantine-AppShell-main #label     ${label}
-    Input Text    css:.mantine-AppShell-main #secret    ABTB4P3DIO2YWXP6Y6H5B2KIMDZDY
+    Input Text    ${CSS_MAIN_CONTENT} #issuer    ${issuer} 
+    Input Text    ${CSS_MAIN_CONTENT} #label     ${label}
+    Input Text    ${CSS_MAIN_CONTENT} #secret    ABTB4P3DIO2YWXP6Y6H5B2KIMDZDY
 
 Click Accounts In Menu
-    ${accountsButton}=                  Set Variable         css:.mantine-Navbar-root #accounts-nav 
+    ${accountsButton}=                  Set Variable         ${CSS_MAIN_NAVIGATION} #accounts-nav 
     Wait Until Page Contains Element    ${accountsButton}    ${DEFAULT_TIMEOUT}
     Click Element                       ${accountsButton}
 
 Should Be On ${page} Page
-    Wait Until Element Contains    css:.mantine-AppShell-main #page-title    ${page}    ${DEFAULT_TIMEOUT}
+    Wait Until Element Contains    ${CSS_MAIN_CONTENT} #page-title    ${page}    ${DEFAULT_TIMEOUT}
 
 Should Show Message About Having No Accounts
-    Element Text Should Be    css:.mantine-AppShell-main #no-accounts-message    You don't have any account yet...    
+    Element Text Should Be    ${CSS_MAIN_CONTENT} #no-accounts-message    You don't have any account yet...    
 
 Click Create Account Button
-    ${createAccountButton}=        Set Variable              css:.mantine-AppShell-main #create-account
+    ${createAccountButton}=        Set Variable              ${CSS_MAIN_CONTENT} #create-account
     Page Should Contain Element    ${createAccountButton}
     Click Element                  ${createAccountButton}
