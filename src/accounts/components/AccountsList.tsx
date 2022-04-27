@@ -22,7 +22,7 @@ const paginate = (accounts: IAccount[], pageSize: number, pageNumber: number) =>
 };
 
 const filterBy = (value: string, searchTerm: string) =>
-  Boolean(value) && value.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
+  value.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
 
 const sortAccounts = (
   { issuer: issuerA, uuid: uuidA }: IAccount,

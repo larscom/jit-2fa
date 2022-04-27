@@ -1,8 +1,7 @@
 import { useSessionStorage } from '$core/hooks/use-session-storage';
 import { Group, Input, Switch } from '@mantine/core';
-import { useDebouncedValue } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons';
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useTransition } from 'react';
 
 interface SearchAccountProps {
   onFavoritesChecked: (checked: boolean) => void;
@@ -14,37 +13,43 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
     key: 'favorites-checked',
     defaultValue: false
   });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm] = useDebouncedValue(searchTerm, 200, { leading: true });
-  const [localFavoritesChecked, setLocalFavoritesChecked] = useState(favoritesChecked);
 
-  const placeholder = localFavoritesChecked ? 'Search favorites...' : 'Search all...';
+  const startTransition = useTransition()[1];
 
-  useEffect(() => {
-    setFavoritesChecked(localFavoritesChecked);
-    onFavoritesChecked(localFavoritesChecked);
-  }, [localFavoritesChecked, onFavoritesChecked, setFavoritesChecked]);
+  const placeholder = favoritesChecked ? 'Search favorites...' : 'Search all...';
 
-  useEffect(() => onInputChange(debouncedSearchTerm), [debouncedSearchTerm, onInputChange]);
+  const handleSearchChange = useCallback(
+    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      startTransition(() => onInputChange(value));
+    },
+    [startTransition, onInputChange]
+  );
+
+  const handleFavoritesChange = useCallback(
+    ({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) => {
+      setFavoritesChecked(checked);
+      onFavoritesChecked(checked);
+    },
+    [setFavoritesChecked, onFavoritesChecked]
+  );
 
   return (
     <Group grow>
       <Group spacing="xs">
         <Input
+          autoFocus
           id="search-term"
-          value={searchTerm}
-          onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(value)}
           icon={<IconSearch />}
           placeholder={placeholder}
           aria-label={placeholder}
-          autoFocus
+          onChange={handleSearchChange}
         />
         <Switch
           id="switch-favorites"
           label="Favorites"
           aria-label="Favorites"
-          checked={localFavoritesChecked}
-          onChange={({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) => setLocalFavoritesChecked(checked)}
+          checked={favoritesChecked}
+          onChange={handleFavoritesChange}
         />
       </Group>
     </Group>
