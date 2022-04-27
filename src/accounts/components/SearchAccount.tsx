@@ -19,9 +19,7 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
   const placeholder = favoritesChecked ? 'Search favorites...' : 'Search all...';
 
   const handleSearchChange = useCallback(
-    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-      startTransition(() => onInputChange(value));
-    },
+    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => startTransition(() => onInputChange(value)),
     [startTransition, onInputChange]
   );
 

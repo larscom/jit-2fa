@@ -12,11 +12,6 @@ const useStyles = createStyles(() => ({
   }
 }));
 
-const calculateTotalPages = (accounts: IAccount[], pageSize: number) => {
-  const total = accounts.length / pageSize;
-  return Number.isInteger(total) ? total : total + 1;
-};
-
 const paginate = (accounts: IAccount[], pageSize: number, pageNumber: number) => {
   return accounts.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
 };
@@ -65,7 +60,7 @@ function AccountsList() {
     .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
     .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm));
 
-  const totalPages = useMemo(() => calculateTotalPages(filteredAccounts, pageSize), [filteredAccounts]);
+  const totalPages = Math.ceil(filteredAccounts.length / pageSize);
 
   const paginatedAccounts = useMemo(
     () => paginate(filteredAccounts, pageSize, pageNumber),
@@ -85,7 +80,7 @@ function AccountsList() {
           )}
         </Stack>
       </ScrollArea>
-      <Pagination page={pageNumber} onChange={setPageNumber} total={totalPages} withEdges />
+      {totalPages > 1 && <Pagination page={pageNumber} onChange={setPageNumber} total={totalPages} withEdges />}
     </FavoritesContextProvider>
   );
 }

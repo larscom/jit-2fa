@@ -29,7 +29,7 @@ function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
   useDocumentTitle(`JIT | ${title.toLocaleUpperCase()}`);
 
   const renderTitle = () => (
-    <Title order={2}>
+    <Title id="page-title" order={2}>
       <span className={classes.title}>{title}</span>
       {subtitle && <Text size="xs">{subtitle.toLocaleLowerCase()}</Text>}
     </Title>

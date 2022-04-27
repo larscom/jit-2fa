@@ -1,15 +1,19 @@
 *** Settings ***
+Metadata    Executed At    ${BASE_URL}
+Metadata    Source Code    ${GITHUB_SOURCE} 
+
 Suite Setup       Suite Setup
 Suite Teardown    Suite Teardown
-Resource          fixture.robot
+
+Resource    ./fixture.robot
 
 *** Variables ***
 ${lightTheme}    rgba(248, 249, 250, 1)
 ${darkTheme}     rgba(20, 21, 23, 1)       
 
 *** Test Cases ***
-Switch between light and dark theme and persist through page reload
-    [Tags]    default    header
+Switch Between Light And Dark Theme
+    [Tags]    default    header    theme
 
     Navigate To Home
 
@@ -29,9 +33,9 @@ Switch between light and dark theme and persist through page reload
 
 *** Keywords ***
 Toggle Color Scheme
-    ${colorSchemeButton}=               Set Variable            css:button#switch-color-scheme 
-    Wait Until Page Contains Element    ${colorSchemeButton}    ${DEFAULT_TIMEOUT}
-    Click Element                       ${colorSchemeButton}    
+    ${colorSchemeButton}=          Set Variable            css:button#switch-color-scheme 
+    Page Should Contain Element    ${colorSchemeButton}    
+    Click Element                  ${colorSchemeButton}    
 
 Should Have Color Scheme
     [Arguments]    ${colorScheme}

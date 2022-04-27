@@ -30,9 +30,11 @@ function Accounts() {
   const renderNoAccounts = () => {
     return (
       <>
-        <Text>You don't have any account yet...</Text>
+        <Text id="no-accounts-message">You don't have any account yet...</Text>
         <Group>
-          <Button onClick={handleCreateAccount}>Create account</Button>
+          <Button id="create-account" onClick={handleCreateAccount}>
+            Create account
+          </Button>
         </Group>
       </>
     );

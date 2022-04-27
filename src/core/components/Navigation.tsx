@@ -32,7 +32,7 @@ function Navigation() {
     <Navbar width={{ base: 275 }} p="xs">
       <Navbar.Section grow mt="md">
         <UnstyledButton className={`${classes.button} ${helpPath ? classes.selected : ''}`}>
-          <Group onClick={() => navigate('help')}>
+          <Group id="help-nav" onClick={() => navigate('help')}>
             <ThemeIcon color="teal">
               <IconHelp />
             </ThemeIcon>
@@ -40,7 +40,7 @@ function Navigation() {
           </Group>
         </UnstyledButton>
         <UnstyledButton className={`${classes.button} ${accountsPath ? classes.selected : ''}`}>
-          <Group onClick={() => navigate('accounts')}>
+          <Group id="accounts-nav" onClick={() => navigate('accounts')}>
             <ThemeIcon color="orange">
               <IconUsers />
             </ThemeIcon>
@@ -48,7 +48,7 @@ function Navigation() {
           </Group>
         </UnstyledButton>
         <UnstyledButton className={`${classes.button} ${exportPath ? classes.selected : ''}`}>
-          <Group onClick={() => navigate('export')}>
+          <Group id="export-nav" onClick={() => navigate('export')}>
             <ThemeIcon color="grape">
               <IconFileExport />
             </ThemeIcon>
@@ -56,7 +56,7 @@ function Navigation() {
           </Group>
         </UnstyledButton>
         <UnstyledButton className={`${classes.button} ${importPath ? classes.selected : ''}`}>
-          <Group onClick={() => navigate('import')}>
+          <Group id="import-nav" onClick={() => navigate('import')}>
             <ThemeIcon color="violet">
               <IconFileImport />
             </ThemeIcon>
