@@ -28,6 +28,7 @@ const useStyles = createStyles((theme) => ({
     maxWidth: theme.breakpoints.xs / 1.9
   }
 }));
+
 interface AccountFormProps {
   account?: IAccount;
   style: React.CSSProperties;
@@ -164,7 +165,9 @@ function AccountForm({ account, style }: AccountFormProps) {
           </InputWrapper>
         </Stack>
         <Group position="right">
-          <Button type="submit">{account ? 'Save' : 'Create'}</Button>
+          <Button id="submit-account" type="submit">
+            {account ? 'Save' : 'Create'}
+          </Button>
         </Group>
       </form>
     </Group>

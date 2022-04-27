@@ -1,4 +1,4 @@
-import { memoAccount } from '$accounts/hofs/memo-account';
+import { memoAccount } from '$accounts/memo-account';
 import { useToken } from '$accounts/hooks/use-token';
 import { IAccount } from '$accounts/models/account';
 import { createStyles, Group, Stack, Text } from '@mantine/core';
@@ -34,7 +34,9 @@ function TokenGroup({ account, fixedWidth }: TokenGroupProps) {
         <Text weight="bold" size="sm">
           Token
         </Text>
-        <Text size="sm">{token}</Text>
+        <Text id="token" size="sm">
+          {token}
+        </Text>
       </Stack>
       <Timer period={period} onColorChange={handleColorChange} />
       <CopyButton color={color} value={token} />

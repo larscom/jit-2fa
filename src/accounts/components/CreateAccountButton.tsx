@@ -7,7 +7,7 @@ interface CreateAccountButtonProps {
 
 function CreateAccountButton({ onClick }: CreateAccountButtonProps) {
   return (
-    <ActionIcon onClick={onClick} title="Create new account" color="teal">
+    <ActionIcon id="create-account" onClick={onClick} title="Create new account" color="teal">
       <IconUserPlus />
     </ActionIcon>
   );

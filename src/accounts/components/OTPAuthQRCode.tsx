@@ -1,4 +1,4 @@
-import { memoAccount } from '$accounts/hofs/memo-account';
+import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
 import { createStyles, Paper } from '@mantine/core';
 import { useState } from 'react';
@@ -37,12 +37,13 @@ function OTPAuthQRCode({ account: { label, secret, issuer, algorithm, digits, pe
 
   return (
     <Paper
-      className={classes.root}
+      id="qr-code-container"
       shadow="xs"
+      className={classes.root}
       sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' && visible ? 'white' : 'transparent' })}
       onClick={handleClick}
     >
-      <QRCode style={{ opacity: visible ? 1.0 : 0.1 }} size={180} value={value} />
+      <QRCode id="qr-code" style={{ opacity: visible ? 1.0 : 0.1 }} size={180} value={value} />
     </Paper>
   );
 }

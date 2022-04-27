@@ -1,7 +1,7 @@
 import { FavoritesContext } from '$accounts/contexts/favorites';
-import { memoAccount } from '$accounts/hofs/memo-account';
+import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
-import { ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { ActionIcon, useMantineTheme } from '@mantine/core';
 import { IconStar } from '@tabler/icons';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
@@ -12,17 +12,20 @@ interface FavoriteButtonProps {
 function FavoriteButton({ account }: FavoriteButtonProps) {
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const [clicked, setClicked] = useState(false);
-  const { colorScheme } = useMantineColorScheme();
+  const { colorScheme, colors } = useMantineTheme();
 
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   const { uuid } = account;
   const isFavorite = favorites.includes(uuid);
+  const isActive = isFavorite || clicked;
   const iconSize = 32;
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
+
+      setClicked(true);
 
       timeoutRef.current && clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
@@ -31,8 +34,6 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
         });
         setClicked(false);
       }, 150);
-
-      setClicked(true);
     },
     [setFavorites, uuid, setClicked]
   );
@@ -41,13 +42,16 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
 
   return (
     <ActionIcon
+      variant="transparent"
       size={iconSize}
       onClick={handleClick}
-      variant={clicked ? 'filled' : 'transparent'}
-      color={isFavorite || clicked ? 'yellow' : colorScheme === 'dark' ? 'dark' : 'gray'}
-      title={isFavorite ? 'Marked as favorite' : 'Make favorite'}
+      color={isActive ? 'yellow' : colorScheme === 'dark' ? 'dark' : 'gray'}
+      title={isActive ? 'Marked as favorite' : 'Make favorite'}
     >
-      <IconStar size={iconSize} />
+      <IconStar
+        fill={isActive ? (colorScheme === 'dark' ? colors.yellow[6] : colors.yellow[3]) : 'none'}
+        size={iconSize}
+      />
     </ActionIcon>
   );
 }

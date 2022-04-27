@@ -25,7 +25,7 @@ function DeleteAccountsButton() {
   };
 
   return (
-    <ActionIcon title={`Delete ${accounts.length} accounts`} color="red" onClick={handleDelete}>
+    <ActionIcon id="delete-accounts" title={`Delete ${accounts.length} accounts`} color="red" onClick={handleDelete}>
       <IconTrash />
     </ActionIcon>
   );

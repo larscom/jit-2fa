@@ -31,6 +31,7 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
     <Group grow>
       <Group spacing="xs">
         <Input
+          id="search-term"
           value={searchTerm}
           onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(value)}
           icon={<IconSearch />}
@@ -39,6 +40,7 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
           autoFocus
         />
         <Switch
+          id="switch-favorites"
           label="Favorites"
           aria-label="Favorites"
           checked={localFavoritesChecked}

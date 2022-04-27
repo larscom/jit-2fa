@@ -1,4 +1,4 @@
-import { memoAccount } from '$accounts/hofs/memo-account';
+import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
 import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +44,7 @@ function AccountsListItem({ account }: AccountsListItemProps) {
             <Text weight="bold" size="sm">
               Issuer
             </Text>
-            <Text transform="capitalize" size="sm">
+            <Text id="issuer" transform="capitalize" size="sm">
               {issuer}
             </Text>
           </Stack>
@@ -55,7 +55,9 @@ function AccountsListItem({ account }: AccountsListItemProps) {
             <Text weight="bold" size="sm">
               Label
             </Text>
-            <Text size="sm">{label}</Text>
+            <Text id="label" size="sm">
+              {label}
+            </Text>
           </Stack>
 
           <Group spacing="xl" noWrap>
@@ -63,19 +65,25 @@ function AccountsListItem({ account }: AccountsListItemProps) {
               <Text weight="bold" size="sm">
                 Algorithm
               </Text>
-              <Badge color="violet">{algorithm}</Badge>
+              <Badge id="algorithm" color="violet">
+                {algorithm}
+              </Badge>
             </Stack>
             <Stack spacing="md">
               <Text weight="bold" size="sm">
                 Digits
               </Text>
-              <Badge color="indigo">{digits}</Badge>
+              <Badge id="digits" color="indigo">
+                {digits}
+              </Badge>
             </Stack>
             <Stack spacing="md">
               <Text weight="bold" size="sm">
                 Period
               </Text>
-              <Badge color="grape">{period}</Badge>
+              <Badge id="period" color="grape">
+                {period}
+              </Badge>
             </Stack>
           </Group>
         </Group>

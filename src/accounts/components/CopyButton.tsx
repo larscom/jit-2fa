@@ -29,6 +29,7 @@ function CopyButton({ value, color }: CopyButtonProps) {
 
   return (
     <ActionIcon
+      id="copy"
       size={iconSize}
       onClick={handleClick}
       color={clipboard.copied ? 'gray' : color}

@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
+  container: {
+    maxWidth: 275
+  },
   tokenGroup: {
     border: `0.1rem solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}`,
     display: 'flex',
@@ -43,16 +46,14 @@ function AccountDetails() {
       </Group>
       <Transition mounted={mounted} transition="pop">
         {(style) => (
-          <Stack style={{ ...style, maxWidth: 275 }}>
+          <Stack className={classes.container} style={style}>
             <Group position="center">
               <OTPAuthQRCode account={account} />
             </Group>
-
             <Group grow direction="column">
               <Paper className={classes.tokenGroup} shadow="xs">
                 <TokenGroup account={account}></TokenGroup>
               </Paper>
-
               <AccountDetailsActions account={account} />
             </Group>
           </Stack>

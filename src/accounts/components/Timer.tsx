@@ -26,7 +26,7 @@ function Timer({ period, onColorChange }: TimerProps) {
       thickness={4}
       sections={[{ value, color }]}
       label={
-        <Text color={color} weight={700} align="center" size="md">
+        <Text id="timer" color={color} weight={700} align="center" size="md">
           {timer}
         </Text>
       }

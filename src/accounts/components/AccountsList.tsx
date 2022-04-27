@@ -49,7 +49,13 @@ function AccountsList() {
   return (
     <FavoritesContextProvider value={{ favorites, setFavorites }}>
       <Stack spacing="xs">
-        {filteredAccounts.length ? filteredAccounts : <Text size="sm">No accounts found...</Text>}
+        {filteredAccounts.length ? (
+          filteredAccounts
+        ) : (
+          <Text id="no-accounts-found" size="sm">
+            No accounts found...
+          </Text>
+        )}
       </Stack>
     </FavoritesContextProvider>
   );
