@@ -1,8 +1,8 @@
-import { memoAccount } from '$accounts/memo-account';
 import { useToken } from '$accounts/hooks/use-token';
+import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
 import { createStyles, Group, Stack, Text } from '@mantine/core';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import CopyButton from './CopyButton';
 import Timer from './Timer';
 
@@ -25,10 +25,6 @@ function TokenGroup({ account, fixedWidth }: TokenGroupProps) {
 
   const { period } = account;
 
-  const handleColorChange = useCallback((value: string) => {
-    setColor(value);
-  }, []);
-
   return (
     <Group noWrap spacing="xl">
       <Stack className={fixedWidth ? classes.token : ''} spacing="xs">
@@ -39,7 +35,7 @@ function TokenGroup({ account, fixedWidth }: TokenGroupProps) {
           {token}
         </Text>
       </Stack>
-      <Timer period={period} onColorChange={handleColorChange} />
+      <Timer period={period} onColorChange={setColor} />
       <CopyButton color={color} value={token} />
     </Group>
   );

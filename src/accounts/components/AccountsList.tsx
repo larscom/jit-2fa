@@ -3,7 +3,7 @@ import { FavoritesContextProvider } from '$accounts/contexts/favorites';
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
 import { createStyles, Pagination, ScrollArea, Stack, Text } from '@mantine/core';
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import AccountsListItem from './AccountsListItem';
 
 const useStyles = createStyles(() => ({
@@ -65,18 +65,19 @@ function AccountsList() {
     .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
     .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm));
 
-  const totalPages = calculateTotalPages(filteredAccounts, pageSize);
+  const totalPages = useMemo(() => calculateTotalPages(filteredAccounts, pageSize), [filteredAccounts]);
 
-  const accountListItems = paginate(filteredAccounts, pageSize, pageNumber).map((account) => (
-    <AccountsListItem key={account.uuid} account={account} />
-  ));
+  const paginatedAccounts = useMemo(
+    () => paginate(filteredAccounts, pageSize, pageNumber),
+    [filteredAccounts, pageNumber]
+  );
 
   return (
     <FavoritesContextProvider value={{ favorites, setFavorites }}>
       <ScrollArea className={classes.root} offsetScrollbars>
         <Stack spacing="xs">
-          {accountListItems.length ? (
-            accountListItems
+          {paginatedAccounts.length ? (
+            paginatedAccounts.map((account) => <AccountsListItem key={account.uuid} account={account} />)
           ) : (
             <Text id="no-accounts-found" size="sm">
               No accounts found...

@@ -6,7 +6,7 @@ import { AccountsContextProvider } from '$accounts/contexts/accounts';
 import { useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, Text } from '@mantine/core';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -25,9 +25,7 @@ function Accounts() {
 
   const navigate = useNavigate();
 
-  const handleInputChange = useCallback((value: string) => setSearchTerm(value), []);
-  const handleFavoritesChecked = useCallback((value: boolean) => setFavoritesChecked(value), []);
-  const handleCreateAccount = useCallback(() => navigate('create'), [navigate]);
+  const handleCreateAccount = () => navigate('create');
 
   const renderNoAccounts = () => {
     return (
@@ -44,7 +42,7 @@ function Accounts() {
     return (
       <>
         <Group className={classes.actions} position="apart">
-          <SearchAccount onFavoritesChecked={handleFavoritesChecked} onInputChange={handleInputChange}></SearchAccount>
+          <SearchAccount onFavoritesChecked={setFavoritesChecked} onInputChange={setSearchTerm}></SearchAccount>
           <Group>
             <CreateAccountButton onClick={handleCreateAccount} />
             <DeleteAccountsButton />
