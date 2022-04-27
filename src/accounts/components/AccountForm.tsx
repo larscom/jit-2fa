@@ -107,6 +107,7 @@ function AccountForm({ account, style }: AccountFormProps) {
         <Stack spacing="lg">
           <TextInput
             required
+            id="issuer"
             placeholder="Issuer"
             label="Issuer"
             description="Name of the application that hands out the secret"
@@ -114,6 +115,7 @@ function AccountForm({ account, style }: AccountFormProps) {
           />
           <TextInput
             required
+            id="label"
             placeholder="Label"
             label="Label"
             description="Something like a username or nickname"
@@ -121,6 +123,7 @@ function AccountForm({ account, style }: AccountFormProps) {
           />
           <PasswordInput
             required
+            id="secret"
             autoComplete="new-password"
             placeholder="Secret"
             label="Secret"
@@ -130,6 +133,7 @@ function AccountForm({ account, style }: AccountFormProps) {
 
           <InputWrapper required description="Algorithm used to generate a token" label="Algorithm">
             <SegmentedControl
+              id="algorithm"
               color="violet"
               data={[
                 { label: 'SHA1', value: 'SHA1' },
@@ -142,6 +146,7 @@ function AccountForm({ account, style }: AccountFormProps) {
 
           <InputWrapper required description="Token length" label="Digits">
             <SegmentedControl
+              id="digits"
               color="indigo"
               data={[
                 { label: '6', value: '6' },
@@ -154,6 +159,7 @@ function AccountForm({ account, style }: AccountFormProps) {
 
           <InputWrapper required description="Token expire time (seconds)" label="Period">
             <SegmentedControl
+              id="period"
               color="grape"
               data={[
                 { label: '30', value: '30' },
