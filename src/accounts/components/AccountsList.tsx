@@ -2,9 +2,24 @@ import { AccountsContext } from '$accounts/contexts/accounts';
 import { FavoritesContextProvider } from '$accounts/contexts/favorites';
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
-import { Stack, Text } from '@mantine/core';
-import { useContext } from 'react';
+import { createStyles, Pagination, ScrollArea, Stack, Text } from '@mantine/core';
+import { useContext, useState } from 'react';
 import AccountsListItem from './AccountsListItem';
+
+const useStyles = createStyles(() => ({
+  root: {
+    height: '70vh'
+  }
+}));
+
+const calculateTotalPages = (accounts: IAccount[], pageSize: number) => {
+  const total = accounts.length / pageSize;
+  return Number.isInteger(total) ? total : total + 1;
+};
+
+const paginate = (accounts: IAccount[], pageSize: number, pageNumber: number) => {
+  return accounts.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+};
 
 const filterBy = (value: string, searchTerm: string) =>
   Boolean(value) && value.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
@@ -37,26 +52,39 @@ const sortAccounts = (
 };
 
 function AccountsList() {
+  const { classes } = useStyles();
+
   const [favorites, setFavorites] = useFavorites();
   const { accounts, favoritesChecked, searchTerm } = useContext(AccountsContext);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const pageSize = 10;
 
   const filteredAccounts = accounts
     .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
     .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
-    .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm))
-    .map((account) => <AccountsListItem key={account.uuid} account={account} />);
+    .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm));
+
+  const totalPages = calculateTotalPages(filteredAccounts, pageSize);
+
+  const accountListItems = paginate(filteredAccounts, pageSize, pageNumber).map((account) => (
+    <AccountsListItem key={account.uuid} account={account} />
+  ));
 
   return (
     <FavoritesContextProvider value={{ favorites, setFavorites }}>
-      <Stack spacing="xs">
-        {filteredAccounts.length ? (
-          filteredAccounts
-        ) : (
-          <Text id="no-accounts-found" size="sm">
-            No accounts found...
-          </Text>
-        )}
-      </Stack>
+      <ScrollArea className={classes.root} offsetScrollbars>
+        <Stack spacing="xs">
+          {accountListItems.length ? (
+            accountListItems
+          ) : (
+            <Text id="no-accounts-found" size="sm">
+              No accounts found...
+            </Text>
+          )}
+        </Stack>
+      </ScrollArea>
+      <Pagination page={pageNumber} onChange={setPageNumber} total={totalPages} withEdges />
     </FavoritesContextProvider>
   );
 }

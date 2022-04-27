@@ -23,6 +23,7 @@ interface PageTitleProps {
 
 function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
   const { classes } = useStyles();
+
   const navigate = useNavigate();
 
   useDocumentTitle(`JIT | ${title.toLocaleUpperCase()}`);

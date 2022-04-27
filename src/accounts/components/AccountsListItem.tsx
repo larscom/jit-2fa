@@ -25,6 +25,7 @@ interface AccountsListItemProps {
 
 function AccountsListItem({ account }: AccountsListItemProps) {
   const { classes } = useStyles();
+
   const navigate = useNavigate();
 
   const { issuer, label, algorithm, digits, period } = account;

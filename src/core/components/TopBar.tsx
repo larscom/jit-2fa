@@ -14,6 +14,7 @@ const useStyles = createStyles(() => ({
 
 function TopBar() {
   const { classes } = useStyles();
+
   const navigate = useNavigate();
 
   return (

@@ -20,6 +20,7 @@ const useStyles = createStyles((theme) => ({
 
 function Navigation() {
   const { classes } = useStyles();
+
   const navigate = useNavigate();
 
   const helpPath = useMatch('help/*');

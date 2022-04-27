@@ -5,7 +5,7 @@ import SearchAccount from '$accounts/components/SearchAccount';
 import { AccountsContextProvider } from '$accounts/contexts/accounts';
 import { useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
-import { Button, createStyles, Group, ScrollArea, Text } from '@mantine/core';
+import { Button, createStyles, Group, Text } from '@mantine/core';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,14 +13,12 @@ const useStyles = createStyles((theme) => ({
   actions: {
     paddingLeft: theme.spacing.xs,
     paddingRight: theme.spacing.xs
-  },
-  accounts: {
-    height: '70vh'
   }
 }));
 
 function Accounts() {
   const { classes } = useStyles();
+
   const [accounts, setAccounts] = useAccounts();
   const [favoritesChecked, setFavoritesChecked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,9 +50,7 @@ function Accounts() {
             <DeleteAccountsButton />
           </Group>
         </Group>
-        <ScrollArea className={classes.accounts} offsetScrollbars>
-          <AccountsList />
-        </ScrollArea>
+        <AccountsList />
       </>
     );
   };

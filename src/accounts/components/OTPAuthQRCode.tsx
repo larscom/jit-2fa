@@ -23,6 +23,7 @@ interface OTPAuthQRCodeProps {
 
 function OTPAuthQRCode({ account: { label, secret, issuer, algorithm, digits, period } }: OTPAuthQRCodeProps) {
   const { classes } = useStyles();
+
   const [visible, setVisible] = useState(false);
 
   const value =

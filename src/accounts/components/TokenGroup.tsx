@@ -19,6 +19,7 @@ interface TokenGroupProps {
 
 function TokenGroup({ account, fixedWidth }: TokenGroupProps) {
   const { classes } = useStyles();
+
   const [color, setColor] = useState('teal');
   const token = useToken(account);
 

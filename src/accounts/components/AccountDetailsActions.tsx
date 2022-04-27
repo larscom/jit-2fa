@@ -17,8 +17,8 @@ interface AccountDetailsActionsProps {
 
 function AccountDetailsActions({ account: { issuer, uuid } }: AccountDetailsActionsProps) {
   const { classes } = useStyles();
-  const { success } = useNotification();
 
+  const { success } = useNotification();
   const navigate = useNavigate();
   const modals = useModals();
   const setAccounts = useAccounts()[1];

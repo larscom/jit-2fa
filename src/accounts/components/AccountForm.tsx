@@ -35,9 +35,10 @@ interface AccountFormProps {
 }
 
 function AccountForm({ account, style }: AccountFormProps) {
+  const { classes } = useStyles();
+
   const [accounts, setAccounts] = useAccounts();
   const { success } = useNotification();
-  const { classes } = useStyles();
   const navigate = useNavigate();
 
   const isUpdate = !!account;

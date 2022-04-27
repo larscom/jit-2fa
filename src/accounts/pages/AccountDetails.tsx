@@ -26,6 +26,7 @@ const useStyles = createStyles((theme) => ({
 
 function AccountDetails() {
   const { classes } = useStyles();
+
   const [favorites, setFavorites] = useFavorites();
   const { uuid } = useParams();
   const account = useAccount(String(uuid));
