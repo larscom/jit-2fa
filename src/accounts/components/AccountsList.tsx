@@ -2,8 +2,9 @@ import { AccountsContext } from '$accounts/contexts/accounts';
 import { FavoritesContextProvider } from '$accounts/contexts/favorites';
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
+import { useSessionStorage } from '$core/hooks/use-session-storage';
 import { createStyles, Pagination, ScrollArea, Stack, Text } from '@mantine/core';
-import { useContext, useMemo, useState } from 'react';
+import { useContext } from 'react';
 import AccountsListItem from './AccountsListItem';
 
 const useStyles = createStyles(() => ({
@@ -51,21 +52,21 @@ function AccountsList() {
 
   const [favorites, setFavorites] = useFavorites();
   const { accounts, favoritesChecked, searchTerm } = useContext(AccountsContext);
-  const [pageNumber, setPageNumber] = useState(1);
-
-  const pageSize = 10;
+  const [pageNumber, setPageNumber] = useSessionStorage({
+    key: 'totp-page',
+    defaultValue: 1
+  });
 
   const filteredAccounts = accounts
     .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
     .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
     .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm));
 
-  const totalPages = Math.ceil(filteredAccounts.length / pageSize);
+  const pageSize = 10;
 
-  const paginatedAccounts = useMemo(
-    () => paginate(filteredAccounts, pageSize, pageNumber),
-    [filteredAccounts, pageNumber]
-  );
+  const paginatedAccounts = paginate(filteredAccounts, pageSize, pageNumber);
+
+  const totalPages = Math.ceil(filteredAccounts.length / pageSize);
 
   return (
     <FavoritesContextProvider value={{ favorites, setFavorites }}>

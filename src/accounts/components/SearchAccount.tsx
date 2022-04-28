@@ -1,7 +1,7 @@
 import { useSessionStorage } from '$core/hooks/use-session-storage';
 import { Group, Input, Switch } from '@mantine/core';
 import { IconSearch } from '@tabler/icons';
-import { memo, useCallback, useTransition } from 'react';
+import { memo, useCallback, useEffect, useTransition } from 'react';
 
 interface SearchAccountProps {
   onFavoritesChecked: (checked: boolean) => void;
@@ -30,6 +30,8 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
     },
     [setFavoritesChecked, onFavoritesChecked]
   );
+
+  useEffect(() => onFavoritesChecked(favoritesChecked), []);
 
   return (
     <Group grow>
