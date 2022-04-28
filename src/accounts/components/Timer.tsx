@@ -18,7 +18,7 @@ function Timer({ period, onColorChange }: TimerProps) {
   const color = useMemo(() => getColor(timer), [timer]);
   const value = useMemo(() => calculateValue(timer, period), [timer, period]);
 
-  useEffect(() => onColorChange && onColorChange(color), [color, onColorChange]);
+  useEffect(() => onColorChange(color), [color, onColorChange]);
 
   return (
     <RingProgress
