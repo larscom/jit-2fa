@@ -1,4 +1,4 @@
-import { useAccounts } from '$accounts/hooks/use-account';
+import { AccountsContext } from '$accounts/contexts/accounts';
 import { IAccount } from '$accounts/models/account';
 import { useNotification } from '$core/hooks/use-notification';
 import {
@@ -13,7 +13,7 @@ import {
   TextInput
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
@@ -36,8 +36,7 @@ interface AccountFormProps {
 
 function AccountForm({ account, style }: AccountFormProps) {
   const { classes } = useStyles();
-
-  const [accounts, setAccounts] = useAccounts();
+  const { accounts, setAccounts } = useContext(AccountsContext);
   const { success } = useNotification();
   const navigate = useNavigate();
 

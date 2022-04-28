@@ -3,6 +3,7 @@ import CreateAccountButton from '$accounts/components/CreateAccountButton';
 import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
 import SearchAccount from '$accounts/components/SearchAccount';
 import { AccountsContextProvider } from '$accounts/contexts/accounts';
+import { FilterContextProvider } from '$accounts/contexts/filter';
 import { useAccounts } from '$accounts/hooks/use-account';
 import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, Text } from '@mantine/core';
@@ -56,10 +57,12 @@ function Accounts() {
   };
 
   return (
-    <AccountsContextProvider value={{ accounts, setAccounts, favoritesChecked, searchTerm }}>
-      <PageTitle title="Accounts" disablePrevious />
-      {accounts.length ? renderAccounts() : renderNoAccounts()}
-    </AccountsContextProvider>
+    <FilterContextProvider value={{ favoritesChecked, searchTerm }}>
+      <AccountsContextProvider value={{ accounts, setAccounts }}>
+        <PageTitle title="Accounts" disablePrevious />
+        {accounts.length ? renderAccounts() : renderNoAccounts()}
+      </AccountsContextProvider>
+    </FilterContextProvider>
   );
 }
 

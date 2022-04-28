@@ -1,5 +1,6 @@
 import { AccountsContext } from '$accounts/contexts/accounts';
 import { FavoritesContextProvider } from '$accounts/contexts/favorites';
+import { FilterContext } from '$accounts/contexts/filter';
 import { useFavorites } from '$accounts/hooks/use-favorites';
 import { IAccount } from '$accounts/models/account';
 import { useSessionStorage } from '$core/hooks/use-session-storage';
@@ -50,8 +51,10 @@ const sortAccounts = (
 function AccountsList() {
   const { classes } = useStyles();
 
+  const { accounts } = useContext(AccountsContext);
+  const { favoritesChecked, searchTerm } = useContext(FilterContext);
+
   const [favorites, setFavorites] = useFavorites();
-  const { accounts, favoritesChecked, searchTerm } = useContext(AccountsContext);
   const [pageNumber, setPageNumber] = useSessionStorage({
     key: 'totp-page',
     defaultValue: 1
