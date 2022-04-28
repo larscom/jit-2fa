@@ -1,4 +1,5 @@
 import { AccountsContext } from '$accounts/contexts/accounts';
+import { FavoritesContext } from '$accounts/contexts/favorites';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
@@ -8,6 +9,7 @@ import { useContext } from 'react';
 function DeleteAccountsButton() {
   const { success } = useNotification();
   const { accounts, setAccounts } = useContext(AccountsContext);
+  const { setFavorites } = useContext(FavoritesContext);
 
   const modals = useModals();
 
@@ -19,6 +21,7 @@ function DeleteAccountsButton() {
       confirmProps: { color: 'red' },
       onConfirm: () => {
         setAccounts([]);
+        setFavorites([]);
         success(<Text size="sm">All your accounts have been deleted</Text>);
       }
     });

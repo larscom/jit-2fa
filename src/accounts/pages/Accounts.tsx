@@ -3,8 +3,10 @@ import CreateAccountButton from '$accounts/components/CreateAccountButton';
 import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
 import SearchAccount from '$accounts/components/SearchAccount';
 import { AccountsContextProvider } from '$accounts/contexts/accounts';
+import { FavoritesContextProvider } from '$accounts/contexts/favorites';
 import { FilterContextProvider } from '$accounts/contexts/filter';
 import { useAccounts } from '$accounts/hooks/use-account';
+import { useFavorites } from '$accounts/hooks/use-favorites';
 import PageTitle from '$core/components/PageTitle';
 import { Button, createStyles, Group, Text } from '@mantine/core';
 import { useState } from 'react';
@@ -21,6 +23,7 @@ function Accounts() {
   const { classes } = useStyles();
 
   const [accounts, setAccounts] = useAccounts();
+  const [favorites, setFavorites] = useFavorites();
   const [favoritesChecked, setFavoritesChecked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -43,26 +46,28 @@ function Accounts() {
 
   const renderAccounts = () => {
     return (
-      <>
+      <AccountsContextProvider value={{ accounts, setAccounts }}>
         <Group className={classes.actions} position="apart">
           <SearchAccount onFavoritesChecked={setFavoritesChecked} onInputChange={setSearchTerm}></SearchAccount>
           <Group>
             <CreateAccountButton onClick={handleCreateAccount} />
-            <DeleteAccountsButton />
+            <FavoritesContextProvider value={{ favorites, setFavorites }}>
+              <DeleteAccountsButton />
+            </FavoritesContextProvider>
           </Group>
         </Group>
-        <AccountsList />
-      </>
+        <FilterContextProvider value={{ favoritesChecked, searchTerm }}>
+          <AccountsList />
+        </FilterContextProvider>
+      </AccountsContextProvider>
     );
   };
 
   return (
-    <FilterContextProvider value={{ favoritesChecked, searchTerm }}>
-      <AccountsContextProvider value={{ accounts, setAccounts }}>
-        <PageTitle title="Accounts" disablePrevious />
-        {accounts.length ? renderAccounts() : renderNoAccounts()}
-      </AccountsContextProvider>
-    </FilterContextProvider>
+    <>
+      <PageTitle title="Accounts" disablePrevious />
+      {accounts.length ? renderAccounts() : renderNoAccounts()}
+    </>
   );
 }
 

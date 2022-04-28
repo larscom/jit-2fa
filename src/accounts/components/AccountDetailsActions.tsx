@@ -1,10 +1,12 @@
-import { useAccounts } from '$accounts/hooks/use-account';
+import { AccountsContext } from '$accounts/contexts/accounts';
+import { FavoritesContext } from '$accounts/contexts/favorites';
 import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, createStyles, Group, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { IconEdit, IconFileExport, IconTrash } from '@tabler/icons';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -18,10 +20,11 @@ interface AccountDetailsActionsProps {
 function AccountDetailsActions({ account: { issuer, uuid } }: AccountDetailsActionsProps) {
   const { classes } = useStyles();
 
+  const { setAccounts } = useContext(AccountsContext);
+  const { setFavorites } = useContext(FavoritesContext);
   const { success } = useNotification();
   const navigate = useNavigate();
   const modals = useModals();
-  const setAccounts = useAccounts()[1];
 
   const handleEdit = () => navigate('edit');
 
@@ -35,6 +38,7 @@ function AccountDetailsActions({ account: { issuer, uuid } }: AccountDetailsActi
       confirmProps: { color: 'red' },
       onConfirm: () => {
         setAccounts((accounts) => accounts.filter((account) => account.uuid !== uuid));
+        setFavorites((favorites) => favorites.filter((favorite) => favorite !== uuid));
         setTimeout(() => {
           navigate('/');
           success(<Text size="sm">Account deleted</Text>);

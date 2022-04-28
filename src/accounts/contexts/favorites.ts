@@ -7,7 +7,9 @@ interface IFavoritesContext {
 
 export const FavoritesContext = createContext<IFavoritesContext>({
   favorites: [],
-  setFavorites: () => undefined
+  setFavorites: () => {
+    throw Error('Not implemented.');
+  }
 });
 
 export const FavoritesContextProvider = FavoritesContext.Provider;

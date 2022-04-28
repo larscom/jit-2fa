@@ -8,7 +8,9 @@ interface IAccountsContext {
 
 export const AccountsContext = createContext<IAccountsContext>({
   accounts: [],
-  setAccounts: () => undefined
+  setAccounts: () => {
+    throw Error('Not implemented.');
+  }
 });
 
 export const AccountsContextProvider = AccountsContext.Provider;
