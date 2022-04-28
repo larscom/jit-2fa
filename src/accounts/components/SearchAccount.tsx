@@ -31,6 +31,7 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
     [setFavoritesChecked, onFavoritesChecked]
   );
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => onFavoritesChecked(favoritesChecked), []);
 
   return (
