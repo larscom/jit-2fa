@@ -7,11 +7,9 @@ Suite Teardown    Suite Teardown
 
 Resource    ./fixture.robot    
 
-
 *** Variables ***
 ${issuer}    Google
 ${label}     myaccount@gmail.com    
-
 
 *** Test Cases ***
 Navigate To Accounts Page
