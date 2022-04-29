@@ -4,7 +4,7 @@ import { AccountsContext } from '$core/contexts/accounts';
 import { FavoritesContext } from '$core/contexts/favorites';
 import { useSessionStorage } from '$core/hooks/use-session-storage';
 import { createStyles, Pagination, ScrollArea, Stack, Text } from '@mantine/core';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import AccountsListItem from './AccountsListItem';
 
 const useStyles = createStyles(() => ({
@@ -69,6 +69,12 @@ function AccountsList() {
   const paginatedAccounts = paginate(filteredAccounts, pageSize, pageNumber);
 
   const totalPages = Math.ceil(filteredAccounts.length / pageSize);
+
+  useEffect(() => {
+    if (totalPages < pageNumber) {
+      setPageNumber(totalPages);
+    }
+  }, [totalPages, pageNumber, setPageNumber]);
 
   return (
     <>
