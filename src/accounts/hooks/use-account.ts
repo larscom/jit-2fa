@@ -1,17 +1,7 @@
-import { IAccount } from '$accounts/models/account';
-import { useLocalStorage } from '@mantine/hooks';
-import { useMemo } from 'react';
+import { AccountsContext } from '$core/contexts/accounts';
+import { useContext, useMemo } from 'react';
 
-export function useAccounts() {
-  const [accounts, setAccounts] = useLocalStorage<IAccount[]>({
-    key: 'totp-accounts',
-    defaultValue: []
-  });
-
-  return [accounts, setAccounts] as const;
-}
-
-export function useAccount(uuid: IAccount['uuid']) {
-  const [accounts] = useAccounts();
+export function useAccount(uuid: string) {
+  const { accounts } = useContext(AccountsContext);
   return useMemo(() => accounts.find((account) => account.uuid === uuid), [accounts, uuid]);
 }

@@ -2,14 +2,11 @@ import AccountsList from '$accounts/components/AccountsList';
 import CreateAccountButton from '$accounts/components/CreateAccountButton';
 import DeleteAccountsButton from '$accounts/components/DeleteAccountsButton';
 import SearchAccount from '$accounts/components/SearchAccount';
-import { AccountsContextProvider } from '$accounts/contexts/accounts';
-import { FavoritesContextProvider } from '$accounts/contexts/favorites';
 import { FilterContextProvider } from '$accounts/contexts/filter';
-import { useAccounts } from '$accounts/hooks/use-account';
-import { useFavorites } from '$accounts/hooks/use-favorites';
 import PageTitle from '$core/components/PageTitle';
+import { AccountsContext } from '$core/contexts/accounts';
 import { Button, createStyles, Group, Text } from '@mantine/core';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -22,8 +19,7 @@ const useStyles = createStyles((theme) => ({
 function Accounts() {
   const { classes } = useStyles();
 
-  const [accounts, setAccounts] = useAccounts();
-  const [favorites, setFavorites] = useFavorites();
+  const { accounts } = useContext(AccountsContext);
   const [favoritesChecked, setFavoritesChecked] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -46,20 +42,16 @@ function Accounts() {
 
   const renderAccounts = () => {
     return (
-      <AccountsContextProvider value={{ accounts, setAccounts }}>
+      <FilterContextProvider value={{ favoritesChecked, searchTerm }}>
         <Group className={classes.actions} position="apart">
           <SearchAccount onFavoritesChecked={setFavoritesChecked} onInputChange={setSearchTerm}></SearchAccount>
           <Group>
             <CreateAccountButton onClick={handleCreateAccount} />
-            <FavoritesContextProvider value={{ favorites, setFavorites }}>
-              <DeleteAccountsButton />
-            </FavoritesContextProvider>
+            <DeleteAccountsButton />
           </Group>
         </Group>
-        <FilterContextProvider value={{ favoritesChecked, searchTerm }}>
-          <AccountsList />
-        </FilterContextProvider>
-      </AccountsContextProvider>
+        <AccountsList />
+      </FilterContextProvider>
     );
   };
 

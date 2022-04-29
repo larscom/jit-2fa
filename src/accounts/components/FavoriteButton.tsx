@@ -1,6 +1,6 @@
-import { FavoritesContext } from '$accounts/contexts/favorites';
 import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
+import { FavoritesContext } from '$core/contexts/favorites';
 import { ActionIcon, useMantineTheme } from '@mantine/core';
 import { IconStar } from '@tabler/icons';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';

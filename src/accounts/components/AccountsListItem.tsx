@@ -28,12 +28,11 @@ function AccountsListItem({ account }: AccountsListItemProps) {
 
   const navigate = useNavigate();
 
-  const { issuer, label, algorithm, digits, period } = account;
+  const { uuid, issuer, label, algorithm, digits, period } = account;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-
-    navigate(account.uuid);
+    navigate(uuid);
   };
 
   return (

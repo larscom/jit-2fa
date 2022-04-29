@@ -1,5 +1,5 @@
-import { AccountsContext } from '$accounts/contexts/accounts';
-import { FavoritesContext } from '$accounts/contexts/favorites';
+import { AccountsContext } from '$core/contexts/accounts';
+import { FavoritesContext } from '$core/contexts/favorites';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';

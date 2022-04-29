@@ -1,7 +1,7 @@
-import { AccountsContext } from '$accounts/contexts/accounts';
-import { FavoritesContext } from '$accounts/contexts/favorites';
 import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
+import { AccountsContext } from '$core/contexts/accounts';
+import { FavoritesContext } from '$core/contexts/favorites';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, createStyles, Group, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';

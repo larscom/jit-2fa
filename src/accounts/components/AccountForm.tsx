@@ -1,5 +1,5 @@
-import { AccountsContext } from '$accounts/contexts/accounts';
 import { IAccount } from '$accounts/models/account';
+import { AccountsContext } from '$core/contexts/accounts';
 import { useNotification } from '$core/hooks/use-notification';
 import {
   Button,
