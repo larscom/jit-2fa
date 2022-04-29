@@ -3,9 +3,9 @@ import FavoriteButton from '$accounts/components/FavoriteButton';
 import OTPAuthQRCode from '$accounts/components/OTPAuthQRCode';
 import TokenGroup from '$accounts/components/TokenGroup';
 import { useAccount } from '$accounts/hooks/use-account';
+import AutoTransition from '$core/components/AutoTransition';
 import PageTitle from '$core/components/PageTitle';
-import { useMounted } from '$core/hooks/use-mounted';
-import { createStyles, Group, Paper, Stack, Transition } from '@mantine/core';
+import { createStyles, Group, Paper, Stack } from '@mantine/core';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -28,7 +28,6 @@ function AccountDetails() {
   const { uuid } = useParams();
   const account = useAccount(String(uuid));
   const navigate = useNavigate();
-  const mounted = useMounted();
 
   useEffect(() => {
     if (!account) navigate('accounts');
@@ -42,9 +41,9 @@ function AccountDetails() {
         <PageTitle title={account.issuer} subtitle={account.label} />
         <FavoriteButton account={account} />
       </Group>
-      <Transition mounted={mounted} transition="pop">
-        {(style) => (
-          <Stack className={classes.container} style={style}>
+      <AutoTransition
+        target={
+          <Stack className={classes.container}>
             <Group position="center">
               <OTPAuthQRCode account={account} />
             </Group>
@@ -55,8 +54,8 @@ function AccountDetails() {
               <AccountDetailsActions account={account} />
             </Group>
           </Stack>
-        )}
-      </Transition>
+        }
+      />
     </>
   );
 }

@@ -31,7 +31,7 @@ const useStyles = createStyles((theme) => ({
 
 interface AccountFormProps {
   account?: IAccount;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 }
 
 function AccountForm({ account, style }: AccountFormProps) {
