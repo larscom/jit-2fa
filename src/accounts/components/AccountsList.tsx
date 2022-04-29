@@ -13,14 +13,10 @@ const useStyles = createStyles(() => ({
   }
 }));
 
-const paginate = (accounts: IAccount[], pageSize: number, pageNumber: number) => {
-  return accounts.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
-};
-
 const filterBy = (value: string, searchTerm: string) =>
   value.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
 
-const sortAccounts = (
+const sort = (
   { issuer: issuerA, uuid: uuidA }: IAccount,
   { issuer: issuerB, uuid: uuidB }: IAccount,
   favorites: string[],
@@ -47,27 +43,30 @@ const sortAccounts = (
   return aIssuer.localeCompare(bIssuer);
 };
 
+const paginate = (accounts: IAccount[], pageSize: number, pageNumber: number) => {
+  return accounts.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+};
+
+const sortAndFilter = (accounts: IAccount[], favoritesChecked: boolean, favorites: string[], searchTerm: string) =>
+  accounts
+    .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
+    .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
+    .sort((accountA, accountB) => sort(accountA, accountB, favorites, searchTerm));
+
 function AccountsList() {
   const { classes } = useStyles();
 
   const { accounts } = useContext(AccountsContext);
   const { favoritesChecked, searchTerm } = useContext(FilterContext);
   const { favorites } = useContext(FavoritesContext);
-
   const [pageNumber, setPageNumber] = useSessionStorage({
     key: 'totp-page',
     defaultValue: 1
   });
 
-  const filteredAccounts = accounts
-    .filter(({ uuid }) => (favoritesChecked ? favorites.includes(uuid) : true))
-    .filter(({ issuer, label }) => filterBy(issuer, searchTerm) || filterBy(label, searchTerm))
-    .sort((accountA, accountB) => sortAccounts(accountA, accountB, favorites, searchTerm));
-
   const pageSize = 10;
-
+  const filteredAccounts = sortAndFilter(accounts, favoritesChecked, favorites, searchTerm);
   const paginatedAccounts = paginate(filteredAccounts, pageSize, pageNumber);
-
   const totalPages = Math.ceil(filteredAccounts.length / pageSize);
 
   useEffect(() => {
@@ -80,7 +79,7 @@ function AccountsList() {
     <>
       <ScrollArea className={classes.root} offsetScrollbars>
         <Stack spacing="xs">
-          {paginatedAccounts.length ? (
+          {filteredAccounts.length ? (
             paginatedAccounts.map((account) => <AccountsListItem key={account.uuid} account={account} />)
           ) : (
             <Text id="no-accounts-found" size="sm">
