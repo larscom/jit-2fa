@@ -1,6 +1,6 @@
 import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
-import { FavoritesContext } from '$core/contexts/favorites';
+import { AccountsContext } from '$core/contexts/accounts';
 import { ActionIcon, useMantineTheme } from '@mantine/core';
 import { IconStar } from '@tabler/icons';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
@@ -10,7 +10,7 @@ interface FavoriteButtonProps {
 }
 
 function FavoriteButton({ account }: FavoriteButtonProps) {
-  const { favorites, setFavorites } = useContext(FavoritesContext);
+  const { favorites, setFavorites } = useContext(AccountsContext);
   const [clicked, setClicked] = useState(false);
   const { colorScheme, colors } = useMantineTheme();
 

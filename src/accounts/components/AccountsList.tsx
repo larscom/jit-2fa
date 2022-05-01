@@ -1,7 +1,6 @@
 import { FilterContext } from '$accounts/contexts/filter';
 import { IAccount } from '$accounts/models/account';
 import { AccountsContext } from '$core/contexts/accounts';
-import { FavoritesContext } from '$core/contexts/favorites';
 import { useSessionStorage } from '$core/hooks/use-session-storage';
 import { createStyles, Pagination, ScrollArea, Stack, Text } from '@mantine/core';
 import { useContext, useEffect } from 'react';
@@ -56,9 +55,8 @@ const sortAndFilter = (accounts: IAccount[], favoritesChecked: boolean, favorite
 function AccountsList() {
   const { classes } = useStyles();
 
-  const { accounts } = useContext(AccountsContext);
+  const { accounts, favorites } = useContext(AccountsContext);
   const { favoritesChecked, searchTerm } = useContext(FilterContext);
-  const { favorites } = useContext(FavoritesContext);
   const [pageNumber, setPageNumber] = useSessionStorage({
     key: 'totp-page',
     defaultValue: 1
@@ -70,7 +68,7 @@ function AccountsList() {
   const totalPages = Math.ceil(filteredAccounts.length / pageSize);
 
   useEffect(() => {
-    if (totalPages < pageNumber) {
+    if (totalPages > 0 && totalPages < pageNumber) {
       setPageNumber(totalPages);
     }
   }, [totalPages, pageNumber, setPageNumber]);

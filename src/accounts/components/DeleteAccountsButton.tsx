@@ -1,5 +1,4 @@
 import { AccountsContext } from '$core/contexts/accounts';
-import { FavoritesContext } from '$core/contexts/favorites';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
@@ -8,8 +7,7 @@ import { useContext } from 'react';
 
 function DeleteAccountsButton() {
   const { success } = useNotification();
-  const { accounts, setAccounts } = useContext(AccountsContext);
-  const { setFavorites } = useContext(FavoritesContext);
+  const { accounts, setAccounts, setFavorites } = useContext(AccountsContext);
 
   const modals = useModals();
 

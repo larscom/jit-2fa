@@ -1,7 +1,6 @@
 import { memoAccount } from '$accounts/memo-account';
 import { IAccount } from '$accounts/models/account';
 import { AccountsContext } from '$core/contexts/accounts';
-import { FavoritesContext } from '$core/contexts/favorites';
 import { useNotification } from '$core/hooks/use-notification';
 import { ActionIcon, createStyles, Group, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
@@ -20,8 +19,7 @@ interface AccountDetailsActionsProps {
 function AccountDetailsActions({ account: { issuer, uuid } }: AccountDetailsActionsProps) {
   const { classes } = useStyles();
 
-  const { setAccounts } = useContext(AccountsContext);
-  const { setFavorites } = useContext(FavoritesContext);
+  const { setAccounts, setFavorites } = useContext(AccountsContext);
   const { success } = useNotification();
   const navigate = useNavigate();
   const modals = useModals();
