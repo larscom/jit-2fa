@@ -2,6 +2,7 @@ import { IAccount } from '$accounts/models/account';
 import { createContext } from 'react';
 
 interface IAccountsContext {
+  account: IAccount | undefined;
   accounts: IAccount[];
   setAccounts: (val: IAccount[] | ((prevState: IAccount[]) => IAccount[])) => void;
   favorites: string[];
@@ -9,6 +10,7 @@ interface IAccountsContext {
 }
 
 export const AccountsContext = createContext<IAccountsContext>({
+  account: undefined,
   accounts: [],
   setAccounts: () => {
     throw Error('Not implemented.');

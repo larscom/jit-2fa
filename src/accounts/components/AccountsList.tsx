@@ -68,7 +68,7 @@ function AccountsList() {
   const totalPages = Math.ceil(filteredAccounts.length / pageSize);
 
   useEffect(() => {
-    if (totalPages > 0 && totalPages < pageNumber) {
+    if (totalPages && totalPages < pageNumber) {
       setPageNumber(totalPages);
     }
   }, [totalPages, pageNumber, setPageNumber]);
@@ -81,7 +81,7 @@ function AccountsList() {
             paginatedAccounts.map((account) => <AccountsListItem key={account.uuid} account={account} />)
           ) : (
             <Text id="no-accounts-found" size="sm">
-              No accounts found...
+              {favoritesChecked ? 'No favorites found...' : 'No accounts found...'}
             </Text>
           )}
         </Stack>

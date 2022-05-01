@@ -26,7 +26,7 @@ function AccountDetailsActions({ account: { issuer, uuid } }: AccountDetailsActi
 
   const handleEdit = () => navigate('edit');
 
-  const handleExport = () => navigate('/export');
+  const handleExport = () => navigate(`/export/${uuid}`);
 
   const handleDelete = () => {
     modals.openConfirmModal({

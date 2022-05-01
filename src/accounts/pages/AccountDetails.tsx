@@ -2,12 +2,12 @@ import AccountDetailsActions from '$accounts/components/AccountDetailsActions';
 import FavoriteButton from '$accounts/components/FavoriteButton';
 import OTPAuthQRCode from '$accounts/components/OTPAuthQRCode';
 import TokenGroup from '$accounts/components/TokenGroup';
-import { useAccount } from '$accounts/hooks/use-account';
 import AutoTransition from '$core/components/AutoTransition';
 import PageTitle from '$core/components/PageTitle';
+import { AccountsContext } from '$core/contexts/accounts';
 import { createStyles, Group, Paper, Stack } from '@mantine/core';
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -25,8 +25,8 @@ const useStyles = createStyles((theme) => ({
 function AccountDetails() {
   const { classes } = useStyles();
 
-  const { uuid } = useParams();
-  const account = useAccount(String(uuid));
+  const { account } = useContext(AccountsContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {

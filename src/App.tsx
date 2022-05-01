@@ -56,7 +56,7 @@ function App() {
                             <Account />
                           </SuspenseWithoutFallback>
                         }
-                      ></Route>
+                      />
                       <Route
                         path=":uuid"
                         element={
@@ -64,7 +64,7 @@ function App() {
                             <AccountDetails />
                           </SuspenseWithoutFallback>
                         }
-                      ></Route>
+                      />
                       <Route
                         path=":uuid/edit"
                         element={
@@ -72,7 +72,7 @@ function App() {
                             <Account />
                           </SuspenseWithoutFallback>
                         }
-                      ></Route>
+                      />
                     </Route>
 
                     <Route path="export" element={<Page />}>
@@ -83,7 +83,15 @@ function App() {
                             <Export />
                           </SuspenseWithoutFallback>
                         }
-                      ></Route>
+                      />
+                      <Route
+                        path=":uuid"
+                        element={
+                          <SuspenseWithoutFallback>
+                            <Export />
+                          </SuspenseWithoutFallback>
+                        }
+                      />
                     </Route>
 
                     <Route path="import" element={<Page />}>
@@ -94,7 +102,7 @@ function App() {
                             <Import />
                           </SuspenseWithoutFallback>
                         }
-                      ></Route>
+                      />
                     </Route>
 
                     <Route path="help" element={<Page />}>
@@ -105,10 +113,10 @@ function App() {
                             <Help />
                           </SuspenseWithoutFallback>
                         }
-                      ></Route>
+                      />
                     </Route>
 
-                    <Route path="*" element={<Navigate to="accounts"></Navigate>}></Route>
+                    <Route path="*" element={<Navigate to="accounts"></Navigate>} />
                   </Routes>
                 </Container>
               </AppShell>
