@@ -1,4 +1,6 @@
 *** Settings ***
+Documentation    This suite tests the flow for a new user that is visiting the page and wants to setup his first account
+
 Metadata    Executed At    ${BASE_URL}
 Metadata    Source Code    ${GITHUB_SOURCE} 
 
@@ -9,22 +11,18 @@ Resource    ./fixture.robot
 
 *** Variables ***
 ${issuer}    Google
-${label}     myaccount@gmail.com    
+${label}     user001@email.com    
 
 *** Test Cases ***
-Navigate To Accounts Page
-    [Tags]    default    accounts    no_accounts
+Navigate To Accounts Page For The First Time
+    [Tags]    default    accounts    first_visit    
 
-    Navigate To Home
-
-    Click Accounts In Menu
-
-    Should Be On Accounts Page
+    Navigate To Accounts Page
 
     Should Show Message About Having No Accounts
 
 Create New Account For First Time
-    [Tags]    default    accounts    no_accounts
+    [Tags]    default    accounts    first_visit
 
     Click Create Account Button
 
@@ -35,15 +33,21 @@ Create New Account For First Time
     Click Create Button 
 
 Validate Newly Created Account
-    [Tags]    default    accounts    no_accounts    
+    [Tags]    default    accounts    first_visit    
 
     Should Be On Accounts Page    
 
     Should Have 1 Account Cards
 
-    Validate Account Card    
+    Validate Account Card 
+
+    Should Not Have Paginator    
 
 *** Keywords ***
+Should Not Have Paginator
+    Page Should Not Contain Element    ${CSS_MAIN_CONTENT} #paginator
+
+
 Validate Account Card
     Element Text Should Be         ${CSS_MAIN_CONTENT} #issuer       ${issuer}    
     Element Text Should Be         ${CSS_MAIN_CONTENT} #label        ${label}     
@@ -65,14 +69,6 @@ Fill Required Fields
     Input Text    ${CSS_MAIN_CONTENT} #issuer    ${issuer} 
     Input Text    ${CSS_MAIN_CONTENT} #label     ${label}
     Input Text    ${CSS_MAIN_CONTENT} #secret    ABTB4P3DIO2YWXP6Y6H5B2KIMDZDY
-
-Click Accounts In Menu
-    ${accountsButton}=                  Set Variable         ${CSS_MAIN_NAVIGATION} #accounts-nav 
-    Wait Until Page Contains Element    ${accountsButton}    ${DEFAULT_TIMEOUT}
-    Click Element                       ${accountsButton}
-
-Should Be On ${page} Page
-    Wait Until Element Contains    ${CSS_MAIN_CONTENT} #page-title    ${page}    ${DEFAULT_TIMEOUT}
 
 Should Show Message About Having No Accounts
     Element Text Should Be    ${CSS_MAIN_CONTENT} #no-accounts-message    You don't have any account yet...    

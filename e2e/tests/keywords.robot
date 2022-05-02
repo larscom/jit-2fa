@@ -1,6 +1,10 @@
+*** Settings ***
+Documentation    Globally shared keywords
+
 *** Keywords ***
 Suite Setup
     ChromeDriver Setup
+    Navigate To Home
 
 Suite Teardown
     Close All Browsers
@@ -19,6 +23,9 @@ Navigate To Home
     Log                            ${BASE_URL}
     Go To                          ${BASE_URL}
     Wait Until Element Contains    css:div#top-bar-title    Just In Time    ${DEFAULT_TIMEOUT}
+
+Should Be On ${page} Page
+    Wait Until Element Contains    ${CSS_MAIN_CONTENT} #page-title    ${page}    ${DEFAULT_TIMEOUT}    
 
 Get CSS Property Value
     [Arguments]    ${locator}    ${propertyName}

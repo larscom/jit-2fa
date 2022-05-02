@@ -1,4 +1,6 @@
 *** Settings ***
+Documentation    This suite tests the dark and light theme button in the header
+
 Metadata    Executed At    ${BASE_URL}
 Metadata    Source Code    ${GITHUB_SOURCE} 
 
@@ -13,9 +15,7 @@ ${darkTheme}     rgba(20, 21, 23, 1)
 
 *** Test Cases ***
 Switch Between Light And Dark Theme
-    [Tags]    default    header    theme
-
-    Navigate To Home
+    [Tags]    default    header    theme    
 
     Should Have Color Scheme    ${lightTheme}
 
