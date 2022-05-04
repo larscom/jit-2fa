@@ -17,8 +17,8 @@ ${label}     user001@email.com
 Search Accounts
     [Tags]    default    accounts    search_accounts    
 
-    ${js}=          Get File              ${CURDIR}/setup_accounts.js
-    ${accounts}=    Execute JavaScript    ${js};return getAccounts();    
+    ${setupAccounts}=     Get File            ${CURDIR}/setup_accounts.js
+    Execute JavaScript    ${setupAccounts}    
 
     Reload Page
     Capture Page Screenshot
