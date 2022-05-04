@@ -42,6 +42,7 @@ function FavoriteButton({ account }: FavoriteButtonProps) {
 
   return (
     <ActionIcon
+      id={isFavorite ? 'favorite-on' : 'favorite-off'}
       variant="transparent"
       size={iconSize}
       onClick={handleClick}

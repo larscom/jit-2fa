@@ -33,3 +33,8 @@ Get CSS Property Value
     ${css}=      Get WebElement    ${locator}
     ${value}=    Call Method       ${css}        value_of_css_property    ${propertyName}
     [Return]     ${value}          
+
+Expect Element Count
+    [Arguments]       ${locator}                      ${expectedCount}
+    ${count}=         Get Element Count               ${locator}
+    Should Be True    ${count} == ${expectedCount}    

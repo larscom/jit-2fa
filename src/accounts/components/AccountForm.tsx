@@ -110,7 +110,7 @@ function AccountForm({ account, style }: AccountFormProps) {
             id="issuer"
             placeholder="Issuer"
             label="Issuer"
-            description="Name of the application that hands out the secret"
+            description="Name of the service that hands out the secret"
             {...form.getInputProps('issuer')}
           />
           <TextInput
