@@ -58,7 +58,6 @@ Paginate Accounts
     Should Have 10 Account Cards    
 
     Paginate Next Page
-    Capture Page Screenshot
     Should Have 1 Account Cards 
 
     Paginate Previous Page
