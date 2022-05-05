@@ -44,7 +44,6 @@ Validate Newly Created Account
     Should Not Have Paginator    
 
 *** Keywords ***
-
 Validate Account Card
     Element Text Should Be         ${CSS_MAIN_CONTENT} #issuer       ${issuer}    
     Element Text Should Be         ${CSS_MAIN_CONTENT} #label        ${label}     

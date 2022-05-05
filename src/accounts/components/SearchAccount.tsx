@@ -46,7 +46,7 @@ function SearchAccount({ onFavoritesChecked, onInputChange }: SearchAccountProps
           onChange={handleSearchChange}
         />
         <Switch
-          id="switch-favorites"
+          id={favoritesChecked ? 'switch-favorites-on' : 'switch-favorites-off'}
           label="Favorites"
           aria-label="Favorites"
           checked={favoritesChecked}
