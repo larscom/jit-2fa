@@ -28,21 +28,17 @@ function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
 
   useDocumentTitle(`JIT | ${title.toLocaleUpperCase()}`);
 
-  const renderTitle = () => (
-    <Title id="page-title" order={2}>
-      <span className={classes.title}>{title}</span>
-      {subtitle && <Text size="xs">{subtitle.toLocaleLowerCase()}</Text>}
-    </Title>
-  );
-
-  return disablePrevious ? (
-    renderTitle()
-  ) : (
-    <Group spacing="xl">
-      <ActionIcon className={classes.previous} onClick={() => navigate(-1)} title="Back to previous">
-        <IconArrowLeft />
-      </ActionIcon>
-      {renderTitle()}
+  return (
+    <Group mb="lg" spacing="xl">
+      {!disablePrevious && (
+        <ActionIcon className={classes.previous} onClick={() => navigate(-1)} title="Back to previous">
+          <IconArrowLeft />
+        </ActionIcon>
+      )}
+      <Title id="page-title" order={2}>
+        <span className={classes.title}>{title}</span>
+        {subtitle && <Text size="xs">{subtitle.toLocaleLowerCase()}</Text>}
+      </Title>
     </Group>
   );
 }
