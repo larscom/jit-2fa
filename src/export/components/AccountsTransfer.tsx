@@ -34,12 +34,13 @@ function AccountsTransfer() {
 
   return (
     <TransferList
+      breakpoint="sm"
+      searchPlaceholder="Search accounts..."
+      nothingFound="Nothing here..."
+      titles={[`Accounts (${accounts.length - exportedAccounts.length})`, `Backup (${exportedAccounts.length} / ${accounts.length})`]}
       listHeight={500}
       value={transferList}
       onChange={handleChange}
-      searchPlaceholder="Search accounts..."
-      nothingFound="No accounts selected yet"
-      breakpoint="sm"
     />
   );
 }
