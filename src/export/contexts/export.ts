@@ -6,6 +6,8 @@ interface IExportContext {
   setExportedAccounts: Dispatch<SetStateAction<IAccount[]>>;
   password: string;
   setPassword: Dispatch<SetStateAction<string>>;
+  next: boolean;
+  setNext: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ExportContext = createContext<IExportContext>({
@@ -15,6 +17,10 @@ export const ExportContext = createContext<IExportContext>({
   },
   password: '',
   setPassword: () => {
+    throw Error('Not implemented.');
+  },
+  next: false,
+  setNext: () => {
     throw Error('Not implemented.');
   }
 });

@@ -5,7 +5,7 @@ import SearchAccount from '$accounts/components/SearchAccount';
 import { FilterContextProvider } from '$accounts/contexts/filter';
 import PageTitle from '$core/components/PageTitle';
 import { AccountsContext } from '$core/contexts/accounts';
-import { Button, createStyles, Group, Text } from '@mantine/core';
+import { Button, createStyles, Group, Stack, Text } from '@mantine/core';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -56,10 +56,10 @@ function Accounts() {
   };
 
   return (
-    <>
+    <Stack>
       <PageTitle title="Accounts" disablePrevious />
       {accounts.length ? renderAccounts() : renderNoAccounts()}
-    </>
+    </Stack>
   );
 }
 

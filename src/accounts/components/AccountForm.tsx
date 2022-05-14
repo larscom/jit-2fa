@@ -1,17 +1,7 @@
 import { IAccount } from '$accounts/models/account';
 import { AccountsContext } from '$core/contexts/accounts';
 import { useNotification } from '$core/hooks/use-notification';
-import {
-  Button,
-  createStyles,
-  Group,
-  InputWrapper,
-  PasswordInput,
-  SegmentedControl,
-  Stack,
-  Text,
-  TextInput
-} from '@mantine/core';
+import { Button, Group, InputWrapper, PasswordInput, SegmentedControl, Stack, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -23,19 +13,12 @@ const isValidSecret = (secret: string) =>
     .split('')
     .every((char) => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'.includes(char));
 
-const useStyles = createStyles((theme) => ({
-  root: {
-    maxWidth: theme.breakpoints.xs / 1.9
-  }
-}));
-
 interface AccountFormProps {
   account?: IAccount;
   style?: React.CSSProperties;
 }
 
 function AccountForm({ account, style }: AccountFormProps) {
-  const { classes } = useStyles();
   const { accounts, setAccounts } = useContext(AccountsContext);
   const { success } = useNotification();
   const navigate = useNavigate();
@@ -102,7 +85,7 @@ function AccountForm({ account, style }: AccountFormProps) {
   };
 
   return (
-    <Group style={style} className={classes.root} grow direction="column">
+    <Stack align="flex-start" style={style}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack spacing="lg">
           <TextInput
@@ -176,7 +159,7 @@ function AccountForm({ account, style }: AccountFormProps) {
           </Button>
         </Group>
       </form>
-    </Group>
+    </Stack>
   );
 }
 

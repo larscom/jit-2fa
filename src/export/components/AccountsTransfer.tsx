@@ -2,7 +2,7 @@ import { IAccount } from '$accounts/models/account';
 import { AccountsContext } from '$core/contexts/accounts';
 import { ExportContext } from '$export/contexts/export';
 import { TransferList, TransferListData, TransferListItem } from '@mantine/core';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const sortByLabel = ({ label: labelA }: TransferListItem, { label: labelB }: TransferListItem) =>
   labelA.localeCompare(labelB);
@@ -14,7 +14,7 @@ const toTransferListItem = ({ uuid: value, issuer, label }: IAccount): TransferL
 
 function AccountsTransfer() {
   const { accounts } = useContext(AccountsContext);
-  const { exportedAccounts, setExportedAccounts } = useContext(ExportContext);
+  const { exportedAccounts, setExportedAccounts, setNext } = useContext(ExportContext);
 
   const unselected = accounts
     .filter(({ uuid }) => !exportedAccounts.map(({ uuid }) => uuid).includes(uuid))
@@ -32,13 +32,19 @@ function AccountsTransfer() {
     setExportedAccounts(accounts.filter(({ uuid }) => selected.some(({ value }) => value === uuid)));
   };
 
+  useEffect(() => setNext(exportedAccounts.length > 0), [exportedAccounts, setNext]);
+
   return (
     <TransferList
+      mt={10}
+      listHeight={600}
       breakpoint="sm"
       searchPlaceholder="Search accounts..."
       nothingFound="Nothing here..."
-      titles={[`Accounts (${accounts.length - exportedAccounts.length})`, `Backup (${exportedAccounts.length} / ${accounts.length})`]}
-      listHeight={500}
+      titles={[
+        `Accounts (${accounts.length - exportedAccounts.length})`,
+        `Backup (${exportedAccounts.length} / ${accounts.length})`
+      ]}
       value={transferList}
       onChange={handleChange}
     />

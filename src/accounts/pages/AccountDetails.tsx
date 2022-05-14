@@ -36,7 +36,7 @@ function AccountDetails() {
   if (!account) return null;
 
   return (
-    <>
+    <Stack>
       <Group spacing="xl">
         <PageTitle title={account.issuer} subtitle={account.label} />
         <FavoriteButton account={account} />
@@ -56,7 +56,7 @@ function AccountDetails() {
           </Stack>
         }
       />
-    </>
+    </Stack>
   );
 }
 
