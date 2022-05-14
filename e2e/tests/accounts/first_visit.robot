@@ -64,6 +64,10 @@ Click Create Button
     Click Element    ${CSS_MAIN_CONTENT} #submit-account
 
 Fill Required Fields
+    Wait Until Element Is Visible    ${CSS_MAIN_CONTENT} #issuer    ${DEFAULT_TIMEOUT}
+    Wait Until Element Is Visible    ${CSS_MAIN_CONTENT} #label     ${DEFAULT_TIMEOUT}
+    Wait Until Element Is Visible    ${CSS_MAIN_CONTENT} #secret    ${DEFAULT_TIMEOUT}
+
     Input Text    ${CSS_MAIN_CONTENT} #issuer    ${issuer} 
     Input Text    ${CSS_MAIN_CONTENT} #label     ${label}
     Input Text    ${CSS_MAIN_CONTENT} #secret    ABTB4P3DIO2YWXP6Y6H5B2KIMDZDY
