@@ -42,8 +42,8 @@ function AccountsTransfer() {
       searchPlaceholder="Search accounts..."
       nothingFound="Nothing here..."
       titles={[
-        `Accounts (${accounts.length - exportedAccounts.length})`,
-        `Backup (${exportedAccounts.length} / ${accounts.length})`
+        `Accounts (${unselected.length} / ${accounts.length})`,
+        `Backup (${selected.length} / ${accounts.length})`
       ]}
       value={transferList}
       onChange={handleChange}

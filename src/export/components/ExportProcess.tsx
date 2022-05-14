@@ -1,13 +1,15 @@
 import { IAccount } from '$accounts/models/account';
+import { AccountsContext } from '$core/contexts/accounts';
 import { ExportContextProvider } from '$export/contexts/export';
 import { Button, Group, Stack, Stepper } from '@mantine/core';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import AccountsTransfer from './AccountsTransfer';
 import Download from './Download';
 import EncryptionPassword from './EncryptionPassword';
 
 function ExportProcess() {
-  const [exportedAccounts, setExportedAccounts] = useState<IAccount[]>([]);
+  const { account } = useContext(AccountsContext);
+  const [exportedAccounts, setExportedAccounts] = useState<IAccount[]>(account ? [account] : []);
   const [password, setPassword] = useState('');
   const [active, setActive] = useState(0);
   const [next, setNext] = useState(false);

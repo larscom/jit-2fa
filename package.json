@@ -11,11 +11,12 @@
     "explore": "source-map-explorer dist/**/*.js"
   },
   "dependencies": {
-    "@mantine/core": "^4.1.4",
-    "@mantine/form": "^4.1.4",
-    "@mantine/hooks": "^4.1.4",
-    "@mantine/modals": "^4.1.4",
-    "@mantine/notifications": "^4.1.4",
+    "@mantine/core": "^4.2.4",
+    "@mantine/dropzone": "^4.2.4",
+    "@mantine/form": "^4.2.4",
+    "@mantine/hooks": "^4.2.4",
+    "@mantine/modals": "^4.2.4",
+    "@mantine/notifications": "^4.2.4",
     "@modulz/radix-icons": "^4.0.0",
     "@tabler/icons": "^1.58.0",
     "crypto-aes-gcm": "^1.1.0",
