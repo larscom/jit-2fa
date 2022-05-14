@@ -6,7 +6,7 @@ Suite Setup
     ChromeDriver Setup
     Navigate To Home
 
-Suite Teardown
+Suite Teardown    
     Close All Browsers
 
 ChromeDriver Setup

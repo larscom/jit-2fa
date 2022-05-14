@@ -7,6 +7,8 @@ Metadata    Source Code    ${GITHUB_SOURCE}
 Suite Setup       Suite Setup
 Suite Teardown    Suite Teardown
 
+Test Teardown    Run Keyword If Test Failed    Capture Page Screenshot
+
 Resource    ./fixture.robot    
 
 *** Test Cases ***
@@ -17,7 +19,6 @@ Search Accounts
     Execute JavaScript    ${setup}; setupAccounts();    
 
     Reload Page
-    Capture Page Screenshot
 
     Should Have Paginator           
     Should Have 10 Account Cards
@@ -38,7 +39,6 @@ Search Favorite Accounts
     Execute JavaScript    ${setup}; setupFavorites(); 
 
     Reload Page
-    Capture Page Screenshot
 
     Should Have 10 Account Cards
     Should Have 2 Favorites

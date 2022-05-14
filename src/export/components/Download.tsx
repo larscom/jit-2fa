@@ -1,4 +1,5 @@
 import { ExportContext } from '$export/contexts/export';
+import { IBackup } from '$shared/models/backup';
 import { Anchor, Group, Text } from '@mantine/core';
 import { aesGcmEncrypt } from 'crypto-aes-gcm';
 import { useContext, useEffect, useState } from 'react';
@@ -8,7 +9,12 @@ function Download() {
   const [objectURL, setObjectURL] = useState('');
 
   useEffect(() => {
-    aesGcmEncrypt(JSON.stringify(exportedAccounts), password).then((cipherText) => {
+    const backup: IBackup = {
+      type: 'totp',
+      accounts: exportedAccounts
+    };
+
+    aesGcmEncrypt(JSON.stringify(backup), password).then((cipherText) => {
       setObjectURL(window.URL.createObjectURL(new Blob([cipherText], { type: 'text/plain' })));
     });
   }, [exportedAccounts, password]);
@@ -16,7 +22,7 @@ function Download() {
   return (
     <Group position="center" mt={10} direction="column">
       <Text>Your accounts have been exported successfully!</Text>
-      <Anchor underline download={`${Date.now()}.data`} href={objectURL}>
+      <Anchor underline download={`totp-accounts_${Date.now()}.bak`} href={objectURL}>
         Download
       </Anchor>
     </Group>

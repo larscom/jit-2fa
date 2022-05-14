@@ -7,6 +7,8 @@ Metadata    Source Code    ${GITHUB_SOURCE}
 Suite Setup       Suite Setup
 Suite Teardown    Suite Teardown
 
+Test Teardown    Run Keyword If Test Failed    Capture Page Screenshot
+
 Resource    ./fixture.robot    
 
 *** Variables ***

@@ -21,7 +21,8 @@
       "$core/*": ["src/core/*"],
       "$export/*": ["src/export/*"],
       "$help/*": ["src/help/*"],
-      "$import/*": ["src/import/*"]
+      "$import/*": ["src/import/*"],
+      "$shared/*": ["src/shared/*"]
     }
   },
   "include": ["src"],
