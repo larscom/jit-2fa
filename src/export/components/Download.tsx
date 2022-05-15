@@ -14,9 +14,10 @@ function Download() {
       accounts: exportedAccounts
     };
 
-    aesGcmEncrypt(JSON.stringify(backup), password).then((cipherText) => {
-      setObjectURL(window.URL.createObjectURL(new Blob([cipherText], { type: 'text/plain' })));
-    });
+    aesGcmEncrypt(JSON.stringify(backup), password)
+      .then((cipherText) => new Blob([cipherText], { type: 'text/plain' }))
+      .then(window.URL.createObjectURL)
+      .then(setObjectURL);
   }, [exportedAccounts, password]);
 
   return (
