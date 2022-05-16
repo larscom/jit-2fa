@@ -33,10 +33,10 @@ const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
     <ImageUploadIcon status={status} style={{ color: getIconColor(status, theme) }} size={80} />
     <div>
       <Text size="xl" inline>
-        Drag backup file here or click to select file
+        Drag backup file (.txt) here
       </Text>
       <Text size="sm" color="dimmed" inline mt={7}>
-        Only one file allowed with a maximum of 3mb
+        You may also just click to select a file
       </Text>
     </div>
   </Group>
@@ -51,8 +51,10 @@ function Import() {
     file
       ?.text()
       .then((t) => aesGcmDecrypt(t, '1234'))
+      .then(JSON.parse)
       .then(console.log);
   }, [file]);
+
   return (
     <>
       <Dropzone
@@ -67,7 +69,7 @@ function Import() {
           setRejected(true);
         }}
         maxSize={3 * 1024 ** 2}
-        accept={['application/x-trash']}
+        accept={['text/plain']}
       >
         {() => {
           return dropzoneChildren(

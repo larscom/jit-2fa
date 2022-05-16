@@ -23,7 +23,7 @@ function Download() {
   return (
     <Group position="center" mt={10} direction="column">
       <Text>Your accounts have been exported successfully!</Text>
-      <Anchor underline download={`totp-accounts_${Date.now()}.bak`} href={objectURL}>
+      <Anchor underline download={`totp-accounts_${Date.now()}.txt`} href={objectURL}>
         Download
       </Anchor>
     </Group>
