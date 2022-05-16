@@ -1,8 +1,8 @@
-import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
-import { IconUpload, IconDatabaseImport, IconX, IconCheck, TablerIconProps } from '@tabler/icons';
+import { Group, MantineTheme, Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
-import { FC, useEffect, useState } from 'react';
+import { IconCheck, IconDatabaseImport, IconX, TablerIconProps } from '@tabler/icons';
 import { aesGcmDecrypt } from 'crypto-aes-gcm';
+import { FC, useEffect, useState } from 'react';
 
 type TablerIcon = FC<TablerIconProps>;
 
@@ -61,7 +61,8 @@ function Import() {
           setRejected(false);
           setFile(files[0]);
         }}
-        onReject={() => {
+        onReject={(files) => {
+          console.error('files reject=', files[0]);
           setFile(undefined);
           setRejected(true);
         }}
