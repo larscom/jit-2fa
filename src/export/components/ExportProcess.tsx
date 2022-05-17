@@ -31,10 +31,10 @@ function ExportProcess() {
     <ExportContextProvider value={{ next, setNext, exportedAccounts, setExportedAccounts, password, setPassword }}>
       <Stack>
         <Stepper active={active} onStepClick={setActive} breakpoint="sm">
-          <Stepper.Step allowStepSelect={false} description="Accounts">
+          <Stepper.Step allowStepSelect={false} description="Select Accounts">
             <AccountsTransfer />
           </Stepper.Step>
-          <Stepper.Step allowStepSelect={false} description="Export">
+          <Stepper.Step allowStepSelect={false} description="Encrypt">
             <EncryptionPassword />
           </Stepper.Step>
           <Stepper.Completed>

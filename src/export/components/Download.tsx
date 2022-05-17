@@ -1,3 +1,4 @@
+import { IAccount } from '$accounts/models/account';
 import { ExportContext } from '$export/contexts/export';
 import { IBackup } from '$shared/models/backup';
 import { Anchor, Group, Text } from '@mantine/core';
@@ -9,9 +10,10 @@ function Download() {
   const [objectURL, setObjectURL] = useState('');
 
   useEffect(() => {
-    const backup: IBackup = {
+    const backup: IBackup<IAccount[]> = {
+      version: 1,
       type: 'totp',
-      accounts: exportedAccounts
+      data: exportedAccounts
     };
 
     aesGcmEncrypt(JSON.stringify(backup), password)

@@ -21,8 +21,8 @@ function EncryptionPassword() {
           A strong passphrase is recommended to encrypt your accounts.
         </Text>
         <PasswordInput
-          id="export-password"
-          required
+          id="encrypt-password"
+          autoFocus
           value={password}
           onChange={handleOnChange}
           autoComplete="new-password"

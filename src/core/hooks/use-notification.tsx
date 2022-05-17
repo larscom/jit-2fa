@@ -3,17 +3,17 @@ import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
 
 export function useNotification() {
   return {
-    success: (message: React.ReactNode) =>
+    success: (message: React.ReactNode, title = 'Success') =>
       showNotification({
         message,
-        title: 'Success',
+        title,
         color: 'teal',
         icon: <CheckIcon />
       }),
-    error: (message: React.ReactNode) =>
+    error: (message: React.ReactNode, title = 'Error') =>
       showNotification({
         message,
-        title: 'Failed',
+        title,
         color: 'red',
         icon: <Cross1Icon />
       })

@@ -1,6 +1,5 @@
-import { IAccount } from '$accounts/models/account';
-
-export interface IBackup {
+export interface IBackup<T> {
   type: 'totp' | 'hotp';
-  accounts: IAccount[];
+  version: number;
+  data: T;
 }
