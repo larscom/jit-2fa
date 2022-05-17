@@ -20,7 +20,6 @@
       "$accounts/*": ["src/accounts/*"],
       "$core/*": ["src/core/*"],
       "$export/*": ["src/export/*"],
-      "$help/*": ["src/help/*"],
       "$import/*": ["src/import/*"],
       "$shared/*": ["src/shared/*"]
     }

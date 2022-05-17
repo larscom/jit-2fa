@@ -1,5 +1,5 @@
 import { createStyles, Group, Navbar, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
-import { IconFileExport, IconFileImport, IconHelp, IconUsers } from '@tabler/icons';
+import { IconFileExport, IconFileImport, IconUsers } from '@tabler/icons';
 import { useMatch, useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -23,7 +23,6 @@ function Navigation() {
 
   const navigate = useNavigate();
 
-  const helpPath = useMatch('help/*');
   const accountsPath = useMatch('accounts/*');
   const exportPath = useMatch('export/*');
   const importPath = useMatch('import/*');
@@ -31,32 +30,36 @@ function Navigation() {
   return (
     <Navbar width={{ base: 275 }} p="xs">
       <Navbar.Section grow mt="md">
-        <UnstyledButton className={`${classes.button} ${helpPath ? classes.selected : ''}`}>
-          <Group id="help-nav" onClick={() => navigate('help')}>
+        <UnstyledButton
+          id="accounts-nav"
+          className={`${classes.button} ${accountsPath ? classes.selected : ''}`}
+          onClick={() => navigate('accounts')}
+        >
+          <Group>
             <ThemeIcon color="teal">
-              <IconHelp />
-            </ThemeIcon>
-            <Text size="sm">Help</Text>
-          </Group>
-        </UnstyledButton>
-        <UnstyledButton className={`${classes.button} ${accountsPath ? classes.selected : ''}`}>
-          <Group id="accounts-nav" onClick={() => navigate('accounts')}>
-            <ThemeIcon color="orange">
               <IconUsers />
             </ThemeIcon>
             <Text size="sm">Accounts</Text>
           </Group>
         </UnstyledButton>
-        <UnstyledButton className={`${classes.button} ${exportPath ? classes.selected : ''}`}>
-          <Group id="export-nav" onClick={() => navigate('export')}>
+        <UnstyledButton
+          id="export-nav"
+          className={`${classes.button} ${exportPath ? classes.selected : ''}`}
+          onClick={() => navigate('export')}
+        >
+          <Group>
             <ThemeIcon color="grape">
               <IconFileExport />
             </ThemeIcon>
             <Text size="sm">Export (backup)</Text>
           </Group>
         </UnstyledButton>
-        <UnstyledButton className={`${classes.button} ${importPath ? classes.selected : ''}`}>
-          <Group id="import-nav" onClick={() => navigate('import')}>
+        <UnstyledButton
+          id="import-nav"
+          className={`${classes.button} ${importPath ? classes.selected : ''}`}
+          onClick={() => navigate('import')}
+        >
+          <Group>
             <ThemeIcon color="violet">
               <IconFileImport />
             </ThemeIcon>

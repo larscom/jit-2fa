@@ -15,7 +15,6 @@ const AccountDetails = lazy(() => import('$accounts/pages/AccountDetails'));
 
 const Import = lazy(() => import('$import/pages/Import'));
 const Export = lazy(() => import('$export/pages/Export'));
-const Help = lazy(() => import('$help/pages/Help'));
 
 const toggle = (c: ColorScheme): ColorScheme => (c === 'dark' ? 'light' : 'dark');
 
@@ -100,17 +99,6 @@ function App() {
                         element={
                           <SuspenseWithoutFallback>
                             <Import />
-                          </SuspenseWithoutFallback>
-                        }
-                      />
-                    </Route>
-
-                    <Route path="help" element={<Page />}>
-                      <Route
-                        index
-                        element={
-                          <SuspenseWithoutFallback>
-                            <Help />
                           </SuspenseWithoutFallback>
                         }
                       />

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [ -z "$(command -v docker)" ]; then
     echo "ERROR: docker needs to be installed!"
