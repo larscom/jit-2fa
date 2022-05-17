@@ -20,6 +20,20 @@ function BackupDropzone() {
   const { importFile, setImportFile, setNext, setImportedAccounts, setPassword } = useContext(ImportContext);
   const [rejected, setRejected] = useState(false);
 
+  const handleOnDrop = ([file]: File[]) => {
+    setRejected(false);
+    setImportFile(file);
+    setImportedAccounts([]);
+    setPassword('');
+  };
+
+  const handleOnReject = () => {
+    setRejected(true);
+    setImportFile(undefined);
+    setImportedAccounts([]);
+    setPassword('');
+  };
+
   useEffect(() => {
     setNext(importFile !== undefined);
   }, [importFile, setNext]);
@@ -28,18 +42,8 @@ function BackupDropzone() {
     <Dropzone
       mt={10}
       multiple={false}
-      onDrop={([file]) => {
-        setRejected(false);
-        setImportFile(file);
-        setImportedAccounts([]);
-        setPassword('');
-      }}
-      onReject={() => {
-        setRejected(true);
-        setImportFile(undefined);
-        setImportedAccounts([]);
-        setPassword('');
-      }}
+      onDrop={handleOnDrop}
+      onReject={handleOnReject}
       maxSize={3 * 1024 ** 2}
       accept={['text/plain']}
     >

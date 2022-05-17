@@ -1,18 +1,16 @@
 import { ExportContext } from '$export/contexts/export';
 import { Group, PasswordInput, Stack, Text } from '@mantine/core';
-import { useContext, useTransition } from 'react';
+import { useContext } from 'react';
 
 const MIN_PASSWORD_LENGTH = 4;
 
 function EncryptionPassword() {
   const { password, setPassword, setNext } = useContext(ExportContext);
-  const startTransition = useTransition()[1];
 
-  const handleOnChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) =>
-    startTransition(() => {
-      setPassword(value);
-      setNext(value.length >= MIN_PASSWORD_LENGTH);
-    });
+  const handleOnChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(value);
+    setNext(value.length >= MIN_PASSWORD_LENGTH);
+  };
 
   return (
     <Group position="center" mt={10}>
