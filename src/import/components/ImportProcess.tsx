@@ -4,6 +4,7 @@ import { Button, Group, Stack, Stepper } from '@mantine/core';
 import { useState } from 'react';
 import BackupDropzone from './BackupDropzone';
 import DecryptionPassword from './DecryptionPassword';
+import ImportStrategy from './ImportStrategy';
 
 function ImportProcess() {
   const [importedAccounts, setImportedAccounts] = useState<IAccount[]>([]);
@@ -47,7 +48,7 @@ function ImportProcess() {
             <DecryptionPassword />
           </Stepper.Step>
           <Stepper.Step allowStepSelect={false} description="Strategy">
-            Merge, overwrite, etc
+            <ImportStrategy />
           </Stepper.Step>
           <Stepper.Completed>Done!</Stepper.Completed>
         </Stepper>

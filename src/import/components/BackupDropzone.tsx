@@ -1,8 +1,12 @@
 import { ImportContext } from '$import/contexts/import';
-import { Group, MantineTheme, Text, useMantineTheme } from '@mantine/core';
+import { createStyles, Group, MantineTheme, Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { IconCheck, IconFile, IconX } from '@tabler/icons';
 import { useContext, useEffect, useState } from 'react';
+
+const useStyles = createStyles(() => ({
+  root: { height: 220, pointerEvents: 'none' }
+}));
 
 function ImageUploadIcon({ status, theme }: { status: DropzoneStatus; theme: MantineTheme }) {
   const size = 80;
@@ -17,6 +21,8 @@ function ImageUploadIcon({ status, theme }: { status: DropzoneStatus; theme: Man
 
 function BackupDropzone() {
   const theme = useMantineTheme();
+
+  const { classes } = useStyles();
   const { importFile, setImportFile, setNext, setImportedAccounts, setPassword } = useContext(ImportContext);
   const [rejected, setRejected] = useState(false);
 
@@ -48,7 +54,7 @@ function BackupDropzone() {
       accept={['text/plain']}
     >
       {() => (
-        <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
+        <Group className={classes.root} position="center" spacing="xl">
           <ImageUploadIcon
             status={{
               accepted: importFile !== undefined,

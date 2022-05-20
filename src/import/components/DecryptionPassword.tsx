@@ -38,7 +38,7 @@ function DecryptionPassword() {
 
   return (
     <Group position="center" mt={10}>
-      <Stack align="center">
+      <Stack spacing="xs" align="center">
         <PasswordInput
           autoFocus
           disabled={next}
@@ -55,9 +55,11 @@ function DecryptionPassword() {
               : null
           }
         />
-        <Button color="cyan" disabled={next || password.length < MIN_PASSWORD_LENGTH} onClick={handleDecrypt}>
-          Decrypt
-        </Button>
+        {!next && (
+          <Button color="cyan" disabled={password.length < MIN_PASSWORD_LENGTH} onClick={handleDecrypt}>
+            Decrypt
+          </Button>
+        )}
       </Stack>
     </Group>
   );
