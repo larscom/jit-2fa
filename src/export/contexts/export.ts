@@ -12,17 +12,11 @@ interface IExportContext {
 
 export const ExportContext = createContext<IExportContext>({
   exportedAccounts: [],
-  setExportedAccounts: () => {
-    throw Error('Not implemented.');
-  },
   password: '',
-  setPassword: () => {
-    throw Error('Not implemented.');
-  },
   next: false,
-  setNext: () => {
-    throw Error('Not implemented.');
-  }
+  setExportedAccounts: () => null,
+  setPassword: () => null,
+  setNext: () => null
 });
 
 export const ExportContextProvider = ExportContext.Provider;

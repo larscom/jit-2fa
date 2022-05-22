@@ -20,6 +20,7 @@
     "@modulz/radix-icons": "^4.0.0",
     "@tabler/icons": "^1.68.0",
     "crypto-aes-gcm": "^1.1.0",
+    "deepmerge-ts": "^4.0.3",
     "firebase": "^9.6.10",
     "otpauth": "^7.1.1",
     "react": "^18.1.0",

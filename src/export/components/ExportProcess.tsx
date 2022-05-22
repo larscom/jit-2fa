@@ -3,9 +3,9 @@ import { AccountsContext } from '$core/contexts/accounts';
 import { ExportContextProvider } from '$export/contexts/export';
 import { Button, Group, Stack, Stepper } from '@mantine/core';
 import { useContext, useState } from 'react';
-import AccountsTransfer from './AccountsTransfer';
 import Download from './Download';
 import EncryptionPassword from './EncryptionPassword';
+import ExportAccounts from './ExportAccounts';
 
 function ExportProcess() {
   const { account } = useContext(AccountsContext);
@@ -32,7 +32,7 @@ function ExportProcess() {
       <Stack>
         <Stepper active={active} onStepClick={setActive} breakpoint="sm">
           <Stepper.Step allowStepSelect={false} description="Select Accounts">
-            <AccountsTransfer />
+            <ExportAccounts />
           </Stepper.Step>
           <Stepper.Step allowStepSelect={false} description="Encrypt">
             <EncryptionPassword />

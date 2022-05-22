@@ -1,7 +1,8 @@
 import { IAccount } from '$accounts/models/account';
+import { ImportStrategy } from '$import/models/import-strategy';
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-interface IImportContext {
+export interface IImportContext {
   importedAccounts: IAccount[];
   setImportedAccounts: Dispatch<SetStateAction<IAccount[]>>;
   password: string;
@@ -10,25 +11,25 @@ interface IImportContext {
   setNext: Dispatch<SetStateAction<boolean>>;
   importFile: File | undefined;
   setImportFile: Dispatch<SetStateAction<File | undefined>>;
+  restoredAccounts: IAccount[];
+  setRestoredAccounts: Dispatch<SetStateAction<IAccount[]>>;
+  importStrategy: ImportStrategy;
+  setImportStrategy: Dispatch<SetStateAction<ImportStrategy>>;
 }
 
 export const ImportContext = createContext<IImportContext>({
   importedAccounts: [],
-  setImportedAccounts: () => {
-    throw Error('Not implemented.');
-  },
+  restoredAccounts: [],
   password: '',
-  setPassword: () => {
-    throw Error('Not implemented.');
-  },
   next: false,
-  setNext: () => {
-    throw Error('Not implemented.');
-  },
   importFile: undefined,
-  setImportFile: () => {
-    throw Error('Not implemented.');
-  }
+  importStrategy: 'replace',
+  setImportedAccounts: () => null,
+  setRestoredAccounts: () => null,
+  setPassword: () => null,
+  setNext: () => null,
+  setImportFile: () => null,
+  setImportStrategy: () => null
 });
 
 export const ImportContextProvider = ImportContext.Provider;

@@ -1,27 +1,35 @@
 import { IAccount } from '$accounts/models/account';
-import { ImportContextProvider } from '$import/contexts/import';
+import { IImportContext, ImportContextProvider } from '$import/contexts/import';
+import { ImportStrategy } from '$import/models/import-strategy';
 import { Button, Group, Stack, Stepper } from '@mantine/core';
 import { useState } from 'react';
 import BackupDropzone from './BackupDropzone';
 import DecryptionPassword from './DecryptionPassword';
-import ImportStrategy from './ImportStrategy';
+import ImportAccounts from './ImportAccounts';
+import MergeAccounts from './MergeAccounts';
 
 function ImportProcess() {
   const [importedAccounts, setImportedAccounts] = useState<IAccount[]>([]);
+  const [restoredAccounts, setRestoredAccounts] = useState<IAccount[]>([]);
+  const [importStrategy, setImportStrategy] = useState<ImportStrategy>('replace');
   const [active, setActive] = useState(0);
   const [next, setNext] = useState(false);
   const [password, setPassword] = useState('');
   const [importFile, setImportFile] = useState<File>();
 
-  const importContext = {
+  const context: IImportContext = {
     next,
-    setNext,
     importedAccounts,
     password,
-    setPassword,
-    setImportedAccounts,
     importFile,
-    setImportFile
+    restoredAccounts,
+    importStrategy,
+    setNext,
+    setImportedAccounts,
+    setRestoredAccounts,
+    setPassword,
+    setImportFile,
+    setImportStrategy
   };
 
   const nextStep = () => {
@@ -35,10 +43,10 @@ function ImportProcess() {
   };
 
   const isFirstStep = active <= 0;
-  const isActive = active < 2;
+  const isActive = active < 3;
 
   return (
-    <ImportContextProvider value={importContext}>
+    <ImportContextProvider value={context}>
       <Stack>
         <Stepper active={active} onStepClick={setActive} breakpoint="sm">
           <Stepper.Step allowStepSelect={false} description="Select File">
@@ -47,10 +55,12 @@ function ImportProcess() {
           <Stepper.Step allowStepSelect={false} description="Decrypt">
             <DecryptionPassword />
           </Stepper.Step>
-          <Stepper.Step allowStepSelect={false} description="Strategy">
-            <ImportStrategy />
+          <Stepper.Step allowStepSelect={false} description="Import">
+            <ImportAccounts />
           </Stepper.Step>
-          <Stepper.Completed>Done!</Stepper.Completed>
+          <Stepper.Completed>
+            <MergeAccounts />
+          </Stepper.Completed>
         </Stepper>
         {isActive && (
           <Group position="center" mt="xl">

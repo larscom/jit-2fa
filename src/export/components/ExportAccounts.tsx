@@ -12,7 +12,7 @@ const toTransferListItem = ({ uuid: value, issuer, label }: IAccount): TransferL
   label: `${issuer} | ${label}`
 });
 
-function AccountsTransfer() {
+function ExportAccounts() {
   const { accounts } = useContext(AccountsContext);
   const { exportedAccounts, setExportedAccounts, setNext } = useContext(ExportContext);
 
@@ -51,4 +51,4 @@ function AccountsTransfer() {
   );
 }
 
-export default AccountsTransfer;
+export default ExportAccounts;

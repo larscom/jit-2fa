@@ -30,7 +30,7 @@ function DecryptionPassword() {
       success(<Text size="sm">Backup decrypted ({accounts.length} accounts)</Text>);
     } catch (e) {
       setImportedAccounts([]);
-      error(<Text size="sm">Failed to decrypt, wrong password?</Text>);
+      error(<Text size="sm">Failed to decrypt</Text>);
     }
   };
 
