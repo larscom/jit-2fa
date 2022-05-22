@@ -16,7 +16,8 @@ function DecryptionPassword() {
 
   const handleOnChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setPassword(value);
 
-  const handleOnKeyDown = ({ code }: React.KeyboardEvent<HTMLInputElement>) => code === 'Enter' && handleDecrypt();
+  const handleOnKeyDown = ({ code }: React.KeyboardEvent<HTMLInputElement>) =>
+    code === 'Enter' && password.length >= MIN_PASSWORD_LENGTH && handleDecrypt();
 
   const handleDecrypt = async () => {
     if (!importFile) return;
