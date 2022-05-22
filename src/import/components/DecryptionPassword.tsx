@@ -11,9 +11,12 @@ const MIN_PASSWORD_LENGTH = 4;
 function DecryptionPassword() {
   const { password, setPassword, next, setNext, setImportedAccounts, importedAccounts, importFile } =
     useContext(ImportContext);
+
   const { success, error } = useNotification();
 
   const handleOnChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setPassword(value);
+
+  const handleOnKeyDown = ({ code }: React.KeyboardEvent<HTMLInputElement>) => code === 'Enter' && handleDecrypt();
 
   const handleDecrypt = async () => {
     if (!importFile) return;
@@ -44,6 +47,7 @@ function DecryptionPassword() {
           disabled={next}
           id="decrypt-password"
           value={password}
+          onKeyDown={handleOnKeyDown}
           onChange={handleOnChange}
           autoComplete="new-password"
           placeholder="Dencryption password..."
