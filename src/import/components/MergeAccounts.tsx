@@ -7,15 +7,16 @@ import { useContext, useEffect, useState } from 'react';
 const getUniqueSecrets = (a: IAccount[], b: IAccount[]) => [...new Set([...a, ...b].map(({ secret }) => secret))];
 
 function MergeAccounts() {
-  const { accounts, setAccounts } = useContext(AccountsContext);
-  const { restoredAccounts, importStrategy } = useContext(ImportContext);
-  const [done, setDone] = useState(false);
+  const { accounts, setAccounts, favorites, setFavorites } = useContext(AccountsContext);
+  const { restoredAccounts, importStrategy, importedFavorites } = useContext(ImportContext);
+  const [merged, setMerged] = useState(false);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     // Imported accounts will replace all existing accounts
     if (importStrategy === 'replace') {
       setAccounts(restoredAccounts);
+      setFavorites(importedFavorites);
     }
 
     // Merge imported accounts with existing accounts, overwrite existing
@@ -31,6 +32,11 @@ function MergeAccounts() {
         throw Error('Something weird happened while merging accounts');
       });
 
+      setFavorites(
+        [...new Set([...favorites, ...importedFavorites])].filter((favorite) =>
+          mergedAccounts.map(({ uuid }) => uuid).includes(favorite)
+        )
+      );
       setAccounts(mergedAccounts);
     }
 
@@ -47,15 +53,20 @@ function MergeAccounts() {
         throw Error('Something weird happened while merging accounts');
       });
 
+      setFavorites(
+        [...new Set([...favorites, ...importedFavorites])].filter((favorite) =>
+          mergedAccounts.map(({ uuid }) => uuid).includes(favorite)
+        )
+      );
       setAccounts(mergedAccounts);
     }
 
-    setDone(true);
+    setMerged(true);
   }, []);
 
   return (
     <Group position="center" mt={10}>
-      <Text>{done ? 'Your accounts have been imported successfully!' : 'Busy importing accounts...'}</Text>
+      <Text>{merged ? 'Your accounts have been imported successfully!' : 'Busy importing accounts...'}</Text>
     </Group>
   );
 }

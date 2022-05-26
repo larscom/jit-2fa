@@ -9,8 +9,16 @@ import { useContext, useEffect } from 'react';
 const MIN_PASSWORD_LENGTH = 4;
 
 function DecryptionPassword() {
-  const { password, setPassword, next, setNext, setImportedAccounts, importedAccounts, importFile } =
-    useContext(ImportContext);
+  const {
+    password,
+    setPassword,
+    next,
+    setNext,
+    setImportedAccounts,
+    importedAccounts,
+    setImportedFavorites,
+    importFile
+  } = useContext(ImportContext);
 
   const { success, error } = useNotification();
 
@@ -23,18 +31,25 @@ function DecryptionPassword() {
     if (!importFile) return;
 
     try {
-      const accounts = await importFile
+      const { accounts, favorites } = await importFile
         .text()
         .then((cipherText) => aesGcmDecrypt(cipherText, password))
         .then((json) => {
-          const { data: accounts }: IBackup<IAccount[]> = JSON.parse(json);
-          return accounts;
+          const {
+            data: [accounts, favorites]
+          }: IBackup<[IAccount[], string[]]> = JSON.parse(json);
+          return { accounts, favorites };
         });
+
       setImportedAccounts(accounts);
+      setImportedFavorites(favorites);
+
       success(<Text size="sm">Backup decrypted ({accounts.length} accounts)</Text>);
     } catch (e) {
       setImportedAccounts([]);
-      error(<Text size="sm">Failed to decrypt</Text>);
+      setImportedFavorites([]);
+
+      error(<Text size="sm">Wrong password</Text>);
     }
   };
 

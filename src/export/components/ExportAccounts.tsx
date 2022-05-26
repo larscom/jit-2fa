@@ -43,7 +43,7 @@ function ExportAccounts() {
       nothingFound="Nothing here..."
       titles={[
         `Accounts (${unselected.length} / ${accounts.length})`,
-        `Backup (${selected.length} / ${accounts.length})`
+        `Export (${selected.length} / ${accounts.length})`
       ]}
       value={transferList}
       onChange={handleChange}

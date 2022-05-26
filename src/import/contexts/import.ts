@@ -5,6 +5,8 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 export interface IImportContext {
   importedAccounts: IAccount[];
   setImportedAccounts: Dispatch<SetStateAction<IAccount[]>>;
+  importedFavorites: string[];
+  setImportedFavorites: Dispatch<SetStateAction<string[]>>;
   password: string;
   setPassword: Dispatch<SetStateAction<string>>;
   next: boolean;
@@ -20,11 +22,13 @@ export interface IImportContext {
 export const ImportContext = createContext<IImportContext>({
   importedAccounts: [],
   restoredAccounts: [],
+  importedFavorites: [],
   password: '',
   next: false,
   importFile: undefined,
   importStrategy: 'replace',
   setImportedAccounts: () => null,
+  setImportedFavorites: () => null,
   setRestoredAccounts: () => null,
   setPassword: () => null,
   setNext: () => null,

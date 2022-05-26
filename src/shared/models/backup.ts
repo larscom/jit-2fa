@@ -1,5 +1,5 @@
 export interface IBackup<T> {
-  type: 'totp' | 'hotp';
   version: number;
+  type: 'totp' | 'hotp';
   data: T;
 }

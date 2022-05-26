@@ -1,5 +1,5 @@
 import { ExportContext } from '$export/contexts/export';
-import { Group, PasswordInput, Stack, Text } from '@mantine/core';
+import { Group, PasswordInput, Stack } from '@mantine/core';
 import { useContext } from 'react';
 
 const MIN_PASSWORD_LENGTH = 4;
@@ -15,9 +15,6 @@ function EncryptionPassword() {
   return (
     <Group position="center" mt={10}>
       <Stack align="flex-start">
-        <Text color="gray" size="sm">
-          A strong passphrase is recommended to encrypt your accounts.
-        </Text>
         <PasswordInput
           id="encrypt-password"
           autoFocus
