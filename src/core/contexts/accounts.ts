@@ -5,8 +5,8 @@ interface IAccountsContext {
   account: IAccount | undefined;
   accounts: IAccount[];
   setAccounts: (val: IAccount[] | ((prevState: IAccount[]) => IAccount[])) => void;
-  favorites: string[];
-  setFavorites: (val: string[] | ((prevState: string[]) => string[])) => void;
+  favorites: IAccount['uuid'][];
+  setFavorites: (val: IAccount['uuid'][] | ((prevState: IAccount['uuid'][]) => IAccount['uuid'][])) => void;
 }
 
 export const AccountsContext = createContext<IAccountsContext>({

@@ -10,8 +10,8 @@ import MergeAccounts from './MergeAccounts';
 
 function ImportProcess() {
   const [importedAccounts, setImportedAccounts] = useState<IAccount[]>([]);
-  const [importedFavorites, setImportedFavorites] = useState<string[]>([]);
-  const [restoredAccounts, setRestoredAccounts] = useState<IAccount[]>([]);
+  const [importedFavorites, setImportedFavorites] = useState<IAccount['uuid'][]>([]);
+  const [selectedUuids, setSelectedUuids] = useState<IAccount['uuid'][]>([]);
   const [importStrategy, setImportStrategy] = useState<ImportStrategy>('replace');
   const [active, setActive] = useState(0);
   const [next, setNext] = useState(false);
@@ -24,12 +24,12 @@ function ImportProcess() {
     importedFavorites,
     password,
     importFile,
-    restoredAccounts,
+    selectedUuids,
     importStrategy,
     setNext,
     setImportedAccounts,
     setImportedFavorites,
-    setRestoredAccounts,
+    setSelectedUuids,
     setPassword,
     setImportFile,
     setImportStrategy

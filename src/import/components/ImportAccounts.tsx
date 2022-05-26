@@ -21,15 +21,18 @@ const toTransferListItem = ({ uuid: value, issuer, label }: IAccount): TransferL
 });
 
 function ImportAccounts() {
-  const { importedAccounts, restoredAccounts, setRestoredAccounts, setNext, importStrategy, setImportStrategy } =
+  const { importedAccounts, selectedUuids, setSelectedUuids, setNext, importStrategy, setImportStrategy } =
     useContext(ImportContext);
 
   const unselected = importedAccounts
-    .filter(({ uuid }) => !restoredAccounts.map(({ uuid }) => uuid).includes(uuid))
+    .filter(({ uuid }) => !selectedUuids.includes(uuid))
     .map((account) => toTransferListItem(account))
     .sort(sortByLabel);
 
-  const selected = restoredAccounts.map((account) => toTransferListItem(account)).sort(sortByLabel);
+  const selected = importedAccounts
+    .filter(({ uuid }) => selectedUuids.includes(uuid))
+    .map((account) => toTransferListItem(account))
+    .sort(sortByLabel);
 
   const [transferList, setTransferList] = useState<TransferListData>([unselected, selected]);
 
@@ -37,10 +40,12 @@ function ImportAccounts() {
     const [unselected, selected] = data;
 
     setTransferList([unselected.sort(sortByLabel), selected.sort(sortByLabel)]);
-    setRestoredAccounts(importedAccounts.filter(({ uuid }) => selected.some(({ value }) => value === uuid)));
+    setSelectedUuids(
+      importedAccounts.map(({ uuid }) => uuid).filter((uuid) => selected.some(({ value }) => value === uuid))
+    );
   };
 
-  useEffect(() => setNext(restoredAccounts.length > 0), [restoredAccounts, setNext]);
+  useEffect(() => setNext(selectedUuids.length > 0), [selectedUuids, setNext]);
 
   return (
     <Stack mt={10}>

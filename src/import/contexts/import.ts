@@ -13,15 +13,15 @@ export interface IImportContext {
   setNext: Dispatch<SetStateAction<boolean>>;
   importFile: File | undefined;
   setImportFile: Dispatch<SetStateAction<File | undefined>>;
-  restoredAccounts: IAccount[];
-  setRestoredAccounts: Dispatch<SetStateAction<IAccount[]>>;
+  selectedUuids: IAccount['uuid'][];
+  setSelectedUuids: Dispatch<SetStateAction<IAccount['uuid'][]>>;
   importStrategy: ImportStrategy;
   setImportStrategy: Dispatch<SetStateAction<ImportStrategy>>;
 }
 
 export const ImportContext = createContext<IImportContext>({
   importedAccounts: [],
-  restoredAccounts: [],
+  selectedUuids: [],
   importedFavorites: [],
   password: '',
   next: false,
@@ -29,7 +29,7 @@ export const ImportContext = createContext<IImportContext>({
   importStrategy: 'replace',
   setImportedAccounts: () => null,
   setImportedFavorites: () => null,
-  setRestoredAccounts: () => null,
+  setSelectedUuids: () => null,
   setPassword: () => null,
   setNext: () => null,
   setImportFile: () => null,
