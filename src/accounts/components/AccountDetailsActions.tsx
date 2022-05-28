@@ -47,11 +47,11 @@ function AccountDetailsActions({ account: { issuer, uuid } }: AccountDetailsActi
 
   return (
     <Group className={classes.root} noWrap position="apart">
-      <ActionIcon id="edit-account" variant="transparent" color="indigo" title="Edit account" onClick={handleEdit}>
-        <IconEdit />
-      </ActionIcon>
       <ActionIcon id="export-account" variant="transparent" color="grape" title="Export account" onClick={handleExport}>
         <IconFileExport />
+      </ActionIcon>
+      <ActionIcon id="edit-account" variant="transparent" color="indigo" title="Edit account" onClick={handleEdit}>
+        <IconEdit />
       </ActionIcon>
       <ActionIcon id="delete-account" variant="transparent" color="red" title="Delete account" onClick={handleDelete}>
         <IconTrash />
