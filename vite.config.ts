@@ -7,7 +7,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [eslint(), react(), tsconfigPaths()],
   build: {
-    sourcemap: true,
+    sourcemap: false,
     chunkSizeWarningLimit: 750
   }
 });
