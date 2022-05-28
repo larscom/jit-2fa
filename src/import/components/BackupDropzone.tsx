@@ -5,7 +5,10 @@ import { IconCheck, IconFile, IconX } from '@tabler/icons';
 import { useContext, useEffect, useState } from 'react';
 
 const useStyles = createStyles(() => ({
-  root: { height: 220, pointerEvents: 'none' }
+  root: {
+    height: 220,
+    pointerEvents: 'none'
+  }
 }));
 
 function ImageUploadIcon({ status, theme }: { status: DropzoneStatus; theme: MantineTheme }) {
@@ -40,9 +43,7 @@ function BackupDropzone() {
     setPassword('');
   };
 
-  useEffect(() => {
-    setNext(importFile !== undefined);
-  }, [importFile, setNext]);
+  useEffect(() => setNext(importFile !== undefined), [importFile, setNext]);
 
   return (
     <Dropzone

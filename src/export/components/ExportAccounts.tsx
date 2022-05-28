@@ -1,16 +1,8 @@
-import { IAccount } from '$accounts/models/account';
 import { AccountsContext } from '$core/contexts/accounts';
 import { ExportContext } from '$export/contexts/export';
-import { TransferList, TransferListData, TransferListItem } from '@mantine/core';
+import { sortByLabel, toTransferListItem } from '$shared/util/transfer-list';
+import { TransferList, TransferListData } from '@mantine/core';
 import { useContext, useEffect, useState } from 'react';
-
-const sortByLabel = ({ label: labelA }: TransferListItem, { label: labelB }: TransferListItem) =>
-  labelA.localeCompare(labelB);
-
-const toTransferListItem = ({ uuid: value, issuer, label }: IAccount): TransferListItem => ({
-  value,
-  label: `${issuer} | ${label}`
-});
 
 function ExportAccounts() {
   const { accounts } = useContext(AccountsContext);

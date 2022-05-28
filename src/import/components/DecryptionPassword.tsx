@@ -1,10 +1,9 @@
 import { IAccount } from '$accounts/models/account';
-import { useNotification } from '$core/hooks/use-notification';
 import { ImportContext } from '$import/contexts/import';
 import { IBackup } from '$shared/models/backup';
-import { Button, Group, PasswordInput, Stack, Text } from '@mantine/core';
+import { Button, Group, PasswordInput, Stack } from '@mantine/core';
 import { aesGcmDecrypt } from 'crypto-aes-gcm';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const MIN_PASSWORD_LENGTH = 4;
 
@@ -20,12 +19,17 @@ function DecryptionPassword() {
     importFile
   } = useContext(ImportContext);
 
-  const { success, error } = useNotification();
+  const [error, setError] = useState<string | null>(null);
 
-  const handleOnChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => setPassword(value);
+  const buttonDisabled = password.length < MIN_PASSWORD_LENGTH;
+
+  const handleOnChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
+    setPassword(value);
+  };
 
   const handleOnKeyDown = ({ code }: React.KeyboardEvent<HTMLInputElement>) =>
-    code === 'Enter' && password.length >= MIN_PASSWORD_LENGTH && handleDecrypt();
+    code === 'Enter' && !buttonDisabled && handleDecrypt();
 
   const handleDecrypt = async () => {
     if (!importFile) return;
@@ -41,15 +45,13 @@ function DecryptionPassword() {
           return { accounts, favorites };
         });
 
+      setError(null);
       setImportedAccounts(accounts);
       setImportedFavorites(favorites);
-
-      success(<Text size="sm">Backup decrypted ({accounts.length} accounts)</Text>);
     } catch (e) {
+      setError('Incorrect password');
       setImportedAccounts([]);
       setImportedFavorites([]);
-
-      error(<Text size="sm">Wrong password</Text>);
     }
   };
 
@@ -69,14 +71,10 @@ function DecryptionPassword() {
           placeholder="Dencryption password..."
           label="Password"
           description="Enter passphrase to decrypt backup file"
-          error={
-            password.length && password.length < MIN_PASSWORD_LENGTH
-              ? `Minimum length is ${MIN_PASSWORD_LENGTH} characters`
-              : null
-          }
+          error={error}
         />
         {!next && (
-          <Button color="cyan" disabled={password.length < MIN_PASSWORD_LENGTH} onClick={handleDecrypt}>
+          <Button color="cyan" disabled={buttonDisabled} onClick={handleDecrypt}>
             Decrypt
           </Button>
         )}

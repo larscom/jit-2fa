@@ -24,8 +24,11 @@ function ExportProcess() {
     setActive((current) => current - 1);
   };
 
+  const totalSteps = 2;
+
   const isFirstStep = active <= 0;
-  const isActive = active < 2;
+
+  const isActive = active < totalSteps;
 
   return (
     <ExportContextProvider value={{ next, setNext, exportedAccounts, setExportedAccounts, password, setPassword }}>

@@ -45,8 +45,11 @@ function ImportProcess() {
     setActive((current) => current - 1);
   };
 
+  const totalSteps = 3;
+
   const isFirstStep = active <= 0;
-  const isActive = active < 3;
+
+  const isActive = active < totalSteps;
 
   return (
     <ImportContextProvider value={context}>
