@@ -42,6 +42,7 @@ function AccountDetails() {
         <FavoriteButton account={account} />
       </Group>
       <AutoTransition
+        transition="slide-right"
         target={
           <Stack className={classes.container}>
             <Group position="center">

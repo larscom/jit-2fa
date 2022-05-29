@@ -1,5 +1,5 @@
 import { MantineTransition, Transition } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import { cloneElement, useEffect, useState } from 'react';
 
 interface AutoTransitionProps {
   target: JSX.Element;
@@ -13,7 +13,7 @@ function AutoTransition({ target, transition }: AutoTransitionProps) {
 
   return (
     <Transition mounted={mounted} transition={transition || 'pop'}>
-      {(style) => React.cloneElement(target, { style })}
+      {(style) => cloneElement(target, { style })}
     </Transition>
   );
 }

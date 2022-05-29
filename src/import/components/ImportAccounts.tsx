@@ -1,3 +1,4 @@
+import AutoTransition from '$core/components/AutoTransition';
 import { ImportContext } from '$import/contexts/import';
 import { sortByLabel, toTransferListItem } from '$shared/util/transfer-list';
 import { Stack, TransferList, TransferListData } from '@mantine/core';
@@ -33,18 +34,23 @@ function ImportAccounts() {
   return (
     <Stack mt={10}>
       <ImportStrategyInput />
-      <TransferList
-        mt={10}
-        listHeight={550}
-        breakpoint="sm"
-        searchPlaceholder="Search accounts..."
-        nothingFound="Nothing here..."
-        titles={[
-          `Imported (${unselected.length} / ${importedAccounts.length})`,
-          `Restore (${selected.length} / ${importedAccounts.length})`
-        ]}
-        value={transferList}
-        onChange={handleChange}
+      <AutoTransition
+        transition="fade"
+        target={
+          <TransferList
+            mt={10}
+            listHeight={550}
+            breakpoint="sm"
+            searchPlaceholder="Search accounts..."
+            nothingFound="Nothing here..."
+            titles={[
+              `Imported (${unselected.length} / ${importedAccounts.length})`,
+              `Restore (${selected.length} / ${importedAccounts.length})`
+            ]}
+            value={transferList}
+            onChange={handleChange}
+          />
+        }
       />
     </Stack>
   );

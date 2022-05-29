@@ -1,4 +1,5 @@
 import { IAccount } from '$accounts/models/account';
+import AutoTransition from '$core/components/AutoTransition';
 import { AccountsContext } from '$core/contexts/accounts';
 import { ImportContext } from '$import/contexts/import';
 import { Group, Text } from '@mantine/core';
@@ -62,9 +63,13 @@ function MergeAccounts() {
   }, []);
 
   return (
-    <Group position="center" mt={10}>
-      <Text>{finnished ? 'Your accounts have been imported successfully!' : 'Busy importing accounts...'}</Text>
-    </Group>
+    <AutoTransition
+      target={
+        <Group position="center" mt={10}>
+          <Text>{finnished ? 'Your accounts have been imported successfully!' : 'Busy importing accounts...'}</Text>
+        </Group>
+      }
+    />
   );
 }
 

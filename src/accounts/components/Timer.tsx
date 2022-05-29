@@ -1,6 +1,6 @@
 import { useTimer } from '$accounts/hooks/use-timer';
 import { RingProgress, Text } from '@mantine/core';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect } from 'react';
 
 const calculateValue = (count: number, period: number) => {
   return Number(((count / period) * 100).toFixed(2));
@@ -15,8 +15,8 @@ interface TimerProps {
 
 function Timer({ period, onColorChange }: TimerProps) {
   const timer = useTimer(period);
-  const color = useMemo(() => getColor(timer), [timer]);
-  const value = useMemo(() => calculateValue(timer, period), [timer, period]);
+  const color = getColor(timer);
+  const value = calculateValue(timer, period);
 
   useEffect(() => onColorChange(color), [color, onColorChange]);
 

@@ -86,7 +86,9 @@ function AccountsList() {
           )}
         </Stack>
       </ScrollArea>
-      {totalPages > 1 && <Pagination id="paginator" page={pageNumber} onChange={setPageNumber} total={totalPages} withEdges />}
+      {totalPages > 1 && (
+        <Pagination id="paginator" page={pageNumber} onChange={setPageNumber} total={totalPages} withEdges />
+      )}
     </>
   );
 }

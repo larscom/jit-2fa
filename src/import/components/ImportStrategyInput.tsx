@@ -1,3 +1,4 @@
+import AutoTransition from '$core/components/AutoTransition';
 import { ImportContext } from '$import/contexts/import';
 import { ImportStrategy } from '$import/models/import-strategy';
 import { Group, InputWrapper, SegmentedControl } from '@mantine/core';
@@ -32,11 +33,15 @@ function ImportStrategyInput() {
   const handleOnChange = (value: ImportStrategy) => setImportStrategy(value);
 
   return (
-    <Group position="center">
-      <InputWrapper label="Strategy" description={getDescription(importStrategy)}>
-        <SegmentedControl color="pink" value={importStrategy} onChange={handleOnChange} data={data} />
-      </InputWrapper>
-    </Group>
+    <AutoTransition
+      target={
+        <Group position="center">
+          <InputWrapper label="Strategy" description={getDescription(importStrategy)}>
+            <SegmentedControl color="pink" value={importStrategy} onChange={handleOnChange} data={data} />
+          </InputWrapper>
+        </Group>
+      }
+    />
   );
 }
 

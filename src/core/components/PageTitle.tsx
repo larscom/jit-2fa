@@ -26,7 +26,7 @@ function PageTitle({ title, subtitle, disablePrevious }: PageTitleProps) {
 
   const navigate = useNavigate();
 
-  useDocumentTitle(`JIT | ${title.toLocaleUpperCase()}`);
+  useDocumentTitle(`Just In Time | ${title}`);
 
   return (
     <Group mb="lg" spacing="xl">

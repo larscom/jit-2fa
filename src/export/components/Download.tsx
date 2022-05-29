@@ -1,4 +1,5 @@
 import { IAccount } from '$accounts/models/account';
+import AutoTransition from '$core/components/AutoTransition';
 import { AccountsContext } from '$core/contexts/accounts';
 import { ExportContext } from '$export/contexts/export';
 import { IBackup } from '$shared/models/backup';
@@ -25,12 +26,16 @@ function Download() {
   }, [exportedAccounts, password, favorites]);
 
   return (
-    <Group position="center" mt={10} direction="column">
-      <Text>Your accounts have been exported successfully!</Text>
-      <Anchor underline download={`totp-accounts_${Date.now()}.txt`} href={objectURL}>
-        Download
-      </Anchor>
-    </Group>
+    <AutoTransition
+      target={
+        <Group position="center" mt={10} direction="column">
+          <Text>Your accounts have been exported successfully!</Text>
+          <Anchor underline download={`totp-accounts_${Date.now()}.txt`} href={objectURL}>
+            Download
+          </Anchor>
+        </Group>
+      }
+    />
   );
 }
 

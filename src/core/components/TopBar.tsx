@@ -1,5 +1,5 @@
 import { ActionIcon, createStyles, Group, Header, Text } from '@mantine/core';
-import { Icon2fa, IconMoodSmile } from '@tabler/icons';
+import { Icon2fa } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
 import ColorSchemeButton from './ColorSchemeButton';
 import GithubButton from './GithubButton';
@@ -25,7 +25,7 @@ function TopBar() {
             <Icon2fa size={32} />
           </ActionIcon>
           <Text size="lg" id="top-bar-title">
-            Just In Time <IconMoodSmile color="white" size={18} />
+            Just In Time
           </Text>
         </Group>
       </Group>
