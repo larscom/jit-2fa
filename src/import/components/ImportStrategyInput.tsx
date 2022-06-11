@@ -1,8 +1,7 @@
 import AutoTransition from '$core/components/AutoTransition';
-import { ImportContext } from '$import/contexts/import';
+import { useImportState } from '$import/contexts/import';
 import { ImportStrategy } from '$import/models/import-strategy';
 import { Group, InputWrapper, SegmentedControl } from '@mantine/core';
-import { useContext } from 'react';
 
 const getDescription = (strategy: ImportStrategy): string => {
   switch (strategy) {
@@ -22,7 +21,7 @@ const getDescription = (strategy: ImportStrategy): string => {
 };
 
 function ImportStrategyInput() {
-  const { importStrategy, setImportStrategy } = useContext(ImportContext);
+  const { importStrategy, setImportStrategy } = useImportState();
 
   const data = [
     { label: 'Replace', value: 'replace' },

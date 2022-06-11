@@ -1,12 +1,12 @@
 import AutoTransition from '$core/components/AutoTransition';
-import { ImportContext } from '$import/contexts/import';
+import { useImportState } from '$import/contexts/import';
 import { sortByLabel, toTransferListItem } from '$shared/util/transfer-list';
 import { Stack, TransferList, TransferListData } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImportStrategyInput from './ImportStrategyInput';
 
 function ImportAccounts() {
-  const { importedAccounts, selectedUuids, setSelectedUuids, setNext } = useContext(ImportContext);
+  const { importedAccounts, selectedUuids, setSelectedUuids, setNext } = useImportState();
 
   const unselected = importedAccounts
     .filter(({ uuid }) => !selectedUuids.includes(uuid))

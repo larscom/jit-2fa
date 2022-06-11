@@ -1,7 +1,7 @@
 import { IAccount } from '$accounts/models/account';
 import AutoTransition from '$core/components/AutoTransition';
 import { AccountsContext } from '$core/contexts/accounts';
-import { ImportContext } from '$import/contexts/import';
+import { useImportState } from '$import/contexts/import';
 import { Group, Text } from '@mantine/core';
 import { useContext, useEffect, useState } from 'react';
 
@@ -12,7 +12,7 @@ const getUniqueFavorites = (a: string[], b: string[], accounts: IAccount[]) =>
 
 function MergeAccounts() {
   const { accounts, setAccounts, favorites, setFavorites } = useContext(AccountsContext);
-  const { importedAccounts, selectedUuids, importStrategy, importedFavorites } = useContext(ImportContext);
+  const { importedAccounts, selectedUuids, importStrategy, importedFavorites } = useImportState();
   const [finnished, setFinnished] = useState(false);
 
   /* eslint-disable react-hooks/exhaustive-deps */

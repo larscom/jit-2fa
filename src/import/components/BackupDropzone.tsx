@@ -1,8 +1,8 @@
-import { ImportContext } from '$import/contexts/import';
+import { useImportState } from '$import/contexts/import';
 import { createStyles, Group, MantineTheme, Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { IconCheck, IconFile, IconX } from '@tabler/icons';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useStyles = createStyles(() => ({
   root: {
@@ -26,7 +26,7 @@ function BackupDropzone() {
   const theme = useMantineTheme();
 
   const { classes } = useStyles();
-  const { importFile, setImportFile, setNext, setImportedAccounts, setPassword } = useContext(ImportContext);
+  const { importFile, setImportFile, setNext, setImportedAccounts, setPassword } = useImportState();
   const [rejected, setRejected] = useState(false);
 
   const handleOnDrop = ([file]: File[]) => {
@@ -43,7 +43,9 @@ function BackupDropzone() {
     setPassword('');
   };
 
-  useEffect(() => setNext(importFile !== undefined), [importFile, setNext]);
+  useEffect(() => {
+    setNext(importFile !== undefined);
+  }, [importFile, setNext]);
 
   return (
     <Dropzone

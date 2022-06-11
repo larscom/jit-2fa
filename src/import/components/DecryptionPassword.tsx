@@ -1,10 +1,10 @@
 import { IAccount } from '$accounts/models/account';
 import AutoTransition from '$core/components/AutoTransition';
-import { ImportContext } from '$import/contexts/import';
+import { useImportState } from '$import/contexts/import';
 import { IBackup } from '$shared/models/backup';
 import { Button, Group, PasswordInput, Stack } from '@mantine/core';
 import { aesGcmDecrypt } from 'crypto-aes-gcm';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const MIN_PASSWORD_LENGTH = 4;
 
@@ -18,7 +18,7 @@ function DecryptionPassword() {
     importedAccounts,
     setImportedFavorites,
     importFile
-  } = useContext(ImportContext);
+  } = useImportState();
 
   const [error, setError] = useState<string | null>(null);
 
