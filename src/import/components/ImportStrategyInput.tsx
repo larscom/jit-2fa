@@ -1,7 +1,7 @@
 import AutoTransition from '$core/components/AutoTransition';
 import { useImportState } from '$import/contexts/import';
 import { ImportStrategy } from '$import/models/import-strategy';
-import { Group, InputWrapper, SegmentedControl } from '@mantine/core';
+import { Group, InputWrapper, SegmentedControl, SegmentedControlItem } from '@mantine/core';
 
 const getDescription = (strategy: ImportStrategy): string => {
   switch (strategy) {
@@ -23,7 +23,7 @@ const getDescription = (strategy: ImportStrategy): string => {
 function ImportStrategyInput() {
   const { importStrategy, setImportStrategy } = useImportState();
 
-  const data = [
+  const data: SegmentedControlItem[] = [
     { label: 'Replace', value: 'replace' },
     { label: 'Merge', value: 'merge' },
     { label: 'Merge Keep', value: 'merge_keep' }
